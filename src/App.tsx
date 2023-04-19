@@ -1,41 +1,38 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { GoChevronDown, GoChevronRight } from "react-icons/go";
 import "./App.scss";
 
+const ON_GOING = "ongoing";
+const COMPLETE = "conplete";
+type Status = typeof ON_GOING | typeof COMPLETE;
+
+interface Todo {
+  id: string;
+  title: string;
+  status: Status;
+}
+
 function App() {
-  const [todos, setTodos] = useState<string[]>([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
   const [newTodo, setNewTodo] = useState<string>("");
-  const [finishedTodos, setFinishedTodos] = useState<string[]>([]);
+
   const [isChevronToogle, setIsChevronToogle] = useState<boolean>(false);
 
-  const handleAddTodo = () => {
-    if (newTodo.trim()) {
-      setNewTodo("");
-      setTodos([...todos, newTodo.trim()]);
-    }
+  const handleAddTodo = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    setTodos((currentTodos) => [
+      ...currentTodos,
+      { id: uuidv4(), title: newTodo.trim(), status: ON_GOING },
+    ]);
+    setNewTodo("");
   };
 
-  const handleFinishedTodo = (index: number) => {
-    const newTodos = [...todos];
-    const finishedTodo = todos[index];
-    const newFinishedTodos = [...finishedTodos, finishedTodo];
-
-    setTodos(newTodos);
-    setFinishedTodos(newFinishedTodos);
-    newTodos.splice(index, 1);
-  };
-
-  const handleUnfinishedTodo = (index: number) => {
-    const unFinishedTodo = finishedTodos[index];
-
-    setTodos([...todos, unFinishedTodo]);
-    finishedTodos.splice(index, 1);
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      handleAddTodo();
-    }
+  const updateTodoStatus = (id: string, status: Status) => {
+    setTodos((currentTodos) =>
+      currentTodos.map((todo) => (todo.id === id ? { ...todo, status } : todo)),
+    );
   };
 
   const handleChevronToogle = () => {
@@ -45,63 +42,42 @@ function App() {
   return (
     <div className="app">
       <div className="container">
-        {/* Todo title
-            Props:
-            - todos
-        */}
         <div className="title">
           <h1>Todo list</h1>
           <p>{todos.length} rappels en cours</p>
         </div>
-        {/* Todo input
-            Props:
-            - newTodo
-            - setNewTodo
-            - handleKeyDown
-            - handleAddTodo
-        */}
-        <div className="input">
+        <form onSubmit={handleAddTodo} className="input">
           <input
             className="input-field"
             placeholder="Ajouter un rappel"
             type="text"
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
-            onKeyDown={handleKeyDown}
           />
-          <button className="input-button" onClick={handleAddTodo}>
-            OK
-          </button>
-        </div>
-        {/* Todo ongoing
-            Props:
-            - todos
-            - handleFinishedTodo
-        */}
+          <button className="input-button">OK</button>
+        </form>
         <div className="list">
           <ul>
-            {todos.map((todo, index) => (
-              <li key={index} className="list-item">
-                <button
-                  onClick={() => handleFinishedTodo(index)}
-                  className="list-item-checkbox"
-                />
-                <p>{todo}</p>
-              </li>
-            ))}
+            {todos
+              .filter((todo) => todo.status === ON_GOING)
+              .map((todo) => (
+                <li key={todo.id} className="list-item">
+                  <button
+                    onClick={() => updateTodoStatus(todo.id, COMPLETE)}
+                    className="list-item-checkbox"
+                  />
+                  <p>{todo.title}</p>
+                </li>
+              ))}
           </ul>
         </div>
-        {/* Todo finished
-            Props:
-            - finishedTodos
-            - isChevronToogle
-            - handleChevronToogle
-            - handleUnfinishedTodo
-        */}
-        {finishedTodos.length > 0 && (
+        {todos.filter((todo) => todo.status === COMPLETE).length > 0 && (
           <div className="list section-delete">
             <div className="list-title">
-              <p>{finishedTodos.length} terminés</p>
+              <p>
+                {todos.filter((todo) => todo.status === COMPLETE).length}{" "}
+                terminés
+              </p>
               {isChevronToogle ? (
                 <GoChevronDown
                   className="chevron"
@@ -116,15 +92,17 @@ function App() {
             </div>
             {isChevronToogle && (
               <ul>
-                {finishedTodos.map((todo, index) => (
-                  <li key={index} className="list-item">
-                    <button
-                      className=" list-item-checkbox list-item-checkbox--checked"
-                      onClick={() => handleUnfinishedTodo(index)}
-                    />
-                    <p>{todo}</p>
-                  </li>
-                ))}
+                {todos
+                  .filter((todo) => todo.status === COMPLETE)
+                  .map((todo) => (
+                    <li key={todo.id} className="list-item">
+                      <button
+                        className=" list-item-checkbox list-item-checkbox--checked"
+                        onClick={() => updateTodoStatus(todo.id, ON_GOING)}
+                      />
+                      <p>{todo.title}</p>
+                    </li>
+                  ))}
               </ul>
             )}
           </div>
