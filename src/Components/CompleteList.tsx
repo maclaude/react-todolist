@@ -22,7 +22,11 @@ export const CompleteList = ({
   return (
     <div className="list section-delete">
       <div className="list-title">
-        <p>{completeTodos.length} terminés</p>
+        <p>
+          {`${completeTodos.length} ${
+            completeTodos.length === 1 ? "terminé" : "terminés"
+          }`}
+        </p>
         {isChevronToogle ? (
           <GoChevronDown className="chevron" onClick={handleChevronToogle} />
         ) : (

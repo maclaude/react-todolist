@@ -30,7 +30,11 @@ function App() {
       <div className="container">
         <div className="title">
           <h1>Todo list</h1>
-          <p>{getOnGoingTodos(todos).length} rappels en cours</p>
+          <p>
+            {`${getOnGoingTodos(todos).length} ${
+              getOnGoingTodos(todos).length === 1 ? "rappel" : "rappels"
+            }`}
+          </p>
         </div>
         <NewTodoForm onSubmit={addTodo} />
         <OnGoingList
