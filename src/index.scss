@@ -6,3 +6,26 @@
   --clr-acc-green: #47e5bdff;
   --box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 }
+
+/* Fonts
+========================== */
+
+h1, h2 {
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 1.4em;
+}
+
+h2 {
+  font-size: 1.2em;
+}
+
+p {
+  line-height: 20px
+}
+
+strong {
+  font-weight: bold;
+}
