@@ -6,7 +6,8 @@
 }
 
 .container {
-  width: 500px;
+  width: 400px;
+  min-height: 300px;
   height: fit-content;
   margin: auto;
   background-color: var(--clr-main);
@@ -33,14 +34,15 @@
     color: var(--clr-dark);
     padding-left: 10px;
     border: none;
-    border-bottom: 2px solid var(--clr-grey);
+    border-bottom: 2px solid var(--clr-light-grey);
     width: 100%;
     line-height: 30px;
     font-size: inherit;
     margin-right: 10px;
 
     &::placeholder {
-      color: var(--clr-grey);
+      color: var(--clr-dark-grey);
+      font-size: 0.9em;
     }
   }
 
@@ -67,22 +69,44 @@
 
   &-item {
     display: flex;
-    align-items: center;
     padding: 10px;
+    align-items: center;
     gap: 20px;
 
     &-checkbox {
       appearance: none;
-      height: 1.3em;
-      width: 1.3em;
+      height: 1.4em;
+      width: 1.4em;
       border-radius: 50%;
       border: none;
+      padding: 0;
       box-shadow: var(--box-shadow);
       cursor: pointer;
 
       &--checked {
         background-color: var(--clr-acc-green);
       }
+    }
+
+    &-input {
+      background-color: inherit;
+      border: none;
+      outline: none;
+      font-size: inherit;
+      width: 100%;
+      line-height: 25px;
+      cursor: pointer;
+      margin-bottom: 1px;
+
+      &:focus {
+        border-bottom: 1px solid var(--clr-light-grey);
+      }
+    }
+
+    &-buttons {
+      display: flex;
+      gap: .3em;
+
     }
   }
 }
@@ -95,4 +119,13 @@
   cursor: pointer;
 }
 
+.icon {
+  width: 1.1em;
+  height: 1.1em;
+  color: var(--clr-light-grey);
+  cursor: pointer;
 
+  &:hover {
+    color: #D5D8DC;
+  }
+}

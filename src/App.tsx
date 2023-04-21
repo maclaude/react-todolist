@@ -25,6 +25,12 @@ function App() {
     );
   };
 
+  const updateTodoTitle = (id: string, title: string) => {
+    setTodos((currentTodos) =>
+      currentTodos.map((todo) => (todo.id === id ? { ...todo, title } : todo)),
+    );
+  };
+
   return (
     <div className="app">
       <div className="container">
@@ -40,6 +46,8 @@ function App() {
         <OnGoingList
           onGoingTodos={getOnGoingTodos(todos)}
           onCheckboxClick={updateTodoStatus}
+          onDeleteClick={updateTodoStatus}
+          onTextChange={updateTodoTitle}
         />
         {getCompleteTodos(todos).length > 0 && (
           <CompleteList

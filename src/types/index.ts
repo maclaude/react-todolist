@@ -1,6 +1,6 @@
-import { COMPLETE, ON_GOING } from "../constant";
+import { COMPLETE, DELETE, ON_GOING } from "../constant";
 
-export type Status = typeof ON_GOING | typeof COMPLETE;
+export type Status = typeof COMPLETE | typeof DELETE | typeof ON_GOING;
 
 export interface Todo {
   id: string;
