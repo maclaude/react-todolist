@@ -4,15 +4,15 @@ import { GoChevronDown, GoChevronRight } from "react-icons/go";
 import { ON_GOING } from "../constant";
 import { Status, Todo } from "../types";
 
-interface CompleteListProps {
+interface ListCompleteProps {
   completeTodos: Todo[];
   onCheckboxClick: (id: string, status: Status) => void;
 }
 
-export const CompleteList = ({
+export const ListComplete = ({
   completeTodos,
   onCheckboxClick,
-}: CompleteListProps) => {
+}: ListCompleteProps) => {
   const [isChevronToogle, setIsChevronToogle] = useState<boolean>(false);
 
   const handleChevronToogle = () => {
@@ -35,13 +35,13 @@ export const CompleteList = ({
       </div>
       {isChevronToogle && (
         <ul>
-          {completeTodos.map((todo) => (
-            <li key={todo.id} className="list-item">
+          {completeTodos.map(({ id, title }) => (
+            <li key={id} className="list-item">
               <button
                 className=" list-item-checkbox list-item-checkbox--checked"
-                onClick={() => onCheckboxClick(todo.id, ON_GOING)}
+                onClick={() => onCheckboxClick(id, ON_GOING)}
               />
-              <p>{todo.title}</p>
+              <p>{title}</p>
             </li>
           ))}
         </ul>
