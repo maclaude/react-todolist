@@ -2,6 +2,8 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import "./App.scss";
+import { MdAddCircle } from "react-icons/md";
+import { IconContext } from "react-icons";
 import { ListComplete } from "./Components/ListComplete";
 import { ListForm } from "./Components/ListForm";
 import { ListOnGoing } from "./Components/ListOnGoing";
@@ -35,20 +37,38 @@ function App() {
   return (
     <div className="app">
       <div className="container">
-        <ListTitle onGoingTodo={getOnGoingTodos(todos)} />
-        <ListForm onSubmit={addTodo} />
-        <ListOnGoing
-          onGoingTodos={getOnGoingTodos(todos)}
-          onCheckboxClick={updateTodoStatus}
-          onDeleteClick={updateTodoStatus}
-          onTextChange={updateTodoTitle}
-        />
-        {getCompleteTodos(todos).length > 0 && (
-          <ListComplete
-            completeTodos={getCompleteTodos(todos)}
+        <aside className="aside-container">
+          <nav className="navigation">
+            <div className="navigation-title">
+              <h3>Mes listes</h3>
+              <IconContext.Provider value={{ className: "icon" }}>
+                <MdAddCircle />
+              </IconContext.Provider>
+            </div>
+            <ul>
+              <li>Todo</li>
+              <li>Sport</li>
+              <li>Courses</li>
+              <li>Envies</li>
+            </ul>
+          </nav>
+        </aside>
+        <main className="list-container">
+          <ListTitle onGoingTodo={getOnGoingTodos(todos)} />
+          <ListForm onSubmit={addTodo} />
+          <ListOnGoing
+            onGoingTodos={getOnGoingTodos(todos)}
             onCheckboxClick={updateTodoStatus}
+            onDeleteClick={updateTodoStatus}
+            onTextChange={updateTodoTitle}
           />
-        )}
+          {getCompleteTodos(todos).length > 0 && (
+            <ListComplete
+              completeTodos={getCompleteTodos(todos)}
+              onCheckboxClick={updateTodoStatus}
+            />
+          )}
+        </main>
       </div>
     </div>
   );

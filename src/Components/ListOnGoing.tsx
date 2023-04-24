@@ -1,6 +1,5 @@
 import { IconContext } from "react-icons";
 import { MdRemoveCircle } from "react-icons/md";
-import { GoPencil } from "react-icons/go";
 
 import { COMPLETE, DELETE } from "../constant";
 import { Status, Todo } from "../types";
@@ -31,8 +30,6 @@ export const ListOnGoing = ({
             <ListInput onTextChange={onTextChange} id={id} title={title} />
             <div className="list-item-buttons">
               <IconContext.Provider value={{ className: "icon" }}>
-                {/* TODO: Focus on ListInput onClick */}
-                <GoPencil onClick={() => {}} />
                 <MdRemoveCircle onClick={() => onDeleteClick(id, DELETE)} />
               </IconContext.Provider>
             </div>
