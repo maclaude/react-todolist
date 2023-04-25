@@ -1,6 +1,12 @@
-import { COMPLETE, DELETE, ON_GOING } from "../constant";
+import { COMPLETE, DELETE, ON_GOING } from "../data/constant";
 
 export type Status = typeof COMPLETE | typeof DELETE | typeof ON_GOING;
+
+export interface TodoList {
+  id: string;
+  title: string;
+  items: Todo[];
+}
 
 export interface Todo {
   id: string;

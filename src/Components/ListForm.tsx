@@ -1,16 +1,17 @@
 import { useState } from "react";
 
 interface ListFormProps {
-  onSubmit: (newTodo: string) => void;
+  listId: string;
+  onSubmit: (listId: string, newTodo: string) => void;
 }
 
-export const ListForm = ({ onSubmit }: ListFormProps) => {
+export const ListForm = ({ listId, onSubmit }: ListFormProps) => {
   const [newTodo, setNewTodo] = useState<string>("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (newTodo.trim()) onSubmit(newTodo);
+    if (newTodo.trim()) onSubmit(listId, newTodo);
     setNewTodo("");
   };
 

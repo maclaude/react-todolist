@@ -1,18 +1,20 @@
 import { IconContext } from "react-icons";
 import { MdRemoveCircle } from "react-icons/md";
 
-import { COMPLETE, DELETE } from "../constant";
+import { COMPLETE, DELETE } from "../data/constant";
 import { Status, Todo } from "../types";
 import { ListInput } from "./ListInput";
 
 interface ListOnGoingProps {
+  listId: string;
   onGoingTodos: Todo[];
-  onCheckboxClick: (id: string, status: Status) => void;
-  onDeleteClick: (id: string, status: Status) => void;
-  onTextChange: (id: string, title: string) => void;
+  onCheckboxClick: (listId: string, itemId: string, status: Status) => void;
+  onDeleteClick: (listId: string, itemId: string, status: Status) => void;
+  onTextChange: (listId: string, itemId: string, title: string) => void;
 }
 
 export const ListOnGoing = ({
+  listId,
   onGoingTodos,
   onCheckboxClick,
   onDeleteClick,
@@ -24,13 +26,20 @@ export const ListOnGoing = ({
         {onGoingTodos.map(({ id, title }) => (
           <li key={id} className="list-item">
             <button
-              onClick={() => onCheckboxClick(id, COMPLETE)}
+              onClick={() => onCheckboxClick(listId, id, COMPLETE)}
               className="list-item-checkbox"
             />
-            <ListInput onTextChange={onTextChange} id={id} title={title} />
+            <ListInput
+              listId={listId}
+              onTextChange={onTextChange}
+              id={id}
+              title={title}
+            />
             <div className="list-item-buttons">
               <IconContext.Provider value={{ className: "icon" }}>
-                <MdRemoveCircle onClick={() => onDeleteClick(id, DELETE)} />
+                <MdRemoveCircle
+                  onClick={() => onDeleteClick(listId, id, DELETE)}
+                />
               </IconContext.Provider>
             </div>
           </li>

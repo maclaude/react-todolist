@@ -1,13 +1,19 @@
 interface ListInputProps {
+  listId: string;
   id: string;
   title: string;
-  onTextChange: (id: string, title: string) => void;
+  onTextChange: (listId: string, id: string, title: string) => void;
 }
 
-export const ListInput = ({ id, title, onTextChange }: ListInputProps) => {
+export const ListInput = ({
+  listId,
+  id,
+  title,
+  onTextChange,
+}: ListInputProps) => {
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     event.preventDefault();
-    onTextChange(id, event.currentTarget.value);
+    onTextChange(listId, id, event.currentTarget.value);
   };
 
   const handleOnEnterBlur = (event: React.KeyboardEvent<HTMLInputElement>) => {
