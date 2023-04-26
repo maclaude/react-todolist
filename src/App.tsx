@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { MdAddCircle } from "react-icons/md";
+import { Link, Route, Routes } from "react-router-dom";
 import { v4 } from "uuid";
 
 import "./App.scss";
@@ -9,9 +10,20 @@ import { List } from "./pages/List";
 import { Status, TodoList } from "./types";
 
 function App() {
-  const [todoLists, setTodoLists] = useState<TodoList[]>([
-    { id: v4(), title: "New Todo list", items: [] },
-  ]);
+  const [todoLists, setTodoLists] = useState<TodoList[]>(
+    JSON.parse(localStorage.getItem("todoLists")!),
+  );
+
+  useEffect(() => {
+    const storedTodoLists = localStorage.getItem("todoLists");
+    if (storedTodoLists) {
+      setTodoLists(JSON.parse(storedTodoLists));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todoLists", JSON.stringify(todoLists));
+  }, [todoLists]);
 
   const addTodoList = () => {
     setTodoLists((currentTodoLists) => {
@@ -91,25 +103,30 @@ function App() {
             </div>
             <ul>
               {todoLists.map(({ id, title }) => (
-                <li key={id}>{title}</li>
+                <li key={id}>
+                  <Link to={`lists/${id}`}>{title}</Link>
+                </li>
               ))}
             </ul>
           </nav>
         </aside>
-        <main className="lists-container">
-          {todoLists.map(({ id, title, items }) => (
-            <div key={id} className="list-container">
-              <List
-                listId={id}
-                title={title}
-                todos={items}
-                addTodo={addTodo}
-                updateTodoStatus={updateTodoStatus}
-                updateTodoTitle={updateTodoTitle}
-                updateTodoListTitle={updateTodoListTitle}
-              />
-            </div>
-          ))}
+        <main>
+          <div className="list-container">
+            <Routes>
+              <Route
+                path={"lists/:id"}
+                element={
+                  <List
+                    todoLists={todoLists}
+                    addTodo={addTodo}
+                    updateTodoStatus={updateTodoStatus}
+                    updateTodoTitle={updateTodoTitle}
+                    updateTodoListTitle={updateTodoListTitle}
+                  />
+                }
+              ></Route>
+            </Routes>
+          </div>
         </main>
       </div>
     </div>

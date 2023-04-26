@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Todo } from "../types";
 
 interface ListTitleProps {
@@ -15,6 +15,10 @@ export const ListTitle = ({
   onSubmit,
 }: ListTitleProps) => {
   const [listTitle, setListTitle] = useState<string>(title);
+
+  useEffect(() => {
+    setListTitle(title);
+  }, [title]);
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     event.preventDefault();

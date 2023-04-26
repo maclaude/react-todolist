@@ -43,11 +43,6 @@
   }
 }
 
-.lists-container {
-  display: flex;
-  gap: 10px;
-}
-
 .list-container {
   width: 400px;
   min-height: 400px;
@@ -85,7 +80,7 @@
 
   &-field {
     color: var(--clr-dark);
-    padding-left: 10px;
+    padding-left: 5px;
     border: none;
     border-bottom: 2px solid var(--clr-light-grey);
     width: 100%;

@@ -1,14 +1,14 @@
+import { useParams } from "react-router-dom";
+
 import { ListComplete } from "../components/ListComplete";
 import { ListForm } from "../components/ListForm";
 import { ListOnGoing } from "../components/ListOnGoing";
 import { ListTitle } from "../components/ListTitle";
-import { Status, Todo } from "../types";
+import { Status, TodoList } from "../types";
 import { getCompleteTodos, getOnGoingTodos } from "../utils/helpers";
 
 interface TodoListProps {
-  listId: string;
-  title: string;
-  todos: Todo[];
+  todoLists: TodoList[];
   addTodo: (listId: string, newTodo: string) => void;
   updateTodoStatus: (listId: string, itemId: string, status: Status) => void;
   updateTodoTitle: (listId: string, itemId: string, title: string) => void;
@@ -16,37 +16,42 @@ interface TodoListProps {
 }
 
 export const List = ({
-  listId,
-  title,
-  todos,
+  todoLists,
   addTodo,
   updateTodoStatus,
   updateTodoTitle,
   updateTodoListTitle,
 }: TodoListProps) => {
-  return (
+  const { id } = useParams();
+  const currentTodoList = todoLists.find((todoList) => todoList.id === id);
+
+  return id && currentTodoList ? (
     <>
       <ListTitle
-        listId={listId}
-        title={title}
+        listId={id}
+        title={currentTodoList.title}
         onSubmit={updateTodoListTitle}
-        onGoingTodos={getOnGoingTodos(todos)}
+        onGoingTodos={getOnGoingTodos(currentTodoList.items)}
       />
-      <ListForm listId={listId} onSubmit={addTodo} />
+      <ListForm listId={id} onSubmit={addTodo} />
       <ListOnGoing
-        listId={listId}
-        onGoingTodos={getOnGoingTodos(todos)}
+        listId={id}
+        onGoingTodos={getOnGoingTodos(currentTodoList.items)}
         onCheckboxClick={updateTodoStatus}
         onDeleteClick={updateTodoStatus}
         onTextChange={updateTodoTitle}
       />
-      {getCompleteTodos(todos).length > 0 && (
+      {getCompleteTodos(currentTodoList.items).length > 0 && (
         <ListComplete
-          listId={listId}
-          completeTodos={getCompleteTodos(todos)}
+          listId={id}
+          completeTodos={getCompleteTodos(currentTodoList.items)}
           onCheckboxClick={updateTodoStatus}
         />
       )}
+    </>
+  ) : (
+    <>
+      <span>Sorry your todo is not Found 🫠</span>
     </>
   );
 };
