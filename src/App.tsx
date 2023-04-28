@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { IconContext } from "react-icons";
-import { MdAddCircle } from "react-icons/md";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { v4 } from "uuid";
 
 import "./App.scss";
 import { ON_GOING } from "./data/constant";
 import { List } from "./pages/List";
+import { Navigation } from "./pages/Navigation";
 import { Status, TodoList } from "./types";
 
 function App() {
@@ -94,21 +93,7 @@ function App() {
     <div className="app">
       <div className="container">
         <aside className="aside-container">
-          <nav className="navigation">
-            <div className="navigation-title">
-              <h3>Mes listes</h3>
-              <IconContext.Provider value={{ className: "icon" }}>
-                <MdAddCircle onClick={addTodoList} />
-              </IconContext.Provider>
-            </div>
-            <ul>
-              {todoLists.map(({ id, title }) => (
-                <li key={id}>
-                  <Link to={`lists/${id}`}>{title}</Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <Navigation todoLists={todoLists} addTodoList={addTodoList} />
         </aside>
         <main>
           <div className="list-container">

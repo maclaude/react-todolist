@@ -30,14 +30,14 @@
     margin-bottom: 20px;
   }
 
-  > ul > li {
+  &-link {
+    display: block;
     padding: 5px;
     margin-bottom: 5px;
-    width: fit-content;
-    cursor: pointer;
     border-left: 3px solid var(--clr-main);
+    cursor: pointer;
 
-    &:hover {
+    &__active {
       border-left: 3px solid var(--clr-acc-green);
     }
   }
@@ -175,6 +175,6 @@
   cursor: pointer;
 
   &:hover {
-    color: #D5D8DC;
+    color: var(--clr-dark-grey);
   }
 }
