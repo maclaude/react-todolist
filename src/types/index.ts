@@ -5,6 +5,7 @@ export type Status = typeof COMPLETE | typeof DELETE | typeof ON_GOING;
 export interface TodoList {
   id: string;
   title: string;
+  status: Status;
   items: Todo[];
 }
 

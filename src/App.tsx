@@ -7,14 +7,16 @@ import { ON_GOING } from "./data/constant";
 import { List } from "./pages/List";
 import { Navigation } from "./pages/Navigation";
 import { Status, TodoList } from "./types";
+import { getOnGoingTodoLists } from "./utils/helpers";
 
 function App() {
   const [todoLists, setTodoLists] = useState<TodoList[]>(
-    JSON.parse(localStorage.getItem("todoLists")!),
+    JSON.parse(localStorage.getItem("todoLists")!) || [],
   );
 
   useEffect(() => {
     const storedTodoLists = localStorage.getItem("todoLists");
+
     if (storedTodoLists) {
       setTodoLists(JSON.parse(storedTodoLists));
     }
@@ -25,9 +27,23 @@ function App() {
   }, [todoLists]);
 
   const addTodoList = () => {
-    setTodoLists((currentTodoLists) => {
-      return [...currentTodoLists, { id: v4(), title: "New Todo", items: [] }];
-    });
+    setTodoLists((currentTodoLists) => [
+      ...currentTodoLists,
+      { id: v4(), title: "New Todo", status: ON_GOING, items: [] },
+    ]);
+  };
+
+  const updateTodoListStatus = (listId: string, status: Status) => {
+    setTodoLists((currentTodoLists) =>
+      currentTodoLists.map((todoList) =>
+        todoList.id === listId
+          ? {
+              ...todoList,
+              status,
+            }
+          : todoList,
+      ),
+    );
   };
 
   const addTodo = (listId: string, newTodo: string) => {
@@ -93,7 +109,11 @@ function App() {
     <div className="app">
       <div className="container">
         <aside className="aside-container">
-          <Navigation todoLists={todoLists} addTodoList={addTodoList} />
+          <Navigation
+            todoLists={getOnGoingTodoLists(todoLists)}
+            addTodoList={addTodoList}
+            updateTodoListStatus={updateTodoListStatus}
+          />
         </aside>
         <main>
           <div className="list-container">
