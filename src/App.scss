@@ -1,8 +1,12 @@
+/* Main layout
+========================== */
+
 .app {
   height: 100vh;
   display: flex;
   align-items: center;
   background: radial-gradient(28.4% 56.65% at 50.13% 13.56%, rgba(255, 155, 106, 0.12) 0%, rgba(255, 155, 106, 0) 100%),radial-gradient(68.8% 137.23% at 79.33% -37.23%, rgba(255, 177, 78, 0.12) 0%, rgba(255, 177, 78, 0) 100%),radial-gradient(56.27% 112.23% at 100% -19.95%, rgba(246, 229, 37, 0.12) 1.04%, rgba(246, 229, 37, 0) 100%),radial-gradient(50.13% 100% at 0% 0%, rgba(255, 105, 72, 0.12) 0%, rgba(255, 133, 72, 0) 100%),#FFFFFF;
+  font-family: 'Roboto', sans-serif;
 }
 
 .container {
@@ -11,9 +15,8 @@
   margin: auto;
 }
 
-.chevron {
-  cursor: pointer;
-}
+/* Icons
+========================== */
 
 .icon {
   width: 1.1em;
@@ -26,6 +29,10 @@
   }
 }
 
+.chevron {
+  cursor: pointer;
+}
+
 .aside-container {
   display: flex;
   flex-direction: column;
@@ -34,14 +41,18 @@
   padding: 20px;
   border-radius: 10px;
   background-color: var(--clr-main);
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--regular-box-shadow);
   color: var(--clr-dark);
 }
+
+/* Navigation
+========================== */
 
 .navigation {
   &-title {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
   }
 
@@ -54,12 +65,13 @@
   }
 
   &-link {
-    padding-left: 5px;
-    border-left: 3px solid var(--clr-main);
+    padding: 0px 5px;
+    border-left: 4px solid var(--clr-main);
+    line-height: 1.2em;
     cursor: pointer;
 
     &__active {
-      border-left: 3px solid var(--clr-acc-green);
+      border-left: 4px solid var(--clr-acc-green);
     }
   }
 
@@ -68,13 +80,16 @@
   }
 }
 
+/* Lists
+========================== */
+
 .list-container {
   width: 400px;
   min-height: 400px;
   height: fit-content;
   margin: auto;
   background-color: var(--clr-main);
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--regular-box-shadow);
   color: var(--clr-dark);
   padding: 10px;
   border-radius: 10px;
@@ -105,17 +120,17 @@
 
   &-field {
     color: var(--clr-dark);
-    padding-left: 5px;
     border: none;
     border-bottom: 2px solid var(--clr-light-grey);
     width: 100%;
-    line-height: 30px;
-    font-size: inherit;
+    font-size: 1em;
+    line-height: 1.75;
     margin-right: 10px;
 
     &::placeholder {
       color: var(--clr-dark-grey);
       font-size: 0.9em;
+      font-style: italic;
     }
   }
 
@@ -131,8 +146,10 @@
 .list {
   display: flex;
   flex-direction: column;
+  padding: 10px 0;
 
   &-title {
+    font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -148,8 +165,8 @@
 
     &-checkbox {
       appearance: none;
-      height: 1.4em;
-      width: 1.4em;
+      height: 20px;
+      width: 20px;
       border-radius: 50%;
       border: none;
       padding: 0;
@@ -159,6 +176,10 @@
       &--checked {
         background-color: var(--clr-acc-green);
       }
+
+      &:focus {
+        border: 1px solid var(--clr-dark-grey)
+      }
     }
 
     &-input {
@@ -166,7 +187,7 @@
       border: none;
       outline: none;
       font-size: inherit;
-      width: 100%;
+      width: 80%;
       line-height: 20px;
       margin-bottom: 1px;
       border-bottom: 1px solid var(--clr-main);
