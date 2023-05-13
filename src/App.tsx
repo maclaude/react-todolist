@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { v4 } from "uuid";
 
 import "./App.scss";
@@ -14,6 +14,8 @@ function App() {
     JSON.parse(localStorage.getItem("todoLists")!) || [],
   );
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const storedTodoLists = localStorage.getItem("todoLists");
 
@@ -27,10 +29,16 @@ function App() {
   }, [todoLists]);
 
   const addTodoList = () => {
-    setTodoLists((currentTodoLists) => [
-      ...currentTodoLists,
-      { id: v4(), title: "New Todo", status: ON_GOING, items: [] },
-    ]);
+    const newTodoList: TodoList = {
+      id: v4(),
+      title: "New Todo",
+      status: ON_GOING,
+      items: [],
+    };
+
+    setTodoLists((currentTodoLists) => [...currentTodoLists, newTodoList]);
+
+    navigate(`/lists/${newTodoList.id}`);
   };
 
   const updateTodoListStatus = (listId: string, status: Status) => {
