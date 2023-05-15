@@ -1,5 +1,5 @@
-import { COMPLETE, ON_GOING } from "../data/constant";
-import { Todo, TodoList } from "../types";
+import { COMPLETE, ON_GOING } from '../data/constant';
+import { Todo, TodoList } from '../types';
 
 export const getOnGoingTodoLists = (todoLists: TodoList[]) =>
   todoLists.filter((todoList) => todoList.status === ON_GOING);

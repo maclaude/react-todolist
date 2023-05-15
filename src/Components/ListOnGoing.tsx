@@ -1,9 +1,9 @@
-import { IconContext } from "react-icons";
-import { MdRemoveCircle } from "react-icons/md";
+import { IconContext } from 'react-icons';
+import { MdRemoveCircle } from 'react-icons/md';
 
-import { COMPLETE, DELETE } from "../data/constant";
-import { Status, Todo } from "../types";
-import { ListInput } from "./ListInput";
+import { COMPLETE, DELETE } from '../data/constant';
+import { Status, Todo } from '../types';
+import { ListInput } from './ListInput';
 
 interface ListOnGoingProps {
   listId: string;
@@ -36,7 +36,7 @@ export const ListOnGoing = ({
               title={title}
             />
             <div className="list-item-buttons">
-              <IconContext.Provider value={{ className: "icon" }}>
+              <IconContext.Provider value={{ className: 'icon' }}>
                 <MdRemoveCircle
                   onClick={() => onDeleteClick(listId, id, DELETE)}
                 />

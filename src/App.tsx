@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { v4 } from "uuid";
+import { useEffect, useState } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { v4 } from 'uuid';
 
-import "./App.scss";
-import { ON_GOING } from "./data/constant";
-import { List } from "./pages/List";
-import { Navigation } from "./pages/Navigation";
-import { Status, TodoList } from "./types";
-import { getOnGoingTodoLists } from "./utils/helpers";
+import './App.scss';
+import { ON_GOING } from './data/constant';
+import { List } from './pages/List';
+import { Navigation } from './pages/Navigation';
+import { Status, TodoList } from './types';
+import { getOnGoingTodoLists } from './utils/helpers';
 
 function App() {
   const [todoLists, setTodoLists] = useState<TodoList[]>(
-    JSON.parse(localStorage.getItem("todoLists")!) || [],
+    JSON.parse(localStorage.getItem('todoLists')!) || [],
   );
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedTodoLists = localStorage.getItem("todoLists");
+    const storedTodoLists = localStorage.getItem('todoLists');
 
     if (storedTodoLists) {
       setTodoLists(JSON.parse(storedTodoLists));
@@ -25,13 +25,13 @@ function App() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("todoLists", JSON.stringify(todoLists));
+    localStorage.setItem('todoLists', JSON.stringify(todoLists));
   }, [todoLists]);
 
   const addTodoList = () => {
     const newTodoList: TodoList = {
       id: v4(),
-      title: "New Todo",
+      title: 'New Todo',
       status: ON_GOING,
       items: [],
     };
@@ -127,7 +127,7 @@ function App() {
           <div className="list-container">
             <Routes>
               <Route
-                path={"lists/:id"}
+                path={'lists/:id'}
                 element={
                   <List
                     todoLists={todoLists}

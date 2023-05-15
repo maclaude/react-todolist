@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Todo } from "../types";
+import { useEffect, useState } from 'react';
+import { Todo } from '../types';
 
 interface ListTitleProps {
   listId: string;
@@ -26,7 +26,7 @@ export const ListTitle = ({
   };
 
   const handleOnEnterBlur = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       event.currentTarget.blur();
     }
   };
@@ -46,7 +46,7 @@ export const ListTitle = ({
       />
       {onGoingTodos.length > 0 && (
         <p className="title-counter">{`${onGoingTodos.length} ${
-          onGoingTodos.length === 1 ? "rappel" : "rappels"
+          onGoingTodos.length === 1 ? 'rappel' : 'rappels'
         }`}</p>
       )}
     </div>

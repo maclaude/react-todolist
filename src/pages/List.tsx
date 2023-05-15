@@ -1,11 +1,11 @@
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
-import { ListComplete } from "../components/ListComplete";
-import { ListForm } from "../components/ListForm";
-import { ListOnGoing } from "../components/ListOnGoing";
-import { ListTitle } from "../components/ListTitle";
-import { Status, TodoList } from "../types";
-import { getCompleteTodos, getOnGoingTodos } from "../utils/helpers";
+import { ListComplete } from '../components/ListComplete';
+import { ListForm } from '../components/ListForm';
+import { ListOnGoing } from '../components/ListOnGoing';
+import { ListTitle } from '../components/ListTitle';
+import { Status, TodoList } from '../types';
+import { getCompleteTodos, getOnGoingTodos } from '../utils/helpers';
 
 interface TodoListProps {
   todoLists: TodoList[];

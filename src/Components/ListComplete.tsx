@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { GoChevronDown, GoChevronRight } from "react-icons/go";
+import { useState } from 'react';
+import { GoChevronDown, GoChevronRight } from 'react-icons/go';
 
-import { ON_GOING } from "../data/constant";
-import { Status, Todo } from "../types";
+import { ON_GOING } from '../data/constant';
+import { Status, Todo } from '../types';
 
 interface ListCompleteProps {
   listId: string;
@@ -26,7 +26,7 @@ export const ListComplete = ({
       <div className="list-title">
         <p>
           {`${completeTodos.length} ${
-            completeTodos.length === 1 ? "terminé" : "terminés"
+            completeTodos.length === 1 ? 'terminé' : 'terminés'
           }`}
         </p>
         {isChevronToogle ? (
