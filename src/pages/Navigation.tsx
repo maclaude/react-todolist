@@ -23,26 +23,37 @@ export const Navigation = ({
           <MdAddCircle onClick={addTodoList} />
         </IconContext.Provider>
       </div>
-
-      {todoLists?.map(({ id, title }) => (
-        <div key={id} className="navigation-container">
-          <NavLink
-            className={({ isActive }) =>
-              isActive
-                ? 'navigation-link navigation-link__active'
-                : 'navigation-link'
-            }
-            to={`lists/${id}`}
-          >
-            {title}
-          </NavLink>
-          <IconContext.Provider
-            value={{ className: 'icon navigation-delete-icon' }}
-          >
-            <MdDelete onClick={() => updateTodoListStatus(id, DELETE)} />
-          </IconContext.Provider>
-        </div>
-      ))}
+      <div className="navigation-items">
+        {todoLists?.map(({ id, title }) => (
+          <div key={id} className="navigation-item">
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? 'navigation-item-link navigation-item-link__active'
+                  : 'navigation-item-link'
+              }
+              to={`lists/${id}`}
+            >
+              {title}
+            </NavLink>
+            <IconContext.Provider
+              value={{ className: 'icon navigation-item-delete-icon' }}
+            >
+              <MdDelete onClick={() => updateTodoListStatus(id, DELETE)} />
+            </IconContext.Provider>
+          </div>
+        ))}
+      </div>
+      <NavLink
+        className={({ isActive }) =>
+          isActive
+            ? 'navigation-connexion navigation-connexion__active'
+            : 'navigation-connexion'
+        }
+        to={`/user/signup`}
+      >
+        Inscription
+      </NavLink>
     </nav>
   );
 };

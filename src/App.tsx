@@ -6,6 +6,7 @@ import './App.scss';
 import { ON_GOING } from './data/constant';
 import { List } from './pages/List';
 import { Navigation } from './pages/Navigation';
+import { Signup } from './pages/Signup';
 import { Status, TodoList } from './types';
 import { getOnGoingTodoLists } from './utils/helpers';
 
@@ -123,23 +124,22 @@ function App() {
             updateTodoListStatus={updateTodoListStatus}
           />
         </aside>
-        <main>
-          <div className="list-container">
-            <Routes>
-              <Route
-                path={'lists/:id'}
-                element={
-                  <List
-                    todoLists={todoLists}
-                    addTodo={addTodo}
-                    updateTodoStatus={updateTodoStatus}
-                    updateTodoTitle={updateTodoTitle}
-                    updateTodoListTitle={updateTodoListTitle}
-                  />
-                }
-              ></Route>
-            </Routes>
-          </div>
+        <main className="main-container">
+          <Routes>
+            <Route
+              path={'lists/:id'}
+              element={
+                <List
+                  todoLists={todoLists}
+                  addTodo={addTodo}
+                  updateTodoStatus={updateTodoStatus}
+                  updateTodoTitle={updateTodoTitle}
+                  updateTodoListTitle={updateTodoListTitle}
+                />
+              }
+            ></Route>
+            <Route path={'user/signup'} element={<Signup />}></Route>
+          </Routes>
         </main>
       </div>
     </div>

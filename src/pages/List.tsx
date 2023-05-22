@@ -26,7 +26,7 @@ export const List = ({
   const currentTodoList = todoLists.find((todoList) => todoList.id === id);
 
   return id && currentTodoList ? (
-    <>
+    <div className="list-container">
       <ListTitle
         listId={id}
         title={currentTodoList.title}
@@ -48,7 +48,7 @@ export const List = ({
           onCheckboxClick={updateTodoStatus}
         />
       )}
-    </>
+    </div>
   ) : (
     <>
       <span>Sorry your todo is not Found 🫠</span>
