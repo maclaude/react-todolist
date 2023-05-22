@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { IconContext } from 'react-icons';
+import { TbArrowBigRightLineFilled } from 'react-icons/tb';
 
 interface ListFormProps {
   listId: string;
@@ -24,7 +26,9 @@ export const ListForm = ({ listId, onSubmit }: ListFormProps) => {
         value={newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
       />
-      <button className="input-button">OK</button>
+      <IconContext.Provider value={{ className: 'input-button' }}>
+        <TbArrowBigRightLineFilled />
+      </IconContext.Provider>
     </form>
   );
 };

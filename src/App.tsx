@@ -6,7 +6,9 @@ import './App.scss';
 import { ON_GOING } from './data/constant';
 import { List } from './pages/List';
 import { Navigation } from './pages/Navigation';
+import { Signin } from './pages/Signin';
 import { Signup } from './pages/Signup';
+import { User } from './pages/User';
 import { Status, TodoList } from './types';
 import { getOnGoingTodoLists } from './utils/helpers';
 
@@ -138,7 +140,10 @@ function App() {
                 />
               }
             ></Route>
+            <Route path={'/'} element={<User />}></Route>
+            <Route path={'user/'} element={<User />}></Route>
             <Route path={'user/signup'} element={<Signup />}></Route>
+            <Route path={'user/signin'} element={<Signin />}></Route>
           </Routes>
         </main>
       </div>

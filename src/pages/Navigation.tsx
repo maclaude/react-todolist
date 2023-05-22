@@ -1,4 +1,5 @@
 import { IconContext } from 'react-icons';
+import { FaSignInAlt } from 'react-icons/fa';
 import { MdAddCircle, MdDelete } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import { DELETE } from '../data/constant';
@@ -44,16 +45,11 @@ export const Navigation = ({
           </div>
         ))}
       </div>
-      <NavLink
-        className={({ isActive }) =>
-          isActive
-            ? 'navigation-connexion navigation-connexion__active'
-            : 'navigation-connexion'
-        }
-        to={`/user/signup`}
-      >
-        Inscription
-      </NavLink>
+      <div className="navigation-user">
+        <NavLink to={`/user`}>
+          <FaSignInAlt />
+        </NavLink>
+      </div>
     </nav>
   );
 };
