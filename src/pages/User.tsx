@@ -3,6 +3,10 @@ import { NavLink } from 'react-router-dom';
 export const User = () => {
   return (
     <div className="user-container">
+      <h2 className="user-title">Welcome 👋</h2>
+      <span className="user-intro">
+        Connectez vous pour pouvoir sauvegarder et consulter vos listes ✨
+      </span>
       <div className="user-sign-buttons">
         <NavLink className="user-sign-button" to={`/user/signin`}>
           Connexion

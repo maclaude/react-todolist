@@ -18,10 +18,13 @@
   background-color: var(--clr-main);
   box-shadow: var(--regular-box-shadow);
   border-radius: 10px;
-  padding: 20px;
-  width: 400px;
-  height: 400px;
+  padding: 30px;
+  width: 600px;
+  height: 650px;
   overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Navigation
@@ -32,10 +35,10 @@
   box-shadow: var(--regular-box-shadow);
   color: var(--clr-dark);
   border-radius: 10px;
-  padding: 20px;
+  padding: 30px;
   overflow: auto;
-  width: 200px;
-  height: 400px;
+  width: 250px;
+  height: 650px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -54,18 +57,21 @@
   }
 
   &-item {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+    margin-left: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     &-link {
-      padding: 0 10px;
-      border-left: 2px solid var(--clr-main);
+      display: block;
+      margin-bottom: 2px;
+      padding-bottom: 3px;
+      border-bottom: 1px solid var(--clr-main);
       cursor: pointer;
 
       &__active {
-        border-left: 2px solid var(--clr-dark);
+        border-bottom: 1px solid var(--clr-dark);
       }
     }
 
@@ -88,14 +94,27 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 40px;
+    align-items: center;
     height: 100%;
+    width: 80%;
+  }
+
+  &-title {
+    font-size: 2em;
+  }
+
+  &-intro {
+    width: 70%;
+    line-height: 30px;
+    font-size: 1.1em;
+    text-align: center;
   }
 
   &-sign-buttons {
     display: flex;
-    flex-direction: column;
     width: fit-content;
-    margin: auto;
+    margin-top: 30px;
     gap: 20px;
   }
 
@@ -118,10 +137,11 @@
 
 .sign {
   &-container {
-    width: 100%;
+    width: 400px;
     height: 100%;
-    margin: auto;
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   &-title {
@@ -131,8 +151,20 @@
   &-form {
     display: flex;
     flex-direction: column;
-    margin: 30px 10px;
     gap: 5px;
+  }
+
+  &-link {
+    margin: 0 auto 0;
+    padding: 2px;
+    display: block;
+    width: fit-content;
+    font-size: 0.9em;
+    border-bottom: 1px solid var(--clr-dark);
+
+    &:hover {
+      border-bottom: 1px solid var(--clr-dark);
+    }
   }
 }
 
@@ -145,18 +177,26 @@
   }
 
   &-input {
-    padding: 3px 10px;
+    padding: 5px 10px;
     border: 1px solid var(--clr-light-grey);
     border-radius: 5px;
     line-height: 1.75em;
+    margin-bottom: 5px;
+    width: 100%;
 
     &:focus {
       border: 1px solid var(--clr-dark-grey);
     }
   }
 
+  &-error {
+    color: var(--clr-acc-red);
+    font-size: 0.7em;
+    line-height: 1em;
+  }
+
   &-button {
-    margin: 30px auto 0;
+    margin: 20px auto 0;
     padding: 5px 20px;
     width: fit-content;
     border: none;
@@ -170,6 +210,14 @@
       background-color: var(--clr-acc-blue--hover)
     }
   }
+
+  &-reset-link {
+    padding: 2px;
+    font-size: 0.8em;
+    margin: 5px auto;
+    cursor: pointer;
+    border-bottom: 1px solid var(--clr-acc-blue);
+  }
 }
 
 /* Lists
@@ -179,6 +227,7 @@
   width: 100%;
   height: 100%;
   margin: auto;
+  padding: 0 10px;
 }
 
 .title {
@@ -206,7 +255,7 @@
 
   &-field {
     border: none;
-    border-bottom: 2px solid var(--clr-light-main);
+    border-bottom: 1px solid var(--clr-light-grey);
     width: 100%;
     font-size: 1em;
     line-height: 1.75;
@@ -218,14 +267,13 @@
     }
 
     &:focus {
-      border-bottom: 1px solid var(--clr-light-grey);
+      border-bottom: 1px solid var(--clr-dark-grey);
     }
   }
 
   &-button {
     width: 25px;
     height: 25px;
-    margin-right: 10px;
     color: var(--clr-dark-grey);
 
     &:focus, &:hover {
@@ -244,14 +292,14 @@
     align-items: center;
     justify-content: flex-end;
     gap: 10px;
-    padding: 10px;
+    padding: 10px 0;
   }
 
   &-item {
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 5px 10px;
+    gap: 10px;
+    margin-bottom: 10px;
 
     &-checkbox {
       appearance: none;
@@ -277,7 +325,7 @@
       border: none;
       outline: none;
       font-size: inherit;
-      width: 80%;
+      width: 90%;
       line-height: 20px;
       margin-bottom: 1px;
       border-bottom: 1px solid var(--clr-main);
