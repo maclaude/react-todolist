@@ -7,6 +7,8 @@ import { ListTitle } from '../components/ListTitle';
 import { Status, TodoList } from '../types';
 import { getCompleteTodos, getOnGoingTodos } from '../utils/helpers';
 
+import '../styles/List.scss';
+
 interface TodoListProps {
   todoLists: TodoList[];
   addTodo: (listId: string, newTodo: string) => void;

@@ -2,8 +2,10 @@ import { IconContext } from 'react-icons';
 import { FaSignInAlt } from 'react-icons/fa';
 import { MdAddCircle, MdDelete } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
+
 import { DELETE } from '../data/constant';
 import { Status, TodoList } from '../types';
+import '../styles/Navigation.scss';
 
 interface NavigationProps {
   todoLists: TodoList[];

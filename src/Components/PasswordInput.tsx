@@ -3,7 +3,7 @@ import { UseFormRegister } from 'react-hook-form';
 import { IconContext } from 'react-icons';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
-import './PasswordInput.scss';
+import '../styles/PasswordInput.scss';
 
 interface PasswordInputProps {
   id: string;

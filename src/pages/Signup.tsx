@@ -2,7 +2,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 import * as yup from 'yup';
+
 import { PasswordInput } from '../components/PasswordInput';
+
+import '../styles/Sign.scss';
 
 const signupSchema = yup.object({
   firstname: yup.string().trim().required('Le prénom est requis'),

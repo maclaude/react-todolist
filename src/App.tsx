@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 
-import './App.scss';
 import { ON_GOING } from './data/constant';
 import { List } from './pages/List';
 import { Navigation } from './pages/Navigation';
@@ -11,6 +10,8 @@ import { Signup } from './pages/Signup';
 import { User } from './pages/User';
 import { Status, TodoList } from './types';
 import { getOnGoingTodoLists } from './utils/helpers';
+
+import './App.scss';
 
 function App() {
   const [todoLists, setTodoLists] = useState<TodoList[]>(
