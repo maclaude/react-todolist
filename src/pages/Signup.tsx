@@ -1,6 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
+import PulseLoader from 'react-spinners/PulseLoader';
+
+import axios from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
 import { PasswordInput } from '../components/PasswordInput';
@@ -11,13 +15,7 @@ const signupSchema = yup.object({
   firstname: yup.string().trim().required('Le prénom est requis'),
   lastname: yup.string().trim().required('Le nom est requis'),
   email: yup.string().trim().required("L'email est requis"),
-  password: yup
-    .string()
-    .required('Le mot de passe est requis')
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/,
-      'Le mot de passe doit faire au minimum 8 caractères et doit contenir une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial',
-    ),
+  password: yup.string().required('Le mot de passe est requis'),
   confirm_password: yup
     .string()
     .required('La confirmation de mot de passe est requise')
@@ -25,6 +23,13 @@ const signupSchema = yup.object({
 });
 
 type SignupData = yup.InferType<typeof signupSchema>;
+
+type SignupPayload = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+};
 
 export const Signup = () => {
   const {
@@ -35,9 +40,33 @@ export const Signup = () => {
     resolver: yupResolver(signupSchema),
   });
 
+  const navigate = useNavigate();
+
+  const signupMutation = useMutation({
+    mutationFn: (payload: SignupPayload) =>
+      axios.post('http://localhost:3000/auth/signup', payload),
+    onSuccess: ({ data }) => {
+      navigate(`/user/signin`, { state: { userId: data.user } });
+      console.log('signup success', data);
+    },
+    onError: (error) => {
+      // TODO Show error to the user
+      console.log('signup error', error);
+    },
+  });
+
   const onSubmit: SubmitHandler<SignupData> = (data) => {
-    console.log(data);
+    const { firstname, lastname, email, password } = data;
+
+    signupMutation.mutate({
+      firstname,
+      lastname,
+      email,
+      password,
+    });
   };
+
+  if (signupMutation.isLoading) return <PulseLoader />;
 
   return (
     <div className="sign-container">

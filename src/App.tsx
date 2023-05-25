@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 
+import { useAuth } from './context/authContext';
 import { ON_GOING } from './data/constant';
 import { List } from './pages/List';
 import { Navigation } from './pages/Navigation';
@@ -14,9 +15,13 @@ import { getOnGoingTodoLists } from './utils/helpers';
 import './App.scss';
 
 function App() {
+  const { authenticated, login, logout } = useAuth();
+
   const [todoLists, setTodoLists] = useState<TodoList[]>(
     JSON.parse(localStorage.getItem('todoLists')!) || [],
   );
+
+  console.log(authenticated, login, logout);
 
   const navigate = useNavigate();
 

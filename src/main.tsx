@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { BrowserRouter } from 'react-router-dom';
 
+import { AuthProvider } from './context/authContext';
+
 import './styles/reset.scss';
 import './styles/index.scss';
 import App from './App';
@@ -15,7 +17,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>
     </BrowserRouter>

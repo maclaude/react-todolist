@@ -1,6 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
+import { PulseLoader } from 'react-spinners';
 import * as yup from 'yup';
 
 import { PasswordInput } from '../components/PasswordInput';
@@ -9,16 +12,15 @@ import '../styles/Sign.scss';
 
 const signinSchema = yup.object({
   email: yup.string().trim().required("L'email est requis"),
-  password: yup
-    .string()
-    .required('Le mot de passe est requis')
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$/,
-      'Le mot de passe doit faire au minimum 8 caractères et doit contenir une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial',
-    ),
+  password: yup.string().required('Le mot de passe est requis'),
 });
 
 type SigninData = yup.InferType<typeof signinSchema>;
+
+type SigninPayload = {
+  email: string;
+  password: string;
+};
 
 export const Signin = () => {
   const {
@@ -29,9 +31,27 @@ export const Signin = () => {
     resolver: yupResolver(signinSchema),
   });
 
+  const signinMutation = useMutation({
+    mutationFn: (payload: SigninPayload) =>
+      axios.post('http://localhost:3000/auth/signin', payload),
+    onSuccess: ({ data }) => {
+      console.log('signin success', data);
+    },
+    onError: (error) => {
+      // TODO Show error to the user
+      console.log('signin error', error);
+    },
+  });
+
   const onSubmit: SubmitHandler<SigninData> = (data) => {
-    console.log(data);
+    const { email, password } = data;
+
+    signinMutation.mutate({ email, password });
   };
+
+  if (signinMutation.isLoading) return <PulseLoader />;
+
+  if (signinMutation.isSuccess) return <h2>Connected</h2>;
 
   return (
     <div className="sign-container">

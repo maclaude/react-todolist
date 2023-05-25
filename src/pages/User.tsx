@@ -5,7 +5,7 @@ import '../styles/User.scss';
 export const User = () => {
   return (
     <div className="user-container">
-      <h2 className="user-title">Welcome 👋</h2>
+      <h2 className="user-title">Bienvenue !</h2>
       <span className="user-intro">
         Connectez vous pour pouvoir sauvegarder et consulter vos listes ✨
       </span>
