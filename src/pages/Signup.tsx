@@ -1,13 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@tanstack/react-query';
-import PulseLoader from 'react-spinners/PulseLoader';
-
-import axios from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, Navigate } from 'react-router-dom';
+import PulseLoader from 'react-spinners/PulseLoader';
 import * as yup from 'yup';
 
 import { PasswordInput } from '../components/PasswordInput';
+import { useSignupMutation } from '../mutations/user';
 
 import '../styles/Sign.scss';
 
@@ -24,14 +22,9 @@ const signupSchema = yup.object({
 
 type SignupData = yup.InferType<typeof signupSchema>;
 
-type SignupPayload = {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-};
-
 export const Signup = () => {
+  const { mutate, isLoading, isSuccess } = useSignupMutation();
+
   const {
     register,
     formState: { errors },
@@ -40,25 +33,13 @@ export const Signup = () => {
     resolver: yupResolver(signupSchema),
   });
 
-  const navigate = useNavigate();
-
-  const signupMutation = useMutation({
-    mutationFn: (payload: SignupPayload) =>
-      axios.post('http://localhost:3000/auth/signup', payload),
-    onSuccess: ({ data }) => {
-      navigate(`/user/signin`, { state: { userId: data.user } });
-      console.log('signup success', data);
-    },
-    onError: (error) => {
-      // TODO Show error to the user
-      console.log('signup error', error);
-    },
-  });
-
-  const onSubmit: SubmitHandler<SignupData> = (data) => {
-    const { firstname, lastname, email, password } = data;
-
-    signupMutation.mutate({
+  const onSubmit: SubmitHandler<SignupData> = ({
+    firstname,
+    lastname,
+    email,
+    password,
+  }) => {
+    mutate({
       firstname,
       lastname,
       email,
@@ -66,7 +47,11 @@ export const Signup = () => {
     });
   };
 
-  if (signupMutation.isLoading) return <PulseLoader />;
+  if (isSuccess) {
+    return <Navigate to="/user/signin" replace />;
+  }
+
+  if (isLoading) return <PulseLoader />;
 
   return (
     <div className="sign-container">
@@ -122,7 +107,7 @@ export const Signup = () => {
         )}
         <PasswordInput id="confirm_password" register={register} />
 
-        <input className="form-button" type="submit" value="Signup" />
+        <input className="form-button" type="submit" value="Inscription" />
       </form>
 
       <NavLink className="sign-link" to={`/user/signin`}>

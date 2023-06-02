@@ -22,7 +22,7 @@
 
   &-link {
     margin: 0 auto 0;
-    padding: 2px;
+    padding: 2px 0;
     display: block;
     width: fit-content;
     font-size: 0.9em;
@@ -78,7 +78,7 @@
   }
 
   &-reset-link {
-    padding: 2px;
+    padding: 2px 0;
     font-size: 0.8em;
     margin: 5px auto;
     cursor: pointer;

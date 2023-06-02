@@ -1,12 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { PulseLoader } from 'react-spinners';
 import * as yup from 'yup';
 
+import { useEffect } from 'react';
 import { PasswordInput } from '../components/PasswordInput';
+import { useAuth } from '../context/authContext';
+import { useSigninMutation } from '../mutations/user';
 
 import '../styles/Sign.scss';
 
@@ -17,12 +18,12 @@ const signinSchema = yup.object({
 
 type SigninData = yup.InferType<typeof signinSchema>;
 
-type SigninPayload = {
-  email: string;
-  password: string;
-};
-
 export const Signin = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const { mutate, isLoading, isSuccess, data } = useSigninMutation();
+
   const {
     register,
     formState: { errors },
@@ -31,27 +32,21 @@ export const Signin = () => {
     resolver: yupResolver(signinSchema),
   });
 
-  const signinMutation = useMutation({
-    mutationFn: (payload: SigninPayload) =>
-      axios.post('http://localhost:3000/auth/signin', payload),
-    onSuccess: ({ data }) => {
-      console.log('signin success', data);
-    },
-    onError: (error) => {
-      // TODO Show error to the user
-      console.log('signin error', error);
-    },
-  });
+  useEffect(() => {
+    if (isSuccess && data) {
+      // Set authContext credentials
+      login(data.user.id, data.token);
 
-  const onSubmit: SubmitHandler<SigninData> = (data) => {
-    const { email, password } = data;
+      // Navigate back to user dashboard
+      navigate('/user');
+    }
+  }, [isSuccess, data]);
 
-    signinMutation.mutate({ email, password });
+  const onSubmit: SubmitHandler<SigninData> = ({ email, password }) => {
+    mutate({ email, password });
   };
 
-  if (signinMutation.isLoading) return <PulseLoader />;
-
-  if (signinMutation.isSuccess) return <h2>Connected</h2>;
+  if (isLoading) return <PulseLoader />;
 
   return (
     <div className="sign-container">
@@ -83,7 +78,7 @@ export const Signin = () => {
           Mot de passe oublié
         </NavLink>
 
-        <input className="form-button" type="submit" value="Signin" />
+        <input className="form-button" type="submit" value="Connexion" />
       </form>
 
       <NavLink className="sign-link" to={`/user/signup`}>

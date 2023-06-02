@@ -23,22 +23,22 @@ export const ListOnGoing = ({
   return (
     <>
       <ul className="list">
-        {onGoingTodos.map(({ id, title }) => (
-          <li key={id} className="list-item">
+        {onGoingTodos.map(({ _id, title }) => (
+          <li key={_id} className="list-item">
             <button
-              onClick={() => onCheckboxClick(listId, id, COMPLETE)}
+              onClick={() => onCheckboxClick(listId, _id, COMPLETE)}
               className="list-item-checkbox"
             />
             <ListInput
               listId={listId}
               onTextChange={onTextChange}
-              id={id}
+              id={_id}
               title={title}
             />
             <div className="list-item-buttons">
               <IconContext.Provider value={{ className: 'icon' }}>
                 <MdRemoveCircle
-                  onClick={() => onDeleteClick(listId, id, DELETE)}
+                  onClick={() => onDeleteClick(listId, _id, DELETE)}
                 />
               </IconContext.Provider>
             </div>

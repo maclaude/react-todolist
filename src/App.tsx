@@ -1,92 +1,43 @@
+/* eslint-disable no-underscore-dangle */
+
 import { useEffect, useState } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import { v4 } from 'uuid';
+import { Route, Routes } from 'react-router-dom';
 
 import { useAuth } from './context/authContext';
-import { ON_GOING } from './data/constant';
 import { List } from './pages/List';
 import { Navigation } from './pages/Navigation';
 import { Signin } from './pages/Signin';
 import { Signup } from './pages/Signup';
 import { User } from './pages/User';
-import { Status, TodoList } from './types';
-import { getOnGoingTodoLists } from './utils/helpers';
+import { useFetchTodolistsQuery } from './queries/user';
+import { Status, Todolist } from './types';
+import { getOnGoingTodolists } from './utils/helpers';
 
 import './App.scss';
 
 function App() {
-  const { authenticated, login, logout } = useAuth();
+  const { authenticated, token } = useAuth();
+  const [todolists, setTodolists] = useState<Todolist[]>([]);
 
-  const [todoLists, setTodoLists] = useState<TodoList[]>(
-    JSON.parse(localStorage.getItem('todoLists')!) || [],
-  );
-
-  console.log(authenticated, login, logout);
-
-  const navigate = useNavigate();
+  const { data } = useFetchTodolistsQuery({
+    authenticated,
+    token,
+  });
 
   useEffect(() => {
-    const storedTodoLists = localStorage.getItem('todoLists');
-
-    if (storedTodoLists) {
-      setTodoLists(JSON.parse(storedTodoLists));
+    if (data && data.length) {
+      setTodolists(data);
     }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('todoLists', JSON.stringify(todoLists));
-  }, [todoLists]);
-
-  const addTodoList = () => {
-    const newTodoList: TodoList = {
-      id: v4(),
-      title: 'New Todo',
-      status: ON_GOING,
-      items: [],
-    };
-
-    setTodoLists((currentTodoLists) => [...currentTodoLists, newTodoList]);
-
-    navigate(`/lists/${newTodoList.id}`);
-  };
-
-  const updateTodoListStatus = (listId: string, status: Status) => {
-    setTodoLists((currentTodoLists) =>
-      currentTodoLists.map((todoList) =>
-        todoList.id === listId
-          ? {
-              ...todoList,
-              status,
-            }
-          : todoList,
-      ),
-    );
-  };
-
-  const addTodo = (listId: string, newTodo: string) => {
-    setTodoLists((currentTodoLists) =>
-      currentTodoLists.map((todoList) =>
-        todoList.id === listId
-          ? {
-              ...todoList,
-              items: [
-                ...todoList.items,
-                { id: v4(), title: newTodo.trim(), status: ON_GOING },
-              ],
-            }
-          : todoList,
-      ),
-    );
-  };
+  }, [data]);
 
   const updateTodoStatus = (listId: string, itemId: string, status: Status) => {
-    setTodoLists((currentTodoLists) =>
+    setTodolists((currentTodoLists) =>
       currentTodoLists.map((todoList) =>
-        todoList.id === listId
+        todoList._id === listId
           ? {
               ...todoList,
               items: todoList.items.map((item) =>
-                item.id === itemId ? { ...item, status } : item,
+                item._id === itemId ? { ...item, status } : item,
               ),
             }
           : todoList,
@@ -95,13 +46,13 @@ function App() {
   };
 
   const updateTodoTitle = (listId: string, itemId: string, title: string) => {
-    setTodoLists((currentTodoLists) =>
+    setTodolists((currentTodoLists) =>
       currentTodoLists.map((todoList) =>
-        todoList.id === listId
+        todoList._id === listId
           ? {
               ...todoList,
               items: todoList.items.map((item) =>
-                item.id === itemId ? { ...item, title } : item,
+                item._id === itemId ? { ...item, title } : item,
               ),
             }
           : todoList,
@@ -110,9 +61,9 @@ function App() {
   };
 
   const updateTodoListTitle = (listId: string, title: string) => {
-    setTodoLists((currentTodoLists) =>
+    setTodolists((currentTodoLists) =>
       currentTodoLists.map((todoList) =>
-        todoList.id === listId
+        todoList._id === listId
           ? {
               ...todoList,
               title,
@@ -125,31 +76,28 @@ function App() {
   return (
     <div className="app">
       <div className="container">
-        <aside className="aside-container">
-          <Navigation
-            todoLists={getOnGoingTodoLists(todoLists)}
-            addTodoList={addTodoList}
-            updateTodoListStatus={updateTodoListStatus}
-          />
-        </aside>
+        {authenticated && (
+          <aside className="aside-container">
+            <Navigation todolists={getOnGoingTodolists(todolists)} />
+          </aside>
+        )}
         <main className="main-container">
           <Routes>
+            <Route path={'/'} element={<User />}></Route>
+            <Route path={'user/'} element={<User />}></Route>
+            <Route path={'user/signin'} element={<Signin />}></Route>
+            <Route path={'user/signup'} element={<Signup />}></Route>
             <Route
-              path={'lists/:id'}
+              path={'todolist/:id'}
               element={
                 <List
-                  todoLists={todoLists}
-                  addTodo={addTodo}
+                  todolists={todolists}
                   updateTodoStatus={updateTodoStatus}
                   updateTodoTitle={updateTodoTitle}
                   updateTodoListTitle={updateTodoListTitle}
                 />
               }
             ></Route>
-            <Route path={'/'} element={<User />}></Route>
-            <Route path={'user/'} element={<User />}></Route>
-            <Route path={'user/signup'} element={<Signup />}></Route>
-            <Route path={'user/signin'} element={<Signin />}></Route>
           </Routes>
         </main>
       </div>
