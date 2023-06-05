@@ -1,12 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import { useParams } from 'react-router-dom';
 
-import { ListComplete } from '../components/ListComplete';
-import { ListForm } from '../components/ListForm';
-import { ListOnGoing } from '../components/ListOnGoing';
+import { ListNewTodo } from '../components/ListNewTodo';
 import { ListTitle } from '../components/ListTitle';
+import { ListTodos } from '../components/ListTodos';
 import { Todolist } from '../types';
-import { getCompleteTodos, getOnGoingTodos } from '../utils/helpers';
+import { getOnGoingTodos } from '../utils/helpers';
 
 import '../styles/List.scss';
 
@@ -22,17 +21,14 @@ export const List = ({ todolists }: TodoListProps) => {
   const currentTodoList = todolists.find((todolist) => todolist._id === id);
 
   return id && currentTodoList ? (
-    <div className="list-container">
+    <div id="todolist_container">
       <ListTitle
         listId={id}
         title={currentTodoList.title}
         onGoingTodos={getOnGoingTodos(currentTodoList.items)}
       />
-      <ListForm listId={id} />
-      <ListOnGoing onGoingTodos={getOnGoingTodos(currentTodoList.items)} />
-      {getCompleteTodos(currentTodoList.items).length > 0 && (
-        <ListComplete completeTodos={getCompleteTodos(currentTodoList.items)} />
-      )}
+      <ListNewTodo listId={id} />
+      <ListTodos todos={currentTodoList.items} />
     </div>
   ) : (
     <>

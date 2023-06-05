@@ -11,7 +11,7 @@ interface ListFormProps {
   listId: string;
 }
 
-export const ListForm = ({ listId }: ListFormProps) => {
+export const ListNewTodo = ({ listId }: ListFormProps) => {
   const [newTodo, setNewTodo] = useState<string>('');
 
   const { token } = useAuth();
@@ -42,15 +42,14 @@ export const ListForm = ({ listId }: ListFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="input">
+    <form onSubmit={handleSubmit} className="new-todo">
       <input
-        className="input-field"
         placeholder="Ajouter un rappel"
         type="text"
         value={newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
       />
-      <IconContext.Provider value={{ className: 'input-button' }}>
+      <IconContext.Provider value={{ className: 'new-todo__button' }}>
         <TbArrowBigRightLineFilled />
       </IconContext.Provider>
     </form>

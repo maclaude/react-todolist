@@ -36,17 +36,6 @@ export const HomePage = () => {
         </div>
       </div>
 
-      <div className="home-information">
-        <ul>
-          <li>
-            Todolists en cours <strong>1</strong>
-          </li>
-          <li>
-            Todolists supprimées <strong>0</strong>
-          </li>
-        </ul>
-      </div>
-
       <section className="home-settings">
         <h3 className="settings-title">Paramètres</h3>
         <div className="settings-section">
@@ -56,7 +45,7 @@ export const HomePage = () => {
           <a href="#">Supprimer mon compte</a>
         </div>
 
-        <h3 className="settings-title">Dev tools</h3>
+        <h3 className="settings-title">Reset</h3>
         <div className="settings-section">
           <a onClick={() => deleteAllTodolistsMutation.mutate({ token })}>
             Supprimer toutes les todolists

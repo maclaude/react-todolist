@@ -9,7 +9,8 @@ interface ListInputProps {
   title: string;
 }
 
-export const ListInput = ({ id, title }: ListInputProps) => {
+export const ListTodoInput = ({ id, title }: ListInputProps) => {
+  const { token } = useAuth();
   const [inputValue, setInputValue] = useState(title);
 
   const handleOnEnterBlur = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -18,7 +19,6 @@ export const ListInput = ({ id, title }: ListInputProps) => {
     }
   };
 
-  const { token } = useAuth();
   const queryClient = useQueryClient();
   const updateTodoTitleMutation = useUpdateTodoTitleMutation();
 
@@ -30,7 +30,7 @@ export const ListInput = ({ id, title }: ListInputProps) => {
 
   return (
     <input
-      className="list-item-input"
+      className="todos_item__input"
       onChange={(e) => setInputValue(e.currentTarget.value)}
       onKeyDown={(e) => handleOnEnterBlur(e)}
       onBlur={() =>

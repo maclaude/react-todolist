@@ -41,9 +41,9 @@ export const ListTitle = ({ listId, title, onGoingTodos }: ListTitleProps) => {
   }, [updateTodoListTitleMutation.isSuccess]);
 
   return (
-    <div className="title">
+    <div id="todolist_title">
       <input
-        className="title-input"
+        id="todolist_title__input"
         onChange={(e) => handleChange(e)}
         onKeyDown={(e) => handleOnEnterBlur(e)}
         onBlur={() =>

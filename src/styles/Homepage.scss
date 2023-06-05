@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 0 10px;
     height: 100%;
     width: 100%;
   }
@@ -17,16 +16,6 @@
 
     h2 {
       font-size: 1.3em;
-    }
-  }
-
-  &-information {
-    li {
-      margin-bottom: 20px;
-    }
-
-    strong {
-      margin-left: 5px;
     }
   }
 
@@ -53,11 +42,10 @@
 .settings {
   &-title {
     font-size: 1.1em;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
 
   &-section {
-    margin-left: 15px;
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
@@ -66,7 +54,7 @@
       display: block;
       width: fit-content;
       margin: 5px 0;
-      padding: 5px 5px;
+      padding: 5px 0;
       cursor: pointer;
 
       &:hover {
@@ -83,11 +71,10 @@
   justify-content: center;
   height: 2.2rem;
   width: 2.2rem;
-  background-color: #d1d5db;
+  background-color: var(--clr-light-grey);
 }
 
 .avatar__image {
-  /* Size */
   height: 50%;
   width: 50%;
 }

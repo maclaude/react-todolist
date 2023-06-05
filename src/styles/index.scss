@@ -30,8 +30,8 @@
 
 :root {
   --clr-main: #FFFFFF;
-  --clr-light-grey: #efefef;
-  --clr-dark-grey: #D6DBDF ;
+  --clr-light-grey: #EFEFEF;
+  --clr-medium-grey: #D6DBDF ;
   --clr-dark: #24292f;
   --clr-acc-green: #47e5bdff;
   --clr-acc-blue: #27384d;
@@ -90,7 +90,7 @@ input {
   cursor: pointer;
 
   &:hover {
-    color: var(--clr-dark-grey);
+    color: var(--clr-medium-grey);
   }
 }
 
