@@ -12,13 +12,12 @@ import '../styles/List.scss';
 
 interface TodoListProps {
   todolists: Todolist[];
-  updateTodoTitle: (listId: string, itemId: string, title: string) => void;
 }
 
 // TODO: - Query GET todolist/todos to hydrate component
 //       - Redefine page components
 
-export const List = ({ todolists, updateTodoTitle }: TodoListProps) => {
+export const List = ({ todolists }: TodoListProps) => {
   const { id } = useParams();
   const currentTodoList = todolists.find((todolist) => todolist._id === id);
 
@@ -30,11 +29,7 @@ export const List = ({ todolists, updateTodoTitle }: TodoListProps) => {
         onGoingTodos={getOnGoingTodos(currentTodoList.items)}
       />
       <ListForm listId={id} />
-      <ListOnGoing
-        listId={id}
-        onGoingTodos={getOnGoingTodos(currentTodoList.items)}
-        onTextChange={updateTodoTitle}
-      />
+      <ListOnGoing onGoingTodos={getOnGoingTodos(currentTodoList.items)} />
       {getCompleteTodos(currentTodoList.items).length > 0 && (
         <ListComplete completeTodos={getCompleteTodos(currentTodoList.items)} />
       )}

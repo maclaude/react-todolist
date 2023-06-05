@@ -1,7 +1,7 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { GoChevronDown, GoChevronRight } from 'react-icons/go';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../context/authContext';
 import { ON_GOING } from '../data/constant';
 import { useUpdateTodoStatusMutation } from '../mutations/todo';

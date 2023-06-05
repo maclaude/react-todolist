@@ -30,21 +30,6 @@ function App() {
     }
   }, [data]);
 
-  const updateTodoTitle = (listId: string, itemId: string, title: string) => {
-    setTodolists((currentTodoLists) =>
-      currentTodoLists.map((todoList) =>
-        todoList._id === listId
-          ? {
-              ...todoList,
-              items: todoList.items.map((item) =>
-                item._id === itemId ? { ...item, title } : item,
-              ),
-            }
-          : todoList,
-      ),
-    );
-  };
-
   return (
     <div className="app">
       <div className="container">
@@ -61,9 +46,7 @@ function App() {
             <Route path={'user/signup'} element={<Signup />}></Route>
             <Route
               path={'todolist/:id'}
-              element={
-                <List todolists={todolists} updateTodoTitle={updateTodoTitle} />
-              }
+              element={<List todolists={todolists} />}
             ></Route>
           </Routes>
         </main>

@@ -15,6 +15,12 @@ type UpdateTodoStatusPayload = {
   token: string;
 };
 
+type UpdateTodoTitlePayload = {
+  id: string;
+  title: string;
+  token: string;
+};
+
 const newTodo = async (payload: NewTodoPayload) => {
   const response = await axios
     .create({
@@ -46,6 +52,24 @@ const updateTodoStatus = async (payload: UpdateTodoStatusPayload) => {
 export const useUpdateTodoStatusMutation = () =>
   useMutation({
     mutationFn: (payload: UpdateTodoStatusPayload) => updateTodoStatus(payload),
+    onError: (error) => {
+      console.error('[updateTodoStatus] - error', error);
+    },
+  });
+
+const updateTodoTitle = async (payload: UpdateTodoTitlePayload) => {
+  const response = await axios
+    .create({
+      headers: { Authorization: `Bearer ${payload.token}` },
+    })
+    .patch(`http://localhost:3000/todo/title/${payload.id}`, payload);
+
+  return response.data;
+};
+
+export const useUpdateTodoTitleMutation = () =>
+  useMutation({
+    mutationFn: (payload: UpdateTodoTitlePayload) => updateTodoTitle(payload),
     onError: (error) => {
       console.error('[updateTodoStatus] - error', error);
     },

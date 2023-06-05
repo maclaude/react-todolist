@@ -1,8 +1,8 @@
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { IconContext } from 'react-icons';
 import { MdRemoveCircle } from 'react-icons/md';
 
-import { useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
 import { useAuth } from '../context/authContext';
 import { COMPLETE, DELETE } from '../data/constant';
 import { useUpdateTodoStatusMutation } from '../mutations/todo';
@@ -10,16 +10,10 @@ import { Todo } from '../types';
 import { ListInput } from './ListInput';
 
 interface ListOnGoingProps {
-  listId: string;
   onGoingTodos: Todo[];
-  onTextChange: (listId: string, itemId: string, title: string) => void;
 }
 
-export const ListOnGoing = ({
-  listId,
-  onGoingTodos,
-  onTextChange,
-}: ListOnGoingProps) => {
+export const ListOnGoing = ({ onGoingTodos }: ListOnGoingProps) => {
   const { token } = useAuth();
   const queryClient = useQueryClient();
 
@@ -46,12 +40,7 @@ export const ListOnGoing = ({
               }
               className="list-item-checkbox"
             />
-            <ListInput
-              listId={listId}
-              onTextChange={onTextChange}
-              id={_id}
-              title={title}
-            />
+            <ListInput id={_id} title={title} />
             <div className="list-item-buttons">
               <IconContext.Provider value={{ className: 'icon' }}>
                 <MdRemoveCircle

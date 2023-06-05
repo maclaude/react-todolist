@@ -1,20 +1,16 @@
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+
+import { useAuth } from '../context/authContext';
+import { useUpdateTodoTitleMutation } from '../mutations/todo';
+
 interface ListInputProps {
-  listId: string;
   id: string;
   title: string;
-  onTextChange: (listId: string, id: string, title: string) => void;
 }
 
-export const ListInput = ({
-  listId,
-  id,
-  title,
-  onTextChange,
-}: ListInputProps) => {
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    onTextChange(listId, id, event.currentTarget.value);
-  };
+export const ListInput = ({ id, title }: ListInputProps) => {
+  const [inputValue, setInputValue] = useState(title);
 
   const handleOnEnterBlur = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -22,12 +18,29 @@ export const ListInput = ({
     }
   };
 
+  const { token } = useAuth();
+  const queryClient = useQueryClient();
+  const updateTodoTitleMutation = useUpdateTodoTitleMutation();
+
+  useEffect(() => {
+    if (updateTodoTitleMutation.isSuccess) {
+      queryClient.invalidateQueries(['todolists']);
+    }
+  }, [updateTodoTitleMutation.isSuccess]);
+
   return (
     <input
       className="list-item-input"
-      onChange={(e) => handleChange(e)}
+      onChange={(e) => setInputValue(e.currentTarget.value)}
       onKeyDown={(e) => handleOnEnterBlur(e)}
-      value={title}
+      onBlur={() =>
+        updateTodoTitleMutation.mutate({
+          id,
+          title: inputValue,
+          token,
+        })
+      }
+      value={inputValue}
     />
   );
 };
