@@ -25,7 +25,7 @@ function App() {
   });
 
   useEffect(() => {
-    if (data && data.length) {
+    if (data) {
       setTodolists(data);
     }
   }, [data]);

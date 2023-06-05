@@ -52,10 +52,10 @@
   &-button {
     width: 25px;
     height: 25px;
-    color: var(--clr-dark-grey);
+    color: var(--clr-dark);
 
-    &:focus, &:hover {
-      color: var(--clr-dark);
+    &:hover {
+      color: var(--clr-acc-red);
     }
   }
 }

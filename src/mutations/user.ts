@@ -13,6 +13,10 @@ type SignupPayload = {
   password: string;
 };
 
+type DeleteAllTodolistsPayload = {
+  token: string;
+};
+
 const signin = async (payload: SigninPayload) => {
   const response = await axios.post(
     'http://localhost:3000/auth/signin',
@@ -44,5 +48,24 @@ export const useSignupMutation = () =>
     mutationFn: (payload: SignupPayload) => signup(payload),
     onError: (error) => {
       console.error('[signup] - error:', error);
+    },
+  });
+
+const deleteAllTodolists = async (payload: DeleteAllTodolistsPayload) => {
+  const response = await axios
+    .create({
+      headers: { Authorization: `Bearer ${payload.token}` },
+    })
+    .delete('http://localhost:3000/user/todolists');
+
+  return response.data;
+};
+
+export const useDeleteAllTodolistsMutation = () =>
+  useMutation({
+    mutationFn: (payload: DeleteAllTodolistsPayload) =>
+      deleteAllTodolists(payload),
+    onError: (error) => {
+      console.error('[deleteAllTodolists] - error:', error);
     },
   });

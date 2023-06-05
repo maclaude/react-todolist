@@ -24,6 +24,6 @@ const fetchTodolists = async (
 export const useFetchTodolistsQuery = (authContext: AuthContext) =>
   useQuery({
     queryKey: ['todolists'],
-    enabled: authContext.authenticated,
+    enabled: Boolean(authContext.authenticated),
     queryFn: () => fetchTodolists(authContext),
   });

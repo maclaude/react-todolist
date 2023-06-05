@@ -21,7 +21,7 @@ interface NavigationProps {
 
 export const Navigation = ({ todolists }: NavigationProps) => {
   const navigate = useNavigate();
-  const { id, token } = useAuth();
+  const { id, token, authenticated } = useAuth();
 
   const newTodolistMutation = useNewTodolistMutation();
   const updateTodolistStatusMutation = useUpdateTodolistStatusMutation();
@@ -107,8 +107,9 @@ export const Navigation = ({ todolists }: NavigationProps) => {
         ))}
       </div>
       <div className="navigation-user">
-        <NavLink to={`/user`}>
+        <NavLink className="navigation-user" to={`/user`}>
           <FaSignInAlt />
+          <span>{authenticated ? 'Mon compte' : 'Connexion'}</span>
         </NavLink>
       </div>
     </nav>

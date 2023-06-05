@@ -1,0 +1,96 @@
+.home {
+  &-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+  }
+
+  &-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+    color: var(--clr-dark);
+
+    h2 {
+      font-size: 1.5em;
+    }
+
+    &-username {
+      font-size: .9em;
+    }
+  }
+
+  &-information {
+    li {
+      margin-bottom: 20px;
+    }
+
+    strong {
+      margin-left: 5px;
+    }
+  }
+
+  &-logout {
+    margin-left: auto;
+    padding: 10px 15px;
+    border-radius: 5px;
+    width: fit-content;
+    font-weight: 600;
+    color: var(--clr-main);
+    background-color: var(--clr-acc-red);
+    border: 2px solid var(--clr-main);
+
+    &:hover {
+      background-color: var(--clr-acc-red--hover) ;
+    }
+
+    &:focus {
+      border: 2px solid var(--clr-dark);
+    }
+  }
+}
+
+.settings {
+  &-title {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+  }
+
+  &-section {
+    margin-left: 15px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+
+    a {
+      display: block;
+      width: fit-content;
+      margin: 5px 0;
+      padding: 5px 5px;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.avatar {
+  border-radius: 50%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  background-color: #d1d5db;
+}
+
+.avatar__image {
+  /* Size */
+  height: 50%;
+  width: 50%;
+}

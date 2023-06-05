@@ -3,19 +3,13 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
 
 import '../styles/User.scss';
+import { HomePage } from './Homepage';
 
 export const User = () => {
-  const { authenticated, logout } = useAuth();
-
-  const handleLogout = () => {
-    logout();
-  };
+  const { authenticated } = useAuth();
 
   return authenticated ? (
-    <div className="user-container">
-      <h1>Connected ✅</h1>
-      <button onClick={handleLogout}>logout</button>
-    </div>
+    <HomePage />
   ) : (
     <div className="user-container">
       <h2 className="user-title">Bienvenue !</h2>

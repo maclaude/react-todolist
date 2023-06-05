@@ -39,9 +39,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     sessionStorage.getItem('authCredentials')!,
   );
 
-  const getAuthenticated = () => storedAuthCredentials?.authenticated;
-  const getId = () => storedAuthCredentials?.id;
-  const getToken = () => storedAuthCredentials?.token;
+  const getAuthenticated = () => storedAuthCredentials?.authenticated || false;
+  const getId = () => storedAuthCredentials?.id || '';
+  const getToken = () => storedAuthCredentials?.token || '';
 
   const [authenticated, setAuthenticated] = useState(getAuthenticated());
   const [id, setId] = useState(getId());
