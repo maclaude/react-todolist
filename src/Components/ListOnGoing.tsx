@@ -1,32 +1,49 @@
 import { IconContext } from 'react-icons';
 import { MdRemoveCircle } from 'react-icons/md';
 
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { useAuth } from '../context/authContext';
 import { COMPLETE, DELETE } from '../data/constant';
-import { Status, Todo } from '../types';
+import { useUpdateTodoStatusMutation } from '../mutations/todo';
+import { Todo } from '../types';
 import { ListInput } from './ListInput';
 
 interface ListOnGoingProps {
   listId: string;
   onGoingTodos: Todo[];
-  onCheckboxClick: (listId: string, itemId: string, status: Status) => void;
-  onDeleteClick: (listId: string, itemId: string, status: Status) => void;
   onTextChange: (listId: string, itemId: string, title: string) => void;
 }
 
 export const ListOnGoing = ({
   listId,
   onGoingTodos,
-  onCheckboxClick,
-  onDeleteClick,
   onTextChange,
 }: ListOnGoingProps) => {
+  const { token } = useAuth();
+  const queryClient = useQueryClient();
+
+  const updateTodoStatusMutation = useUpdateTodoStatusMutation();
+
+  useEffect(() => {
+    if (updateTodoStatusMutation.isSuccess) {
+      queryClient.invalidateQueries(['todolists']);
+    }
+  }, [updateTodoStatusMutation.isSuccess]);
+
   return (
     <>
       <ul className="list">
         {onGoingTodos.map(({ _id, title }) => (
           <li key={_id} className="list-item">
             <button
-              onClick={() => onCheckboxClick(listId, _id, COMPLETE)}
+              onClick={() =>
+                updateTodoStatusMutation.mutate({
+                  id: _id,
+                  status: COMPLETE,
+                  token,
+                })
+              }
               className="list-item-checkbox"
             />
             <ListInput
@@ -38,7 +55,13 @@ export const ListOnGoing = ({
             <div className="list-item-buttons">
               <IconContext.Provider value={{ className: 'icon' }}>
                 <MdRemoveCircle
-                  onClick={() => onDeleteClick(listId, _id, DELETE)}
+                  onClick={() =>
+                    updateTodoStatusMutation.mutate({
+                      id: _id,
+                      status: DELETE,
+                      token,
+                    })
+                  }
                 />
               </IconContext.Provider>
             </div>

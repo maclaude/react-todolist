@@ -1,21 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GoChevronDown, GoChevronRight } from 'react-icons/go';
 
+import { useQueryClient } from '@tanstack/react-query';
+import { useAuth } from '../context/authContext';
 import { ON_GOING } from '../data/constant';
-import { Status, Todo } from '../types';
+import { useUpdateTodoStatusMutation } from '../mutations/todo';
+import { Todo } from '../types';
 
 interface ListCompleteProps {
-  listId: string;
   completeTodos: Todo[];
-  onCheckboxClick: (listId: string, id: string, status: Status) => void;
 }
 
-export const ListComplete = ({
-  listId,
-  completeTodos,
-  onCheckboxClick,
-}: ListCompleteProps) => {
+export const ListComplete = ({ completeTodos }: ListCompleteProps) => {
   const [isChevronToogle, setIsChevronToogle] = useState<boolean>(true);
+
+  const { token } = useAuth();
+  const queryClient = useQueryClient();
+
+  const updateTodoStatusMutation = useUpdateTodoStatusMutation();
+
+  useEffect(() => {
+    if (updateTodoStatusMutation.isSuccess) {
+      queryClient.invalidateQueries(['todolists']);
+    }
+  }, [updateTodoStatusMutation.isSuccess]);
 
   const handleChevronToogle = () => {
     setIsChevronToogle(!isChevronToogle);
@@ -37,11 +45,17 @@ export const ListComplete = ({
       </div>
       {isChevronToogle && (
         <ul>
-          {completeTodos.map(({ id, title }) => (
-            <li key={id} className="list-item">
+          {completeTodos.map(({ _id, title }) => (
+            <li key={_id} className="list-item">
               <button
                 className=" list-item-checkbox list-item-checkbox--checked"
-                onClick={() => onCheckboxClick(listId, id, ON_GOING)}
+                onClick={() =>
+                  updateTodoStatusMutation.mutate({
+                    id: _id,
+                    status: ON_GOING,
+                    token,
+                  })
+                }
               />
               <p>{title}</p>
             </li>

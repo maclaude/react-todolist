@@ -5,25 +5,20 @@ import { ListComplete } from '../components/ListComplete';
 import { ListForm } from '../components/ListForm';
 import { ListOnGoing } from '../components/ListOnGoing';
 import { ListTitle } from '../components/ListTitle';
-import { Status, Todolist } from '../types';
+import { Todolist } from '../types';
 import { getCompleteTodos, getOnGoingTodos } from '../utils/helpers';
 
 import '../styles/List.scss';
 
 interface TodoListProps {
   todolists: Todolist[];
-  updateTodoStatus: (listId: string, itemId: string, status: Status) => void;
   updateTodoTitle: (listId: string, itemId: string, title: string) => void;
 }
 
 // TODO: - Query GET todolist/todos to hydrate component
 //       - Redefine page components
 
-export const List = ({
-  todolists,
-  updateTodoStatus,
-  updateTodoTitle,
-}: TodoListProps) => {
+export const List = ({ todolists, updateTodoTitle }: TodoListProps) => {
   const { id } = useParams();
   const currentTodoList = todolists.find((todolist) => todolist._id === id);
 
@@ -38,16 +33,10 @@ export const List = ({
       <ListOnGoing
         listId={id}
         onGoingTodos={getOnGoingTodos(currentTodoList.items)}
-        onCheckboxClick={updateTodoStatus}
-        onDeleteClick={updateTodoStatus}
         onTextChange={updateTodoTitle}
       />
       {getCompleteTodos(currentTodoList.items).length > 0 && (
-        <ListComplete
-          listId={id}
-          completeTodos={getCompleteTodos(currentTodoList.items)}
-          onCheckboxClick={updateTodoStatus}
-        />
+        <ListComplete completeTodos={getCompleteTodos(currentTodoList.items)} />
       )}
     </div>
   ) : (

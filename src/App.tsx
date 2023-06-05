@@ -10,7 +10,7 @@ import { Signin } from './pages/Signin';
 import { Signup } from './pages/Signup';
 import { User } from './pages/User';
 import { useFetchTodolistsQuery } from './queries/user';
-import { Status, Todolist } from './types';
+import { Todolist } from './types';
 import { getOnGoingTodolists } from './utils/helpers';
 
 import './App.scss';
@@ -29,21 +29,6 @@ function App() {
       setTodolists(data);
     }
   }, [data]);
-
-  const updateTodoStatus = (listId: string, itemId: string, status: Status) => {
-    setTodolists((currentTodoLists) =>
-      currentTodoLists.map((todoList) =>
-        todoList._id === listId
-          ? {
-              ...todoList,
-              items: todoList.items.map((item) =>
-                item._id === itemId ? { ...item, status } : item,
-              ),
-            }
-          : todoList,
-      ),
-    );
-  };
 
   const updateTodoTitle = (listId: string, itemId: string, title: string) => {
     setTodolists((currentTodoLists) =>
@@ -77,11 +62,7 @@ function App() {
             <Route
               path={'todolist/:id'}
               element={
-                <List
-                  todolists={todolists}
-                  updateTodoStatus={updateTodoStatus}
-                  updateTodoTitle={updateTodoTitle}
-                />
+                <List todolists={todolists} updateTodoTitle={updateTodoTitle} />
               }
             ></Route>
           </Routes>

@@ -38,7 +38,7 @@ const updateTodoStatus = async (payload: UpdateTodoStatusPayload) => {
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .patch(`http://localhost:3000/todo/${payload.id}`, payload);
+    .patch(`http://localhost:3000/todo/status/${payload.id}`, payload);
 
   return response.data;
 };
