@@ -16,6 +16,12 @@ type UpdateTodolistStatusPayload = {
   token: string;
 };
 
+type UpdateTodolistTitlePayload = {
+  id: string;
+  title: string;
+  token: string;
+};
+
 const newTodolist = async (payload: NewTodolistPayload) => {
   const response = await axios
     .create({
@@ -39,7 +45,7 @@ const updateTodolistStatus = async (payload: UpdateTodolistStatusPayload) => {
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .patch(`http://localhost:3000/todolist/${payload.id}`, payload);
+    .patch(`http://localhost:3000/todolist/status/${payload.id}`, payload);
 
   return response.data;
 };
@@ -48,6 +54,25 @@ export const useUpdateTodolistStatusMutation = () =>
   useMutation({
     mutationFn: (payload: UpdateTodolistStatusPayload) =>
       updateTodolistStatus(payload),
+    onError: (error) => {
+      console.error('[updateTodolistStatus] - error:', error);
+    },
+  });
+
+const updateTodolistTitle = async (payload: UpdateTodolistTitlePayload) => {
+  const response = await axios
+    .create({
+      headers: { Authorization: `Bearer ${payload.token}` },
+    })
+    .patch(`http://localhost:3000/todolist/title/${payload.id}`, payload);
+
+  return response.data;
+};
+
+export const useUpdateTodolistTitleMutation = () =>
+  useMutation({
+    mutationFn: (payload: UpdateTodolistTitlePayload) =>
+      updateTodolistTitle(payload),
     onError: (error) => {
       console.error('[updateTodolistStatus] - error:', error);
     },

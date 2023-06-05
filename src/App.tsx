@@ -60,19 +60,6 @@ function App() {
     );
   };
 
-  const updateTodoListTitle = (listId: string, title: string) => {
-    setTodolists((currentTodoLists) =>
-      currentTodoLists.map((todoList) =>
-        todoList._id === listId
-          ? {
-              ...todoList,
-              title,
-            }
-          : todoList,
-      ),
-    );
-  };
-
   return (
     <div className="app">
       <div className="container">
@@ -94,7 +81,6 @@ function App() {
                   todolists={todolists}
                   updateTodoStatus={updateTodoStatus}
                   updateTodoTitle={updateTodoTitle}
-                  updateTodoListTitle={updateTodoListTitle}
                 />
               }
             ></Route>

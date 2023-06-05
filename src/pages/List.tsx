@@ -14,7 +14,6 @@ interface TodoListProps {
   todolists: Todolist[];
   updateTodoStatus: (listId: string, itemId: string, status: Status) => void;
   updateTodoTitle: (listId: string, itemId: string, title: string) => void;
-  updateTodoListTitle: (listId: string, title: string) => void;
 }
 
 // TODO: - Query GET todolist/todos to hydrate component
@@ -24,7 +23,6 @@ export const List = ({
   todolists,
   updateTodoStatus,
   updateTodoTitle,
-  updateTodoListTitle,
 }: TodoListProps) => {
   const { id } = useParams();
   const currentTodoList = todolists.find((todolist) => todolist._id === id);
@@ -34,7 +32,6 @@ export const List = ({
       <ListTitle
         listId={id}
         title={currentTodoList.title}
-        onSubmit={updateTodoListTitle}
         onGoingTodos={getOnGoingTodos(currentTodoList.items)}
       />
       <ListForm listId={id} />

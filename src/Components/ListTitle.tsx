@@ -1,29 +1,27 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { useAuth } from '../context/authContext';
+import { useUpdateTodolistTitleMutation } from '../mutations/todolist';
 import { Todo } from '../types';
 
 interface ListTitleProps {
   listId: string;
   title: string;
   onGoingTodos: Todo[];
-  onSubmit: (listId: string, title: string) => void;
 }
 
-export const ListTitle = ({
-  listId,
-  title,
-  onGoingTodos,
-  onSubmit,
-}: ListTitleProps) => {
+export const ListTitle = ({ listId, title, onGoingTodos }: ListTitleProps) => {
+  const { token } = useAuth();
   const [listTitle, setListTitle] = useState<string>(title);
-
-  useEffect(() => {
-    setListTitle(title);
-  }, [title]);
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     event.preventDefault();
     setListTitle(event.currentTarget.value);
   };
+
+  useEffect(() => {
+    setListTitle(title);
+  }, [title]);
 
   const handleOnEnterBlur = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -31,9 +29,15 @@ export const ListTitle = ({
     }
   };
 
-  const handleSubmit = () => {
-    onSubmit(listId, listTitle);
-  };
+  const updateTodoListTitleMutation = useUpdateTodolistTitleMutation();
+
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (updateTodoListTitleMutation.isSuccess) {
+      queryClient.invalidateQueries(['todolists']);
+    }
+  }, [updateTodoListTitleMutation.isSuccess]);
 
   return (
     <div className="title">
@@ -41,7 +45,13 @@ export const ListTitle = ({
         className="title-input"
         onChange={(e) => handleChange(e)}
         onKeyDown={(e) => handleOnEnterBlur(e)}
-        onBlur={handleSubmit}
+        onBlur={() =>
+          updateTodoListTitleMutation.mutate({
+            id: listId,
+            title: listTitle,
+            token,
+          })
+        }
         value={listTitle}
       />
       {onGoingTodos.length > 0 && (
