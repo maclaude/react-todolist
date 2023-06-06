@@ -3,14 +3,19 @@ import { GoChevronDown, GoChevronRight } from 'react-icons/go';
 
 import { COMPLETE, ON_GOING } from '../data/constant';
 import { Todo } from '../types';
-import { getCompleteTodos, getOnGoingTodos } from '../utils/helpers';
 import { ListTodo } from './ListTodo';
 
 interface ListOnGoingProps {
-  todos: Todo[];
+  listId: string;
+  onGoingTodos: Todo[];
+  completeTodos: Todo[];
 }
 
-export const ListTodos = ({ todos }: ListOnGoingProps) => {
+export const ListTodos = ({
+  listId,
+  onGoingTodos,
+  completeTodos,
+}: ListOnGoingProps) => {
   const [isChevronToogle, setIsChevronToogle] = useState<boolean>(true);
 
   const handleChevronToogle = () => {
@@ -21,17 +26,23 @@ export const ListTodos = ({ todos }: ListOnGoingProps) => {
     <>
       {/* section todos on going */}
       <ul className="todos">
-        {getOnGoingTodos(todos).map(({ _id, title }) => (
-          <ListTodo key={_id} id={_id} title={title} status={ON_GOING} />
+        {onGoingTodos.map(({ _id, title }) => (
+          <ListTodo
+            key={_id}
+            id={_id}
+            listId={listId}
+            title={title}
+            status={ON_GOING}
+          />
         ))}
       </ul>
       {/* chevron */}
-      {getCompleteTodos(todos).length > 0 && (
+      {completeTodos.length > 0 && (
         <>
           <div className="todos_title">
             <p>
-              {`${getCompleteTodos(todos).length} ${
-                getCompleteTodos(todos).length === 1 ? 'terminé' : 'terminés'
+              {`${completeTodos.length} ${
+                completeTodos.length === 1 ? 'terminé' : 'terminés'
               }`}
             </p>
             {isChevronToogle ? (
@@ -49,8 +60,14 @@ export const ListTodos = ({ todos }: ListOnGoingProps) => {
           {/* section todos completed */}
           {isChevronToogle && (
             <ul className="todos">
-              {getCompleteTodos(todos).map(({ _id, title }) => (
-                <ListTodo key={_id} id={_id} title={title} status={COMPLETE} />
+              {completeTodos.map(({ _id, title }) => (
+                <ListTodo
+                  key={_id}
+                  id={_id}
+                  listId={listId}
+                  title={title}
+                  status={COMPLETE}
+                />
               ))}
             </ul>
           )}

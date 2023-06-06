@@ -40,7 +40,11 @@ export const Navigation = ({ todolists }: NavigationProps) => {
           _id: data.id,
           title: 'New Todo',
           status: ON_GOING,
-          items: [],
+          items: {
+            ongoing: [],
+            complete: [],
+            delete: [],
+          },
         },
       ]);
       queryClient.invalidateQueries(['todolists']);

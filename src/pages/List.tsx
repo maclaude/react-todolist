@@ -5,7 +5,6 @@ import { ListNewTodo } from '../components/ListNewTodo';
 import { ListTitle } from '../components/ListTitle';
 import { ListTodos } from '../components/ListTodos';
 import { Todolist } from '../types';
-import { getOnGoingTodos } from '../utils/helpers';
 
 import '../styles/List.scss';
 
@@ -25,10 +24,14 @@ export const List = ({ todolists }: TodoListProps) => {
       <ListTitle
         listId={id}
         title={currentTodoList.title}
-        onGoingTodos={getOnGoingTodos(currentTodoList.items)}
+        onGoingTodos={currentTodoList.items.ongoing}
       />
       <ListNewTodo listId={id} />
-      <ListTodos todos={currentTodoList.items} />
+      <ListTodos
+        listId={id}
+        onGoingTodos={currentTodoList.items.ongoing}
+        completeTodos={currentTodoList.items.complete}
+      />
     </div>
   ) : (
     <>

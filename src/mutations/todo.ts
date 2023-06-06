@@ -11,7 +11,9 @@ type NewTodoPayload = {
 
 type UpdateTodoStatusPayload = {
   id: string;
-  status: Status;
+  todolistId: string;
+  currentStatus: Status;
+  newStatus: Status;
   token: string;
 };
 

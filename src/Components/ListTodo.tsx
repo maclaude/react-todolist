@@ -4,18 +4,19 @@ import { IconContext } from 'react-icons';
 import { MdRemoveCircle } from 'react-icons/md';
 
 import { useAuth } from '../context/authContext';
-import { COMPLETE, ON_GOING } from '../data/constant';
+import { COMPLETE, DELETE, ON_GOING } from '../data/constant';
 import { useUpdateTodoStatusMutation } from '../mutations/todo';
 import { Status } from '../types';
 import { ListTodoInput } from './ListTodoInput';
 
 type ListTodoProps = {
   id: string;
+  listId: string;
   title: string;
   status: Status;
 };
 
-export const ListTodo = ({ id, title, status }: ListTodoProps) => {
+export const ListTodo = ({ id, listId, title, status }: ListTodoProps) => {
   const { token } = useAuth();
 
   const queryClient = useQueryClient();
@@ -33,7 +34,9 @@ export const ListTodo = ({ id, title, status }: ListTodoProps) => {
         onClick={() =>
           updateTodoStatusMutation.mutate({
             id,
-            status: status === ON_GOING ? COMPLETE : ON_GOING,
+            todolistId: listId,
+            currentStatus: status,
+            newStatus: status === ON_GOING ? COMPLETE : ON_GOING,
             token,
           })
         }
@@ -49,7 +52,9 @@ export const ListTodo = ({ id, title, status }: ListTodoProps) => {
           onClick={() =>
             updateTodoStatusMutation.mutate({
               id,
-              status,
+              todolistId: listId,
+              currentStatus: status,
+              newStatus: DELETE,
               token,
             })
           }

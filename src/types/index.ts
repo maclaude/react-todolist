@@ -6,11 +6,14 @@ export interface Todolist {
   _id: string;
   title: string;
   status: Status;
-  items: Todo[];
+  items: {
+    ongoing: Todo[];
+    complete: Todo[];
+    delete: Todo[];
+  };
 }
 
 export interface Todo {
   _id: string;
   title: string;
-  status: Status;
 }
