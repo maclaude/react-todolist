@@ -77,35 +77,52 @@ export const Navigation = ({ todolists }: NavigationProps) => {
           />
         </IconContext.Provider>
       </div>
-      <div className="navigation-items">
-        {todolists?.map(({ _id: todolistId, title }) => (
-          <div key={todolistId} className="navigation-item">
-            <NavLink
-              className={({ isActive }) =>
-                isActive
-                  ? 'navigation-item-link navigation-item-link__active'
-                  : 'navigation-item-link'
+
+      {todolists?.map(({ _id: todolistId, title }) => (
+        <div key={todolistId} className="navigation-item">
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? 'navigation-item-link navigation-item-link__active'
+                : 'navigation-item-link'
+            }
+            to={`todolist/${todolistId}`}
+          >
+            {title}
+          </NavLink>
+          <IconContext.Provider
+            value={{ className: 'icon navigation-item-delete-icon' }}
+          >
+            <MdDelete
+              onClick={() =>
+                updateTodolistStatusMutation.mutate({
+                  id: todolistId,
+                  status: DELETE,
+                  token,
+                })
               }
-              to={`todolist/${todolistId}`}
-            >
-              {title}
-            </NavLink>
-            <IconContext.Provider
-              value={{ className: 'icon navigation-item-delete-icon' }}
-            >
-              <MdDelete
-                onClick={() =>
-                  updateTodolistStatusMutation.mutate({
-                    id: todolistId,
-                    status: DELETE,
-                    token,
-                  })
-                }
-              />
-            </IconContext.Provider>
-          </div>
-        ))}
+            />
+          </IconContext.Provider>
+        </div>
+      ))}
+
+      <div className="navigation-title">
+        <h3>Dev</h3>
       </div>
+
+      <div className="navigation-item">
+        <NavLink
+          className={({ isActive }) =>
+            isActive
+              ? 'navigation-item-link navigation-item-link__active'
+              : 'navigation-item-link'
+          }
+          to={`poc/dnd`}
+        >
+          Drag & drop
+        </NavLink>
+      </div>
+
       <div className="navigation-user">
         <NavLink className="navigation-user" to={`/user`}>
           <FaSignInAlt />

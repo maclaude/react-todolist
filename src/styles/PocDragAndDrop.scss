@@ -1,0 +1,14 @@
+.dnd {
+  &_container {
+    width: 100%;
+    height: 100%;
+  }
+
+  &_title {
+    margin-bottom: 30px;
+  }
+
+  &_item {
+    padding: 5px;
+  }
+}
