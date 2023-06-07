@@ -3,18 +3,17 @@ import { useEffect, useState } from 'react';
 
 import { useAuth } from '../context/authContext';
 import { useUpdateTodolistTitleMutation } from '../mutations/todolist';
-import { Todo } from '../types';
 
 interface ListTitleProps {
   todolistId: string;
   title: string;
-  onGoingTodos: Todo[];
+  onGoingCount: number;
 }
 
 export const ListTitle = ({
   todolistId,
   title,
-  onGoingTodos,
+  onGoingCount,
 }: ListTitleProps) => {
   const { token } = useAuth();
   const [listTitle, setListTitle] = useState<string>(title);
@@ -53,9 +52,9 @@ export const ListTitle = ({
         }
         value={listTitle}
       />
-      {onGoingTodos.length > 0 && (
-        <p className="title-counter">{`${onGoingTodos.length} ${
-          onGoingTodos.length === 1 ? 'rappel' : 'rappels'
+      {onGoingCount > 0 && (
+        <p className="title-counter">{`${onGoingCount} ${
+          onGoingCount === 1 ? 'rappel' : 'rappels'
         }`}</p>
       )}
     </div>

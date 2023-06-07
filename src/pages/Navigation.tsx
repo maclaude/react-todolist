@@ -53,7 +53,7 @@ export const Navigation = () => {
       ]);
       queryClient.invalidateQueries(['todolists']);
 
-      navigate(`/todolist/${data.id}`);
+      navigate(`/todolist/${data._id}`);
     }
   }, [newTodolistMutation.isSuccess, newTodolistMutation.data]);
 
@@ -75,53 +75,57 @@ export const Navigation = () => {
         </IconContext.Provider>
       </div>
 
-      {fetchTodolistsQuery.data &&
-        getOnGoingTodolists(fetchTodolistsQuery.data).map(
-          ({ _id: todolistId, title }) => (
-            <div key={todolistId} className="navigation-item">
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? 'navigation-item-link navigation-item-link__active'
-                    : 'navigation-item-link'
-                }
-                to={`todolist/${todolistId}`}
-              >
-                {title}
-              </NavLink>
-              <IconContext.Provider
-                value={{ className: 'icon navigation-item-delete-icon' }}
-              >
-                <MdDelete
-                  onClick={() =>
-                    updateTodolistStatusMutation.mutate({
-                      id: todolistId,
-                      status: DELETE,
-                      token,
-                    })
+      <section>
+        {fetchTodolistsQuery.data &&
+          getOnGoingTodolists(fetchTodolistsQuery.data).map(
+            ({ _id: todolistId, title }) => (
+              <div key={todolistId} className="navigation-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? 'navigation-item-link navigation-item-link__active'
+                      : 'navigation-item-link'
                   }
-                />
-              </IconContext.Provider>
-            </div>
-          ),
-        )}
+                  to={`todolist/${todolistId}`}
+                >
+                  {title}
+                </NavLink>
+                <IconContext.Provider
+                  value={{ className: 'icon navigation-item-delete-icon' }}
+                >
+                  <MdDelete
+                    onClick={() =>
+                      updateTodolistStatusMutation.mutate({
+                        id: todolistId,
+                        status: DELETE,
+                        token,
+                      })
+                    }
+                  />
+                </IconContext.Provider>
+              </div>
+            ),
+          )}
+      </section>
 
-      <div className="navigation-title">
-        <h3>Dev</h3>
-      </div>
+      <section>
+        <div className="navigation-title">
+          <h3>Dev</h3>
+        </div>
 
-      <div className="navigation-item">
-        <NavLink
-          className={({ isActive }) =>
-            isActive
-              ? 'navigation-item-link navigation-item-link__active'
-              : 'navigation-item-link'
-          }
-          to={`poc/dnd`}
-        >
-          Drag & drop
-        </NavLink>
-      </div>
+        <div className="navigation-item">
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? 'navigation-item-link navigation-item-link__active'
+                : 'navigation-item-link'
+            }
+            to={`poc/dnd`}
+          >
+            Drag & drop
+          </NavLink>
+        </div>
+      </section>
 
       <div className="navigation-user">
         <NavLink className="navigation-user" to={`/user`}>

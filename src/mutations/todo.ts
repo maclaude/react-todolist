@@ -1,5 +1,6 @@
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
+import { ON_GOING } from '../data/constant';
 import { Status } from '../types';
 
 type NewTodoPayload = {
@@ -37,7 +38,7 @@ export const useNewTodoMutation = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: (payload: NewTodoPayload) => newTodo(payload),
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['todolists', data._id]);
+      queryClient.invalidateQueries(['todolists', data._id, ON_GOING]);
     },
     onError: (error) => {
       console.error('[newTodolist] - error:', error);

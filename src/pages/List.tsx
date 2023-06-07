@@ -25,14 +25,10 @@ export const List = () => {
       <ListTitle
         todolistId={todolist._id}
         title={todolist.title}
-        onGoingTodos={todolist.items.ongoing}
+        onGoingCount={todolist.items.ongoing.length}
       />
       <ListNewTodo todolistId={todolist._id} />
-      <ListTodos
-        todolistId={todolist._id}
-        onGoingTodos={todolist.items.ongoing}
-        completeTodos={todolist.items.complete}
-      />
+      <ListTodos todolistId={todolist._id} />
     </div>
   ) : (
     <></>
