@@ -6,12 +6,16 @@ import { useUpdateTodolistTitleMutation } from '../mutations/todolist';
 import { Todo } from '../types';
 
 interface ListTitleProps {
-  listId: string;
+  todolistId: string;
   title: string;
   onGoingTodos: Todo[];
 }
 
-export const ListTitle = ({ listId, title, onGoingTodos }: ListTitleProps) => {
+export const ListTitle = ({
+  todolistId,
+  title,
+  onGoingTodos,
+}: ListTitleProps) => {
   const { token } = useAuth();
   const [listTitle, setListTitle] = useState<string>(title);
 
@@ -30,15 +34,9 @@ export const ListTitle = ({ listId, title, onGoingTodos }: ListTitleProps) => {
     }
   };
 
-  const updateTodoListTitleMutation = useUpdateTodolistTitleMutation();
-
-  const queryClient = useQueryClient();
-
-  useEffect(() => {
-    if (updateTodoListTitleMutation.isSuccess) {
-      queryClient.invalidateQueries(['todolists']);
-    }
-  }, [updateTodoListTitleMutation.isSuccess]);
+  const updateTodoListTitleMutation = useUpdateTodolistTitleMutation(
+    useQueryClient(),
+  );
 
   return (
     <div id="todolist_title">
@@ -48,7 +46,7 @@ export const ListTitle = ({ listId, title, onGoingTodos }: ListTitleProps) => {
         onKeyDown={(e) => handleOnEnterBlur(e)}
         onBlur={() =>
           updateTodoListTitleMutation.mutate({
-            id: listId,
+            id: todolistId,
             title: listTitle,
             token,
           })

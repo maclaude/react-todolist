@@ -1,5 +1,4 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
 import { useAuth } from '../context/authContext';
 import { useDeleteAllTodolistsMutation } from '../mutations/user';
 import '../styles/Homepage.scss';
@@ -9,17 +8,9 @@ import avatarImg from '../assets/svg/avatar.svg';
 export const HomePage = () => {
   const { logout, token } = useAuth();
 
-  const deleteAllTodolistsMutation = useDeleteAllTodolistsMutation();
-
-  const queryClient = useQueryClient();
-
-  useEffect(() => {
-    const { isSuccess } = deleteAllTodolistsMutation;
-
-    if (isSuccess) {
-      queryClient.invalidateQueries(['todolists']);
-    }
-  }, [deleteAllTodolistsMutation.isSuccess]);
+  const deleteAllTodolistsMutation = useDeleteAllTodolistsMutation(
+    useQueryClient(),
+  );
 
   const handleLogout = () => {
     logout();

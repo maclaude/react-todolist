@@ -8,21 +8,22 @@ type AuthContext = {
   token: string;
 };
 
-const fetchTodolists = async (
+const fetchTodolist = async (
   authContext: AuthContext,
-): Promise<Todolist[]> => {
+  id?: string,
+): Promise<Todolist> => {
   const response = await axios
     .create({
       headers: { Authorization: `Bearer ${authContext.token}` },
     })
-    .get(`http://localhost:3000/user/todolists`);
+    .get(`http://localhost:3000/todolist/${id}`);
 
   return response.data;
 };
 
-export const useFetchTodolistsQuery = (authContext: AuthContext) =>
+export const useFetchTodolistQuery = (authContext: AuthContext, id?: string) =>
   useQuery({
-    queryKey: ['todolists'],
-    enabled: Boolean(authContext.authenticated),
-    queryFn: () => fetchTodolists(authContext),
+    queryKey: ['todolists', id],
+    enabled: Boolean(id),
+    queryFn: () => fetchTodolist(authContext, id),
   });

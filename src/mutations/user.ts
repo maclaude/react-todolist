@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { QueryClient, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
 type SigninPayload = {
@@ -61,10 +61,13 @@ const deleteAllTodolists = async (payload: DeleteAllTodolistsPayload) => {
   return response.data;
 };
 
-export const useDeleteAllTodolistsMutation = () =>
+export const useDeleteAllTodolistsMutation = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: (payload: DeleteAllTodolistsPayload) =>
       deleteAllTodolists(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['todolists']);
+    },
     onError: (error) => {
       console.error('[deleteAllTodolists] - error:', error);
     },

@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { QueryClient, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { Status } from '../types';
@@ -50,10 +50,13 @@ const updateTodolistStatus = async (payload: UpdateTodolistStatusPayload) => {
   return response.data;
 };
 
-export const useUpdateTodolistStatusMutation = () =>
+export const useUpdateTodolistStatusMutation = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: (payload: UpdateTodolistStatusPayload) =>
       updateTodolistStatus(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['todolists']);
+    },
     onError: (error) => {
       console.error('[updateTodolistStatus] - error:', error);
     },
@@ -69,10 +72,13 @@ const updateTodolistTitle = async (payload: UpdateTodolistTitlePayload) => {
   return response.data;
 };
 
-export const useUpdateTodolistTitleMutation = () =>
+export const useUpdateTodolistTitleMutation = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: (payload: UpdateTodolistTitlePayload) =>
       updateTodolistTitle(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['todolists']);
+    },
     onError: (error) => {
       console.error('[updateTodolistStatus] - error:', error);
     },

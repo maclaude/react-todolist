@@ -1,15 +1,15 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useAuth } from '../context/authContext';
 import { useUpdateTodoTitleMutation } from '../mutations/todo';
 
 interface ListInputProps {
-  id: string;
+  todoId: string;
   title: string;
 }
 
-export const ListTodoInput = ({ id, title }: ListInputProps) => {
+export const ListTodoInput = ({ todoId, title }: ListInputProps) => {
   const { token } = useAuth();
   const [inputValue, setInputValue] = useState(title);
 
@@ -19,14 +19,7 @@ export const ListTodoInput = ({ id, title }: ListInputProps) => {
     }
   };
 
-  const queryClient = useQueryClient();
-  const updateTodoTitleMutation = useUpdateTodoTitleMutation();
-
-  useEffect(() => {
-    if (updateTodoTitleMutation.isSuccess) {
-      queryClient.invalidateQueries(['todolists']);
-    }
-  }, [updateTodoTitleMutation.isSuccess]);
+  const updateTodoTitleMutation = useUpdateTodoTitleMutation(useQueryClient());
 
   return (
     <input
@@ -35,7 +28,7 @@ export const ListTodoInput = ({ id, title }: ListInputProps) => {
       onKeyDown={(e) => handleOnEnterBlur(e)}
       onBlur={() =>
         updateTodoTitleMutation.mutate({
-          id,
+          id: todoId,
           title: inputValue,
           token,
         })

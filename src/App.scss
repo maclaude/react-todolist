@@ -1,20 +1,20 @@
 /* Main layout
 ========================== */
 
-.app {
+#app {
   height: 100vh;
   display: flex;
   align-items: center;
   font-family: 'Roboto', sans-serif;
 }
 
-.container {
+#container {
   display: flex;
   gap: 10px;
   margin: auto;
 }
 
-.aside-container {
+#aside-container {
   background-color: var(--clr-main);
   box-shadow: var(--regular-box-shadow);
   color: var(--clr-dark);
@@ -28,7 +28,7 @@
   justify-content: space-between;
 }
 
-.main-container {
+#main-container {
   background-color: var(--clr-main);
   box-shadow: var(--regular-box-shadow);
   border-radius: 10px;

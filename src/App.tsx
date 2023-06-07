@@ -1,6 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-
-import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { useAuth } from './context/authContext';
@@ -10,46 +7,28 @@ import { PocDragAndDrop } from './pages/PocDragAndDrop';
 import { Signin } from './pages/Signin';
 import { Signup } from './pages/Signup';
 import { User } from './pages/User';
-import { useFetchTodolistsQuery } from './queries/user';
-import { Todolist } from './types';
-import { getOnGoingTodolists } from './utils/helpers';
 
 import './App.scss';
 
 function App() {
-  const { authenticated, token } = useAuth();
-  const [todolists, setTodolists] = useState<Todolist[]>([]);
-
-  const { data } = useFetchTodolistsQuery({
-    authenticated,
-    token,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setTodolists(data);
-    }
-  }, [data]);
+  const { authenticated } = useAuth();
 
   return (
-    <div className="app">
-      <div className="container">
+    <div id="app">
+      <div id="container">
         {authenticated && (
-          <aside className="aside-container">
-            <Navigation todolists={getOnGoingTodolists(todolists)} />
+          <aside id="aside-container">
+            <Navigation />
           </aside>
         )}
-        <main className="main-container">
+        <main id="main-container">
           <Routes>
             <Route path={'/'} element={<User />}></Route>
             <Route path={'poc/dnd'} element={<PocDragAndDrop />} />
             <Route path={'user/'} element={<User />}></Route>
             <Route path={'user/signin'} element={<Signin />}></Route>
             <Route path={'user/signup'} element={<Signup />}></Route>
-            <Route
-              path={'todolist/:id'}
-              element={<List todolists={todolists} />}
-            ></Route>
+            <Route path={'todolist/:id'} element={<List />}></Route>
           </Routes>
         </main>
       </div>

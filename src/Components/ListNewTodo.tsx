@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IconContext } from 'react-icons';
 import { TbArrowBigRightLineFilled } from 'react-icons/tb';
 
@@ -8,32 +8,23 @@ import { ON_GOING } from '../data/constant';
 import { useNewTodoMutation } from '../mutations/todo';
 
 interface ListFormProps {
-  listId: string;
+  todolistId: string;
 }
 
-export const ListNewTodo = ({ listId }: ListFormProps) => {
+export const ListNewTodo = ({ todolistId }: ListFormProps) => {
   const [newTodo, setNewTodo] = useState<string>('');
 
   const { token } = useAuth();
-  const { mutate, isSuccess, data } = useNewTodoMutation();
-
-  const queryClient = useQueryClient();
-
-  useEffect(() => {
-    if (isSuccess && data) {
-      // TODO: setQueryData
-      queryClient.invalidateQueries(['todolists']);
-    }
-  }, [isSuccess, data]);
+  const newTodoMutation = useNewTodoMutation(useQueryClient());
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (newTodo.trim()) {
-      mutate({
+      newTodoMutation.mutate({
         title: newTodo.trim(),
         status: ON_GOING,
-        todolistId: listId,
+        todolistId,
         token,
       });
     }

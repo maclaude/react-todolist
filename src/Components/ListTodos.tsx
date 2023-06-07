@@ -6,13 +6,13 @@ import { Todo } from '../types';
 import { ListTodo } from './ListTodo';
 
 interface ListOnGoingProps {
-  listId: string;
+  todolistId: string;
   onGoingTodos: Todo[];
   completeTodos: Todo[];
 }
 
 export const ListTodos = ({
-  listId,
+  todolistId,
   onGoingTodos,
   completeTodos,
 }: ListOnGoingProps) => {
@@ -26,11 +26,11 @@ export const ListTodos = ({
     <>
       {/* section todos on going */}
       <ul className="todos">
-        {onGoingTodos.map(({ _id, title }) => (
+        {onGoingTodos.map(({ _id: todoId, title }) => (
           <ListTodo
-            key={_id}
-            id={_id}
-            listId={listId}
+            key={todoId}
+            todoId={todoId}
+            todolistId={todolistId}
             title={title}
             status={ON_GOING}
           />
@@ -60,11 +60,11 @@ export const ListTodos = ({
           {/* section todos completed */}
           {isChevronToogle && (
             <ul className="todos">
-              {completeTodos.map(({ _id, title }) => (
+              {completeTodos.map(({ _id: todoId, title }) => (
                 <ListTodo
-                  key={_id}
-                  id={_id}
-                  listId={listId}
+                  key={todoId}
+                  todoId={todoId}
+                  todolistId={todolistId}
                   title={title}
                   status={COMPLETE}
                 />

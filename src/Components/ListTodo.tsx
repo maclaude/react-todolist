@@ -1,5 +1,4 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
 import { IconContext } from 'react-icons';
 import { MdRemoveCircle } from 'react-icons/md';
 
@@ -10,31 +9,31 @@ import { Status } from '../types';
 import { ListTodoInput } from './ListTodoInput';
 
 type ListTodoProps = {
-  id: string;
-  listId: string;
+  todoId: string;
+  todolistId: string;
   title: string;
   status: Status;
 };
 
-export const ListTodo = ({ id, listId, title, status }: ListTodoProps) => {
+export const ListTodo = ({
+  todoId,
+  todolistId,
+  title,
+  status,
+}: ListTodoProps) => {
   const { token } = useAuth();
 
-  const queryClient = useQueryClient();
-  const updateTodoStatusMutation = useUpdateTodoStatusMutation();
-
-  useEffect(() => {
-    if (updateTodoStatusMutation.isSuccess) {
-      queryClient.invalidateQueries(['todolists']);
-    }
-  }, [updateTodoStatusMutation.isSuccess]);
+  const updateTodoStatusMutation = useUpdateTodoStatusMutation(
+    useQueryClient(),
+  );
 
   return (
     <li className="todos_item">
       <button
         onClick={() =>
           updateTodoStatusMutation.mutate({
-            id,
-            todolistId: listId,
+            id: todoId,
+            todolistId,
             currentStatus: status,
             newStatus: status === ON_GOING ? COMPLETE : ON_GOING,
             token,
@@ -46,13 +45,13 @@ export const ListTodo = ({ id, listId, title, status }: ListTodoProps) => {
             : 'todos_item__checkbox'
         }
       />
-      <ListTodoInput id={id} title={title} />
+      <ListTodoInput todoId={todoId} title={title} />
       <IconContext.Provider value={{ className: 'icon' }}>
         <MdRemoveCircle
           onClick={() =>
             updateTodoStatusMutation.mutate({
-              id,
-              todolistId: listId,
+              id: todoId,
+              todolistId,
               currentStatus: status,
               newStatus: DELETE,
               token,
