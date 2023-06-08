@@ -103,12 +103,7 @@
       width: 90%;
       line-height: 20px;
       margin-bottom: 1px;
-      border-bottom: 1px solid var(--clr-main);
       cursor: pointer;
-
-      &:focus {
-        border-bottom: 1px solid var(--clr-light-grey);
-      }
     }
   }
 }

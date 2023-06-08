@@ -1,9 +1,25 @@
-import { useState } from 'react';
+import {
+  DndContext,
+  DragEndEvent,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  arrayMove,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { useEffect, useState } from 'react';
 import { GoChevronDown, GoChevronRight } from 'react-icons/go';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../context/authContext';
 import { COMPLETE, ON_GOING } from '../data/constant';
+import { useUpdateTodolistTodosOrder } from '../mutations/todolist';
 import { usefetchTodolistTodosQuery } from '../queries/todolist';
+import { Todo } from '../types';
 import { ListTodo } from './ListTodo';
 
 interface ListOnGoingProps {
@@ -13,44 +29,107 @@ interface ListOnGoingProps {
 export const ListTodos = ({ todolistId }: ListOnGoingProps) => {
   const { authenticated, token } = useAuth();
   const [isChevronToogle, setIsChevronToogle] = useState<boolean>(true);
+  const [onGoingTodos, setOnGoingTodos] = useState<Todo[]>([]);
+
+  const authContext = { authenticated, token };
+
+  const { data: fetchedOnGoingTodos } = usefetchTodolistTodosQuery(
+    authContext,
+    {
+      id: todolistId,
+      status: ON_GOING,
+    },
+  );
+
+  const { data: fetchedCompleteTodos } = usefetchTodolistTodosQuery(
+    authContext,
+    {
+      id: todolistId,
+      status: COMPLETE,
+    },
+  );
+
+  const updateTodolistTodosOrderMutation = useUpdateTodolistTodosOrder(
+    useQueryClient(),
+  );
+
+  useEffect(() => {
+    if (fetchedOnGoingTodos) {
+      setOnGoingTodos(fetchedOnGoingTodos);
+    }
+  }, [fetchedOnGoingTodos]);
+
+  useEffect(() => {
+    // Update todos order if number of todos is minimum 2
+    if (onGoingTodos.length > 1) {
+      updateTodolistTodosOrderMutation.mutate({
+        id: todolistId,
+        newItems: onGoingTodos.map((item) => item._id),
+        section: ON_GOING,
+        token,
+      });
+    }
+  }, [onGoingTodos]);
 
   const handleChevronToogle = () => {
     setIsChevronToogle(!isChevronToogle);
   };
 
-  const authContext = { authenticated, token };
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
 
-  const { data: onGoingTodos } = usefetchTodolistTodosQuery(authContext, {
-    id: todolistId,
-    status: ON_GOING,
-  });
+    if (active.id !== over?.id) {
+      setOnGoingTodos((items) => {
+        const overIndex = items.findIndex((item) => item._id === over?.id);
+        const activeIndex = items.findIndex((item) => item._id === active.id);
 
-  const { data: completeTodos } = usefetchTodolistTodosQuery(authContext, {
-    id: todolistId,
-    status: COMPLETE,
-  });
+        return arrayMove(items, activeIndex, overIndex);
+      });
+    }
+  };
+
+  // Sensors to enable click on dragable item
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+  );
 
   return (
     <>
-      {/* section todos on going */}
-      <ul className="todos">
-        {onGoingTodos?.map(({ _id: todoId, title }) => (
-          <ListTodo
-            key={todoId}
-            todoId={todoId}
-            todolistId={todolistId}
-            title={title}
-            status={ON_GOING}
-          />
-        ))}
-      </ul>
-      {/* chevron */}
-      {completeTodos && completeTodos.length > 0 && (
+      {onGoingTodos.length > 0 && (
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+          sensors={sensors}
+        >
+          <ul className="todos">
+            <SortableContext
+              items={onGoingTodos.map((todo) => todo._id)}
+              strategy={verticalListSortingStrategy}
+            >
+              {onGoingTodos?.map(({ _id: todoId, title }) => (
+                <ListTodo
+                  key={todoId}
+                  todoId={todoId}
+                  todolistId={todolistId}
+                  title={title}
+                  status={ON_GOING}
+                />
+              ))}
+            </SortableContext>
+          </ul>
+        </DndContext>
+      )}
+
+      {fetchedCompleteTodos && fetchedCompleteTodos.length > 0 && (
         <>
           <div className="todos_title">
             <p>
-              {`${completeTodos.length} ${
-                completeTodos.length === 1 ? 'terminé' : 'terminés'
+              {`${fetchedCompleteTodos.length} ${
+                fetchedCompleteTodos.length === 1 ? 'terminé' : 'terminés'
               }`}
             </p>
             {isChevronToogle ? (
@@ -65,10 +144,10 @@ export const ListTodos = ({ todolistId }: ListOnGoingProps) => {
               />
             )}
           </div>
-          {/* section todos completed */}
+
           {isChevronToogle && (
             <ul className="todos">
-              {completeTodos.map(({ _id: todoId, title }) => (
+              {fetchedCompleteTodos.map(({ _id: todoId, title }) => (
                 <ListTodo
                   key={todoId}
                   todoId={todoId}

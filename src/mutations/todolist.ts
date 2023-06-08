@@ -22,6 +22,13 @@ type UpdateTodolistTitlePayload = {
   token: string;
 };
 
+type UpdateTodolistTodosOrderPayload = {
+  id: string;
+  newItems: string[];
+  section: Status;
+  token: string;
+};
+
 const newTodolist = async (payload: NewTodolistPayload) => {
   const response = await axios
     .create({
@@ -80,6 +87,36 @@ export const useUpdateTodolistTitleMutation = (queryClient: QueryClient) =>
       queryClient.invalidateQueries(['todolists']);
     },
     onError: (error) => {
-      console.error('[updateTodolistStatus] - error:', error);
+      console.error('[updateTodolistTitle] - error:', error);
+    },
+  });
+
+const updateTodolistTodosOrder = async (
+  payload: UpdateTodolistTodosOrderPayload,
+) => {
+  const response = await axios
+    .create({
+      headers: { Authorization: `Bearer ${payload.token}` },
+    })
+    .patch(`http://localhost:3000/todolist/todos/${payload.id}`, payload);
+
+  return response.data;
+};
+
+export const useUpdateTodolistTodosOrder = (queryClient: QueryClient) =>
+  useMutation({
+    mutationFn: (payload: UpdateTodolistTodosOrderPayload) =>
+      updateTodolistTodosOrder(payload),
+    onSuccess: (data, variables) => {
+      // TODO: setQueryData with data return onGoingTodos
+
+      queryClient.invalidateQueries([
+        'todolists',
+        variables.id,
+        variables.section,
+      ]);
+    },
+    onError: (error) => {
+      console.error('[updateTodolistTodosOrder] - error:', error);
     },
   });

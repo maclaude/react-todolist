@@ -1,3 +1,5 @@
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { useQueryClient } from '@tanstack/react-query';
 import { IconContext } from 'react-icons';
 import { MdRemoveCircle } from 'react-icons/md';
@@ -27,8 +29,22 @@ export const ListTodo = ({
     useQueryClient(),
   );
 
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: todoId });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
   return (
-    <li className="todos_item">
+    <li
+      className="todos_item"
+      style={style}
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
+    >
       <button
         onClick={() =>
           updateTodoStatusMutation.mutate({
