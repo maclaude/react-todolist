@@ -1,7 +1,8 @@
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { Status } from '../types';
+import { ON_GOING } from '../data/constant';
+import { Status, Todolist } from '../types';
 
 type NewTodolistPayload = {
   title: string;
@@ -29,7 +30,7 @@ type UpdateTodolistTodosOrderPayload = {
   token: string;
 };
 
-const newTodolist = async (payload: NewTodolistPayload) => {
+const newTodolist = async (payload: NewTodolistPayload): Promise<Todolist> => {
   const response = await axios
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
@@ -39,9 +40,30 @@ const newTodolist = async (payload: NewTodolistPayload) => {
   return response.data;
 };
 
-export const useNewTodolistMutation = () =>
+export const useNewTodolistMutation = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: (payload: NewTodolistPayload) => newTodolist(payload),
+    onSuccess: (data) => {
+      queryClient.setQueryData<Todolist[]>(
+        ['todolists'],
+        (previousTodolists) => [
+          // @ts-ignore TODO: need to redefine previous todolist type
+          ...previousTodolists,
+          {
+            _id: data._id,
+            title: 'New todolist',
+            status: ON_GOING,
+            items: {
+              ongoing: [],
+              complete: [],
+              delete: [],
+            },
+          },
+        ],
+      );
+
+      queryClient.invalidateQueries(['todolists']);
+    },
     onError: (error) => {
       console.error('[newTodolist] - error:', error);
     },

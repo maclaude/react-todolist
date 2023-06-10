@@ -11,10 +11,10 @@ import {
   arrayMove,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { GoChevronDown, GoChevronRight } from 'react-icons/go';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../context/authContext';
 import { COMPLETE, ON_GOING } from '../data/constant';
 import { useUpdateTodolistTodosOrder } from '../mutations/todolist';
@@ -98,7 +98,7 @@ export const ListTodos = ({ todolistId }: ListOnGoingProps) => {
   );
 
   return (
-    <>
+    <div id="todos-container">
       {onGoingTodos.length > 0 && (
         <DndContext
           collisionDetection={closestCenter}
@@ -160,6 +160,6 @@ export const ListTodos = ({ todolistId }: ListOnGoingProps) => {
           )}
         </>
       )}
-    </>
+    </div>
   );
 };

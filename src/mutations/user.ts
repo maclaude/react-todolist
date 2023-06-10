@@ -13,6 +13,11 @@ type SignupPayload = {
   password: string;
 };
 
+type UpdateTodolistsOrderPayload = {
+  newItems: string[];
+  token: string;
+};
+
 type DeleteAllTodolistsPayload = {
   token: string;
 };
@@ -48,6 +53,28 @@ export const useSignupMutation = () =>
     mutationFn: (payload: SignupPayload) => signup(payload),
     onError: (error) => {
       console.error('[signup] - error:', error);
+    },
+  });
+
+const updateTodolistsOrder = async (payload: UpdateTodolistsOrderPayload) => {
+  const response = await axios
+    .create({
+      headers: { Authorization: `Bearer ${payload.token}` },
+    })
+    .patch(`http://localhost:3000/user/todolists`, payload);
+
+  return response.data;
+};
+
+export const useUpdateTodolistsOrderMutation = (queryClient: QueryClient) =>
+  useMutation({
+    mutationFn: (payload: UpdateTodolistsOrderPayload) =>
+      updateTodolistsOrder(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['todolists']);
+    },
+    onError: (error) => {
+      console.error('[updateTodolistsOrder] - error:', error);
     },
   });
 

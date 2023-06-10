@@ -53,9 +53,7 @@ export const ListTitle = ({
         value={listTitle}
       />
       {onGoingCount > 0 && (
-        <p className="title-counter">{`${onGoingCount} ${
-          onGoingCount === 1 ? 'rappel' : 'rappels'
-        }`}</p>
+        <p>{`${onGoingCount} ${onGoingCount === 1 ? 'rappel' : 'rappels'}`}</p>
       )}
     </div>
   );
