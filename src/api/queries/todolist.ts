@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { Status, Todo, Todolist } from '../types';
+import { Status, Todo, Todolist } from '../../types';
 
 type AuthContext = {
   authenticated: boolean;
@@ -16,15 +16,13 @@ type FetchTodolistTodosPayload = {
 const fetchTodolist = async (
   authContext: AuthContext,
   id?: string,
-): Promise<Todolist> => {
-  const response = await axios
+): Promise<Todolist> =>
+  axios
     .create({
       headers: { Authorization: `Bearer ${authContext.token}` },
     })
-    .get(`http://localhost:3000/todolist/${id}`);
-
-  return response.data;
-};
+    .get(`http://localhost:3000/todolist/${id}`)
+    .then(({ data }) => data);
 
 export const useFetchTodolistQuery = (authContext: AuthContext, id?: string) =>
   useQuery({
@@ -36,15 +34,13 @@ export const useFetchTodolistQuery = (authContext: AuthContext, id?: string) =>
 const fetchTodolistTodos = async (
   authContext: AuthContext,
   payload: FetchTodolistTodosPayload,
-): Promise<Todo[]> => {
-  const response = await axios
+): Promise<Todo[]> =>
+  axios
     .create({
       headers: { Authorization: `Bearer ${authContext.token}` },
     })
-    .get(`http://localhost:3000/todolist/${payload.status}/${payload.id}`);
-
-  return response.data;
-};
+    .get(`http://localhost:3000/todolist/${payload.status}/${payload.id}`)
+    .then(({ data }) => data);
 
 export const usefetchTodolistTodosQuery = (
   authContext: AuthContext,

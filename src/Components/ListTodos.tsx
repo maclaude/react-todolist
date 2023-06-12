@@ -15,10 +15,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { GoChevronDown, GoChevronRight } from 'react-icons/go';
 
+import { useUpdateTodolistTodosOrder } from '../api/mutations/todolist';
+import { usefetchTodolistTodosQuery } from '../api/queries/todolist';
 import { useAuth } from '../context/authContext';
 import { COMPLETE, ON_GOING } from '../data/constant';
-import { useUpdateTodolistTodosOrder } from '../mutations/todolist';
-import { usefetchTodolistTodosQuery } from '../queries/todolist';
 import { Todo } from '../types';
 import { ListTodo } from './ListTodo';
 
@@ -29,7 +29,6 @@ interface ListOnGoingProps {
 export const ListTodos = ({ todolistId }: ListOnGoingProps) => {
   const { authenticated, token } = useAuth();
   const [isChevronToogle, setIsChevronToogle] = useState<boolean>(true);
-  const [onGoingTodos, setOnGoingTodos] = useState<Todo[]>([]);
 
   const authContext = { authenticated, token };
 
@@ -53,6 +52,10 @@ export const ListTodos = ({ todolistId }: ListOnGoingProps) => {
     useQueryClient(),
   );
 
+  const [onGoingTodos, setOnGoingTodos] = useState<Todo[]>(
+    fetchedOnGoingTodos || [],
+  );
+
   useEffect(() => {
     if (fetchedOnGoingTodos) {
       setOnGoingTodos(fetchedOnGoingTodos);
@@ -60,7 +63,6 @@ export const ListTodos = ({ todolistId }: ListOnGoingProps) => {
   }, [fetchedOnGoingTodos]);
 
   useEffect(() => {
-    // Update todos order if number of todos is minimum 2
     if (onGoingTodos.length > 1) {
       updateTodolistTodosOrderMutation.mutate({
         id: todolistId,
@@ -99,30 +101,28 @@ export const ListTodos = ({ todolistId }: ListOnGoingProps) => {
 
   return (
     <div id="todos-container">
-      {onGoingTodos.length > 0 && (
-        <DndContext
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-          sensors={sensors}
-        >
-          <ul className="todos">
-            <SortableContext
-              items={onGoingTodos.map((todo) => todo._id)}
-              strategy={verticalListSortingStrategy}
-            >
-              {onGoingTodos?.map(({ _id: todoId, title }) => (
-                <ListTodo
-                  key={todoId}
-                  todoId={todoId}
-                  todolistId={todolistId}
-                  title={title}
-                  status={ON_GOING}
-                />
-              ))}
-            </SortableContext>
-          </ul>
-        </DndContext>
-      )}
+      <DndContext
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+        sensors={sensors}
+      >
+        <ul className="todos">
+          <SortableContext
+            items={onGoingTodos.map((todo) => todo._id)}
+            strategy={verticalListSortingStrategy}
+          >
+            {onGoingTodos.map(({ _id: todoId, title }) => (
+              <ListTodo
+                key={todoId}
+                todoId={todoId}
+                todolistId={todolistId}
+                title={title}
+                status={ON_GOING}
+              />
+            ))}
+          </SortableContext>
+        </ul>
+      </DndContext>
 
       {fetchedCompleteTodos && fetchedCompleteTodos.length > 0 && (
         <>

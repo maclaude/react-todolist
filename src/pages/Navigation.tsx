@@ -18,12 +18,12 @@ import { FaSignInAlt } from 'react-icons/fa';
 import { MdAddCircle } from 'react-icons/md';
 import { NavLink, useNavigate } from 'react-router-dom';
 
+import { useNewTodolistMutation } from '../api/mutations/todolist';
+import { useUpdateTodolistsOrderMutation } from '../api/mutations/user';
+import { useFetchTodolistsQuery } from '../api/queries/user';
 import { NavigationItem } from '../components/NavigationItem';
 import { useAuth } from '../context/authContext';
 import { ON_GOING } from '../data/constant';
-import { useNewTodolistMutation } from '../mutations/todolist';
-import { useUpdateTodolistsOrderMutation } from '../mutations/user';
-import { useFetchTodolistsQuery } from '../queries/user';
 import { Todolist } from '../types';
 import { getOnGoingTodolists } from '../utils/helpers';
 

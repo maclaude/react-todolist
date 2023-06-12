@@ -1,6 +1,8 @@
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { Todolist } from '../../types';
+
 type SigninPayload = {
   email: string;
   password: string;
@@ -22,49 +24,35 @@ type DeleteAllTodolistsPayload = {
   token: string;
 };
 
-const signin = async (payload: SigninPayload) => {
-  const response = await axios.post(
-    'http://localhost:3000/auth/signin',
-    payload,
-  );
-
-  return response.data;
-};
+const signin = async (payload: SigninPayload) =>
+  axios
+    .post('http://localhost:3000/auth/signin', payload)
+    .then(({ data }) => data);
 
 export const useSigninMutation = () =>
   useMutation({
     mutationFn: (payload: SigninPayload) => signin(payload),
-    onError: (error) => {
-      console.error('[signin] - error:', error);
-    },
   });
 
-const signup = async (payload: SignupPayload) => {
-  const response = await axios.post(
-    'http://localhost:3000/auth/signup',
-    payload,
-  );
-
-  return response.data;
-};
+const signup = async (payload: SignupPayload) =>
+  axios
+    .post('http://localhost:3000/auth/signup', payload)
+    .then(({ data }) => data);
 
 export const useSignupMutation = () =>
   useMutation({
     mutationFn: (payload: SignupPayload) => signup(payload),
-    onError: (error) => {
-      console.error('[signup] - error:', error);
-    },
   });
 
-const updateTodolistsOrder = async (payload: UpdateTodolistsOrderPayload) => {
-  const response = await axios
+const updateTodolistsOrder = async (
+  payload: UpdateTodolistsOrderPayload,
+): Promise<Todolist[]> =>
+  axios
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .patch(`http://localhost:3000/user/todolists`, payload);
-
-  return response.data;
-};
+    .patch(`http://localhost:3000/user/todolists`, payload)
+    .then(({ data }) => data);
 
 export const useUpdateTodolistsOrderMutation = (queryClient: QueryClient) =>
   useMutation({
@@ -73,29 +61,21 @@ export const useUpdateTodolistsOrderMutation = (queryClient: QueryClient) =>
     onSuccess: () => {
       queryClient.invalidateQueries(['todolists']);
     },
-    onError: (error) => {
-      console.error('[updateTodolistsOrder] - error:', error);
-    },
   });
 
-const deleteAllTodolists = async (payload: DeleteAllTodolistsPayload) => {
-  const response = await axios
+const deleteAllTodolists = async (payload: DeleteAllTodolistsPayload) =>
+  axios
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .delete('http://localhost:3000/user/todolists');
-
-  return response.data;
-};
+    .delete('http://localhost:3000/user/todolists')
+    .then(({ data }) => data);
 
 export const useDeleteAllTodolistsMutation = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: (payload: DeleteAllTodolistsPayload) =>
       deleteAllTodolists(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries(['todolists']);
-    },
-    onError: (error) => {
-      console.error('[deleteAllTodolists] - error:', error);
+      queryClient.invalidateQueries(['todolists'], { exact: true });
     },
   });

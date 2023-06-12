@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
 
+import { useFetchTodolistQuery } from '../api/queries/todolist';
 import { ListNewTodo } from '../components/ListNewTodo';
 import { ListTitle } from '../components/ListTitle';
 import { ListTodos } from '../components/ListTodos';
 import { useAuth } from '../context/authContext';
-import { useFetchTodolistQuery } from '../queries/todolist';
 
 import '../styles/List.scss';
 

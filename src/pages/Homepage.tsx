@@ -1,6 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
+
+import { useDeleteAllTodolistsMutation } from '../api/mutations/user';
 import { useAuth } from '../context/authContext';
-import { useDeleteAllTodolistsMutation } from '../mutations/user';
 import '../styles/Homepage.scss';
 
 import avatarImg from '../assets/svg/avatar.svg';

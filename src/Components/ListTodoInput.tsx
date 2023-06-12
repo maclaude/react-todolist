@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
 import { useAuth } from '../context/authContext';
-import { useUpdateTodoTitleMutation } from '../mutations/todo';
+import { useUpdateTodoTitleMutation } from '../api/mutations/todo';
 
 interface ListInputProps {
   todoId: string;

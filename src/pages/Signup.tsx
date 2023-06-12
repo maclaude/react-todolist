@@ -4,8 +4,8 @@ import { NavLink, Navigate } from 'react-router-dom';
 import PulseLoader from 'react-spinners/PulseLoader';
 import * as yup from 'yup';
 
+import { useSignupMutation } from '../api/mutations/user';
 import { PasswordInput } from '../components/PasswordInput';
-import { useSignupMutation } from '../mutations/user';
 
 import '../styles/Sign.scss';
 

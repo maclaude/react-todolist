@@ -5,7 +5,7 @@ import { TbArrowBigRightLineFilled } from 'react-icons/tb';
 
 import { useAuth } from '../context/authContext';
 import { ON_GOING } from '../data/constant';
-import { useNewTodoMutation } from '../mutations/todo';
+import { useNewTodoMutation } from '../api/mutations/todo';
 
 interface ListFormProps {
   todolistId: string;

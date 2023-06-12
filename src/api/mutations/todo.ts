@@ -1,7 +1,7 @@
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
-import { ON_GOING } from '../data/constant';
-import { Status } from '../types';
+import { ON_GOING } from '../../data/constant';
+import { Status } from '../../types';
 
 type NewTodoPayload = {
   title: string;
@@ -24,36 +24,31 @@ type UpdateTodoTitlePayload = {
   token: string;
 };
 
-const newTodo = async (payload: NewTodoPayload) => {
-  const response = await axios
+const newTodo = async (payload: NewTodoPayload) =>
+  axios
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .post(`http://localhost:3000/todo/new-todo`, payload);
-
-  return response.data;
-};
+    .post(`http://localhost:3000/todo/new-todo`, payload)
+    .then(({ data }) => data);
 
 export const useNewTodoMutation = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: (payload: NewTodoPayload) => newTodo(payload),
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['todolists', data._id, ON_GOING]);
-    },
-    onError: (error) => {
-      console.error('[newTodolist] - error:', error);
+      queryClient.invalidateQueries(['todolists', data._id, ON_GOING], {
+        exact: true,
+      });
     },
   });
 
-const updateTodoStatus = async (payload: UpdateTodoStatusPayload) => {
-  const response = await axios
+const updateTodoStatus = async (payload: UpdateTodoStatusPayload) =>
+  axios
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .patch(`http://localhost:3000/todo/status/${payload.id}`, payload);
-
-  return response.data;
-};
+    .patch(`http://localhost:3000/todo/status/${payload.id}`, payload)
+    .then(({ data }) => data);
 
 export const useUpdateTodoStatusMutation = (queryClient: QueryClient) =>
   useMutation({
@@ -61,28 +56,20 @@ export const useUpdateTodoStatusMutation = (queryClient: QueryClient) =>
     onSuccess: () => {
       queryClient.invalidateQueries(['todolists']);
     },
-    onError: (error) => {
-      console.error('[updateTodoStatus] - error', error);
-    },
   });
 
-const updateTodoTitle = async (payload: UpdateTodoTitlePayload) => {
-  const response = await axios
+const updateTodoTitle = async (payload: UpdateTodoTitlePayload) =>
+  axios
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .patch(`http://localhost:3000/todo/title/${payload.id}`, payload);
-
-  return response.data;
-};
+    .patch(`http://localhost:3000/todo/title/${payload.id}`, payload)
+    .then(({ data }) => data);
 
 export const useUpdateTodoTitleMutation = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: (payload: UpdateTodoTitlePayload) => updateTodoTitle(payload),
     onSuccess: () => {
       queryClient.invalidateQueries(['todolists']);
-    },
-    onError: (error) => {
-      console.error('[updateTodoStatus] - error', error);
     },
   });

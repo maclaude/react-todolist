@@ -4,9 +4,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { IconContext } from 'react-icons';
 import { MdRemoveCircle } from 'react-icons/md';
 
+import { useUpdateTodoStatusMutation } from '../api/mutations/todo';
 import { useAuth } from '../context/authContext';
 import { COMPLETE, DELETE, ON_GOING } from '../data/constant';
-import { useUpdateTodoStatusMutation } from '../mutations/todo';
 import { Status } from '../types';
 import { ListTodoInput } from './ListTodoInput';
 

@@ -5,9 +5,9 @@ import { IconContext } from 'react-icons';
 import { MdDelete } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 
+import { useUpdateTodolistStatusMutation } from '../api/mutations/todolist';
 import { useAuth } from '../context/authContext';
 import { DELETE } from '../data/constant';
-import { useUpdateTodolistStatusMutation } from '../mutations/todolist';
 
 type NavigationItemProps = {
   todolistId: string;
