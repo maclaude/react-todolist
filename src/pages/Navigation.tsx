@@ -129,25 +129,6 @@ export const Navigation = () => {
         </ul>
       </DndContext>
 
-      <section>
-        <div className="navigation-title">
-          <h3>Dev</h3>
-        </div>
-
-        <div className="navigation-item">
-          <NavLink
-            className={({ isActive }) =>
-              isActive
-                ? 'navigation-item-link navigation-item-link__active'
-                : 'navigation-item-link'
-            }
-            to={`poc/dnd`}
-          >
-            Drag & drop
-          </NavLink>
-        </div>
-      </section>
-
       <div className="navigation-user">
         <NavLink className="navigation-user" to={`/user`}>
           <FaSignInAlt />
