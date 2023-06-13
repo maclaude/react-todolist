@@ -18,9 +18,13 @@ import { FaSignInAlt } from 'react-icons/fa';
 import { MdAddCircle } from 'react-icons/md';
 import { NavLink, useNavigate } from 'react-router-dom';
 
+import { useNewNoteMutation } from '../api/mutations/note';
 import { useNewTodolistMutation } from '../api/mutations/todolist';
 import { useUpdateTodolistsOrderMutation } from '../api/mutations/user';
-import { useFetchTodolistsQuery } from '../api/queries/user';
+import {
+  useFetchNotesQuery,
+  useFetchTodolistsQuery,
+} from '../api/queries/user';
 import { NavigationItem } from '../components/NavigationItem';
 import { useAuth } from '../context/authContext';
 import { ON_GOING } from '../data/constant';
@@ -34,7 +38,12 @@ export const Navigation = () => {
   const { id, token, authenticated } = useAuth();
   const [todolists, setTodolists] = useState<Todolist[]>([]);
 
-  const { data: fetchTodolists } = useFetchTodolistsQuery({
+  const { data: fetchedTodolists } = useFetchTodolistsQuery({
+    authenticated,
+    token,
+  });
+
+  const { data: fetchedNotes } = useFetchNotesQuery({
     authenticated,
     token,
   });
@@ -44,11 +53,13 @@ export const Navigation = () => {
     useQueryClient(),
   );
 
+  const newNoteMutation = useNewNoteMutation(useQueryClient());
+
   useEffect(() => {
-    if (fetchTodolists) {
-      setTodolists(fetchTodolists);
+    if (fetchedTodolists) {
+      setTodolists(fetchedTodolists);
     }
-  }, [fetchTodolists]);
+  }, [fetchedTodolists]);
 
   useEffect(() => {
     // updateTodolistsOrderMutation only with a minimum of 2 todos
@@ -65,6 +76,12 @@ export const Navigation = () => {
       navigate(`/todolist/${newTodolistMutation.data._id}`);
     }
   }, [newTodolistMutation.isSuccess]);
+
+  useEffect(() => {
+    if (newNoteMutation.data) {
+      navigate(`/note/${newNoteMutation.data._id}`);
+    }
+  }, [newNoteMutation.isSuccess]);
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -90,44 +107,79 @@ export const Navigation = () => {
 
   return (
     <nav className="navigation">
-      <div className="navigation-title">
-        <h3>Mes listes</h3>
-        <IconContext.Provider value={{ className: 'icon' }}>
-          <MdAddCircle
-            onClick={() =>
-              newTodolistMutation.mutate({
-                title: 'New todolist',
-                status: ON_GOING,
-                userId: id,
-                token,
-              })
-            }
-          />
-        </IconContext.Provider>
-      </div>
+      <section>
+        <div className="navigation-title">
+          <h3>Mes listes</h3>
+          <IconContext.Provider value={{ className: 'icon' }}>
+            <MdAddCircle
+              onClick={() =>
+                newTodolistMutation.mutate({
+                  title: 'New todolist',
+                  status: ON_GOING,
+                  userId: id,
+                  token,
+                })
+              }
+            />
+          </IconContext.Provider>
+        </div>
 
-      <DndContext
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-        sensors={sensors}
-      >
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+          sensors={sensors}
+        >
+          <ul>
+            <SortableContext
+              items={todolists.map((item) => item._id)}
+              strategy={verticalListSortingStrategy}
+            >
+              {getOnGoingTodolists(todolists).map(
+                ({ _id: todolistId, title }) => (
+                  <NavigationItem
+                    key={todolistId}
+                    todolistId={todolistId}
+                    title={title}
+                  />
+                ),
+              )}
+            </SortableContext>
+          </ul>
+        </DndContext>
+      </section>
+
+      <section>
+        <div className="navigation-title">
+          <h3>Mes notes</h3>
+          <IconContext.Provider value={{ className: 'icon' }}>
+            <MdAddCircle
+              onClick={() =>
+                newNoteMutation.mutate({
+                  title: 'New note',
+                  content: '[]',
+                  token,
+                })
+              }
+            />
+          </IconContext.Provider>
+        </div>
         <ul>
-          <SortableContext
-            items={todolists.map((item) => item._id)}
-            strategy={verticalListSortingStrategy}
-          >
-            {getOnGoingTodolists(todolists).map(
-              ({ _id: todolistId, title }) => (
-                <NavigationItem
-                  key={todolistId}
-                  todolistId={todolistId}
-                  title={title}
-                />
-              ),
-            )}
-          </SortableContext>
+          {fetchedNotes?.map(({ _id: noteId, title }) => (
+            <li key={noteId} className="navigation-item">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? 'navigation-item-link navigation-item-link__active'
+                    : 'navigation-item-link'
+                }
+                to={`note/${noteId}`}
+              >
+                {title}
+              </NavLink>
+            </li>
+          ))}
         </ul>
-      </DndContext>
+      </section>
 
       <div className="navigation-user">
         <NavLink className="navigation-user" to={`/user`}>

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { Todolist } from '../../types';
+import { Note, Todolist } from '../../types';
 
 type AuthContext = {
   authenticated: boolean;
@@ -21,4 +21,19 @@ export const useFetchTodolistsQuery = (authContext: AuthContext) =>
     queryKey: ['todolists'],
     enabled: Boolean(authContext.authenticated),
     queryFn: () => fetchTodolists(authContext),
+  });
+
+const fetchNotes = async (authContext: AuthContext): Promise<Note[]> =>
+  axios
+    .create({
+      headers: { Authorization: `Bearer ${authContext.token}` },
+    })
+    .get(`http://localhost:3000/user/notes`)
+    .then(({ data }) => data);
+
+export const useFetchNotesQuery = (authContext: AuthContext) =>
+  useQuery({
+    queryKey: ['notes'],
+    enabled: Boolean(authContext.authenticated),
+    queryFn: () => fetchNotes(authContext),
   });
