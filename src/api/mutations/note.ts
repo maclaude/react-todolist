@@ -2,6 +2,7 @@ import { QueryClient, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { Note } from '../../types';
+import { API_BASE_URL, QUERY_KEY } from '../constants';
 
 type NewNotePayload = {
   title: string;
@@ -26,7 +27,7 @@ const newNote = async (payload: NewNotePayload): Promise<Note> =>
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .post(`http://localhost:3000/note/new-note`, payload)
+    .post(`${API_BASE_URL}/note/new-note`, payload)
     .then(({ data }) => data);
 
 export const useNewNoteMutation = (queryClient: QueryClient) =>
@@ -34,7 +35,7 @@ export const useNewNoteMutation = (queryClient: QueryClient) =>
     mutationFn: (payload: NewNotePayload) => newNote(payload),
     onSuccess: (data) => {
       queryClient.setQueryData<Note[]>(
-        ['notes'],
+        [QUERY_KEY.NOTES],
         (previousNotes: Note[] | undefined): Note[] => [
           ...(previousNotes || []),
           {
@@ -48,7 +49,7 @@ export const useNewNoteMutation = (queryClient: QueryClient) =>
         ],
       );
 
-      queryClient.invalidateQueries(['notes']);
+      queryClient.invalidateQueries([QUERY_KEY.NOTES]);
     },
   });
 
@@ -57,14 +58,14 @@ const updateNoteTitle = async (payload: UpdateNoteTitlePayload) =>
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .patch(`http://localhost:3000/note/title/${payload.id}`, payload)
+    .patch(`${API_BASE_URL}/note/title/${payload.id}`, payload)
     .then(({ data }) => data);
 
 export const useUpdateNoteTitleMutation = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: (payload: UpdateNoteTitlePayload) => updateNoteTitle(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries(['notes']);
+      queryClient.invalidateQueries([QUERY_KEY.NOTES]);
     },
   });
 
@@ -73,7 +74,7 @@ const updateNoteContent = async (payload: UpdateNoteContentPayload) =>
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .patch(`http://localhost:3000/note/content/${payload.id}`, payload)
+    .patch(`${API_BASE_URL}/note/content/${payload.id}`, payload)
     .then(({ data }) => data);
 
 export const useUpdateNoteContentMutation = (queryClient: QueryClient) =>
@@ -81,6 +82,6 @@ export const useUpdateNoteContentMutation = (queryClient: QueryClient) =>
     mutationFn: (payload: UpdateNoteContentPayload) =>
       updateNoteContent(payload),
     onSuccess: (data, variables) => {
-      queryClient.invalidateQueries(['notes', variables.id]);
+      queryClient.invalidateQueries([QUERY_KEY.NOTES, variables.id]);
     },
   });

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { Status, Todo, Todolist } from '../../types';
+import { API_BASE_URL, QUERY_KEY } from '../constants';
 
 type AuthContext = {
   authenticated: boolean;
@@ -13,7 +14,7 @@ type FetchTodolistTodosPayload = {
   status: Status;
 };
 
-const fetchTodolist = async (
+const fetchTodolistById = async (
   authContext: AuthContext,
   id?: string,
 ): Promise<Todolist> =>
@@ -21,14 +22,17 @@ const fetchTodolist = async (
     .create({
       headers: { Authorization: `Bearer ${authContext.token}` },
     })
-    .get(`http://localhost:3000/todolist/${id}`)
+    .get(`${API_BASE_URL}/todolist/${id}`)
     .then(({ data }) => data);
 
-export const useFetchTodolistQuery = (authContext: AuthContext, id?: string) =>
+export const useFetchTodolistByIdQuery = (
+  authContext: AuthContext,
+  id?: string,
+) =>
   useQuery({
-    queryKey: ['todolists', id],
+    queryKey: [QUERY_KEY.TODOLISTS, id],
     enabled: Boolean(id),
-    queryFn: () => fetchTodolist(authContext, id),
+    queryFn: () => fetchTodolistById(authContext, id),
   });
 
 const fetchTodolistTodos = async (
@@ -39,7 +43,7 @@ const fetchTodolistTodos = async (
     .create({
       headers: { Authorization: `Bearer ${authContext.token}` },
     })
-    .get(`http://localhost:3000/todolist/${payload.status}/${payload.id}`)
+    .get(`${API_BASE_URL}/todolist/${payload.status}/${payload.id}`)
     .then(({ data }) => data);
 
 export const usefetchTodolistTodosQuery = (
@@ -47,7 +51,7 @@ export const usefetchTodolistTodosQuery = (
   payload: FetchTodolistTodosPayload,
 ) =>
   useQuery({
-    queryKey: ['todolists', payload.id, payload.status],
+    queryKey: [QUERY_KEY.TODOLISTS, payload.id, payload.status],
     enabled: Boolean(payload.id),
     queryFn: () => fetchTodolistTodos(authContext, payload),
   });

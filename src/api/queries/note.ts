@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { Note } from '../../types';
+import { API_BASE_URL, QUERY_KEY } from '../constants';
 
 type AuthContext = {
   authenticated: boolean;
@@ -16,12 +17,12 @@ const fetchNoteById = async (
     .create({
       headers: { Authorization: `Bearer ${authContext.token}` },
     })
-    .get(`http://localhost:3000/note/${id}`)
+    .get(`${API_BASE_URL}/note/${id}`)
     .then(({ data }) => data);
 
 export const useFetchNoteByIdQuery = (authContext: AuthContext, id?: string) =>
   useQuery({
-    queryKey: ['notes', id],
+    queryKey: [QUERY_KEY.NOTES, id],
     enabled: Boolean(id),
     queryFn: () => fetchNoteById(authContext, id),
   });

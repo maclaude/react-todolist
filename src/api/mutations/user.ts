@@ -2,6 +2,7 @@ import { QueryClient, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { Todolist } from '../../types';
+import { API_BASE_URL, QUERY_KEY } from '../constants';
 
 type SigninPayload = {
   email: string;
@@ -25,9 +26,7 @@ type DeleteAllTodolistsPayload = {
 };
 
 const signin = async (payload: SigninPayload) =>
-  axios
-    .post('http://localhost:3000/auth/signin', payload)
-    .then(({ data }) => data);
+  axios.post(`${API_BASE_URL}/auth/signin`, payload).then(({ data }) => data);
 
 export const useSigninMutation = () =>
   useMutation({
@@ -35,9 +34,7 @@ export const useSigninMutation = () =>
   });
 
 const signup = async (payload: SignupPayload) =>
-  axios
-    .post('http://localhost:3000/auth/signup', payload)
-    .then(({ data }) => data);
+  axios.post(`${API_BASE_URL}/auth/signup`, payload).then(({ data }) => data);
 
 export const useSignupMutation = () =>
   useMutation({
@@ -51,7 +48,7 @@ const updateTodolistsOrder = async (
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .patch(`http://localhost:3000/user/todolists`, payload)
+    .patch(`${API_BASE_URL}/user/todolists`, payload)
     .then(({ data }) => data);
 
 export const useUpdateTodolistsOrderMutation = (queryClient: QueryClient) =>
@@ -59,7 +56,7 @@ export const useUpdateTodolistsOrderMutation = (queryClient: QueryClient) =>
     mutationFn: (payload: UpdateTodolistsOrderPayload) =>
       updateTodolistsOrder(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries(['todolists']);
+      queryClient.invalidateQueries([QUERY_KEY.TODOLISTS]);
     },
   });
 
@@ -68,7 +65,7 @@ const deleteAllTodolists = async (payload: DeleteAllTodolistsPayload) =>
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .delete('http://localhost:3000/user/todolists')
+    .delete(`${API_BASE_URL}/user/todolists`)
     .then(({ data }) => data);
 
 export const useDeleteAllTodolistsMutation = (queryClient: QueryClient) =>
@@ -76,6 +73,6 @@ export const useDeleteAllTodolistsMutation = (queryClient: QueryClient) =>
     mutationFn: (payload: DeleteAllTodolistsPayload) =>
       deleteAllTodolists(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries(['todolists'], { exact: true });
+      queryClient.invalidateQueries([QUERY_KEY.TODOLISTS], { exact: true });
     },
   });

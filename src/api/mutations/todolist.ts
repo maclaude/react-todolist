@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import { ON_GOING } from '../../data/constant';
 import { Status, Todo, Todolist } from '../../types';
+import { API_BASE_URL, QUERY_KEY } from '../constants';
 
 type NewTodolistPayload = {
   title: string;
@@ -35,7 +36,7 @@ const newTodolist = async (payload: NewTodolistPayload): Promise<Todolist> =>
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .post(`http://localhost:3000/todolist/new-todolist`, payload)
+    .post(`${API_BASE_URL}/todolist/new-todolist`, payload)
     .then(({ data }) => data);
 
 export const useNewTodolistMutation = (queryClient: QueryClient) =>
@@ -43,7 +44,7 @@ export const useNewTodolistMutation = (queryClient: QueryClient) =>
     mutationFn: (payload: NewTodolistPayload) => newTodolist(payload),
     onSuccess: (data) => {
       queryClient.setQueryData<Todolist[]>(
-        ['todolists'],
+        [QUERY_KEY.TODOLISTS],
         (previousTodolists: Todolist[] | undefined): Todolist[] => [
           ...(previousTodolists || []),
           {
@@ -62,7 +63,7 @@ export const useNewTodolistMutation = (queryClient: QueryClient) =>
         ],
       );
 
-      queryClient.invalidateQueries(['todolists']);
+      queryClient.invalidateQueries([QUERY_KEY.TODOLISTS]);
     },
   });
 
@@ -71,7 +72,7 @@ const updateTodolistStatus = async (payload: UpdateTodolistStatusPayload) =>
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .patch(`http://localhost:3000/todolist/status/${payload.id}`, payload)
+    .patch(`${API_BASE_URL}/todolist/status/${payload.id}`, payload)
     .then(({ data }) => data);
 
 export const useUpdateTodolistStatusMutation = (queryClient: QueryClient) =>
@@ -79,7 +80,7 @@ export const useUpdateTodolistStatusMutation = (queryClient: QueryClient) =>
     mutationFn: (payload: UpdateTodolistStatusPayload) =>
       updateTodolistStatus(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries(['todolists']);
+      queryClient.invalidateQueries([QUERY_KEY.TODOLISTS]);
     },
   });
 
@@ -88,7 +89,7 @@ const updateTodolistTitle = async (payload: UpdateTodolistTitlePayload) =>
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .patch(`http://localhost:3000/todolist/title/${payload.id}`, payload)
+    .patch(`${API_BASE_URL}/todolist/title/${payload.id}`, payload)
     .then(({ data }) => data);
 
 export const useUpdateTodolistTitleMutation = (queryClient: QueryClient) =>
@@ -96,7 +97,7 @@ export const useUpdateTodolistTitleMutation = (queryClient: QueryClient) =>
     mutationFn: (payload: UpdateTodolistTitlePayload) =>
       updateTodolistTitle(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries(['todolists'], { exact: true });
+      queryClient.invalidateQueries([QUERY_KEY.TODOLISTS], { exact: true });
     },
   });
 
@@ -107,7 +108,7 @@ const updateTodolistTodosOrder = async (
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .patch(`http://localhost:3000/todolist/todos/${payload.id}`, payload)
+    .patch(`${API_BASE_URL}/todolist/todos/${payload.id}`, payload)
     .then(({ data }) => data);
 
 export const useUpdateTodolistTodosOrder = (queryClient: QueryClient) =>
@@ -116,7 +117,7 @@ export const useUpdateTodolistTodosOrder = (queryClient: QueryClient) =>
       updateTodolistTodosOrder(payload),
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries([
-        'todolists',
+        QUERY_KEY.TODOLISTS,
         variables.id,
         variables.section,
       ]);

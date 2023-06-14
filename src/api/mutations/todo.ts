@@ -1,7 +1,9 @@
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
+
 import { ON_GOING } from '../../data/constant';
 import { Status } from '../../types';
+import { API_BASE_URL, QUERY_KEY } from '../constants';
 
 type NewTodoPayload = {
   title: string;
@@ -29,14 +31,14 @@ const newTodo = async (payload: NewTodoPayload) =>
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .post(`http://localhost:3000/todo/new-todo`, payload)
+    .post(`${API_BASE_URL}/todo/new-todo`, payload)
     .then(({ data }) => data);
 
 export const useNewTodoMutation = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: (payload: NewTodoPayload) => newTodo(payload),
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['todolists', data._id, ON_GOING], {
+      queryClient.invalidateQueries([QUERY_KEY.TODOLISTS, data._id, ON_GOING], {
         exact: true,
       });
     },
@@ -47,14 +49,14 @@ const updateTodoStatus = async (payload: UpdateTodoStatusPayload) =>
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .patch(`http://localhost:3000/todo/status/${payload.id}`, payload)
+    .patch(`${API_BASE_URL}/todo/status/${payload.id}`, payload)
     .then(({ data }) => data);
 
 export const useUpdateTodoStatusMutation = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: (payload: UpdateTodoStatusPayload) => updateTodoStatus(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries(['todolists']);
+      queryClient.invalidateQueries([QUERY_KEY.TODOLISTS]);
     },
   });
 
@@ -63,13 +65,13 @@ const updateTodoTitle = async (payload: UpdateTodoTitlePayload) =>
     .create({
       headers: { Authorization: `Bearer ${payload.token}` },
     })
-    .patch(`http://localhost:3000/todo/title/${payload.id}`, payload)
+    .patch(`${API_BASE_URL}/todo/title/${payload.id}`, payload)
     .then(({ data }) => data);
 
 export const useUpdateTodoTitleMutation = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: (payload: UpdateTodoTitlePayload) => updateTodoTitle(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries(['todolists']);
+      queryClient.invalidateQueries([QUERY_KEY.TODOLISTS]);
     },
   });

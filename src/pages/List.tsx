@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-import { useFetchTodolistQuery } from '../api/queries/todolist';
+import { useFetchTodolistByIdQuery } from '../api/queries/todolist';
 import { ListNewTodo } from '../components/ListNewTodo';
 import { ListTitle } from '../components/ListTitle';
 import { ListTodos } from '../components/ListTodos';
@@ -12,7 +12,7 @@ export const List = () => {
   const { authenticated, token } = useAuth();
   const { id } = useParams();
 
-  const { data: todolist } = useFetchTodolistQuery(
+  const { data: todolist } = useFetchTodolistByIdQuery(
     {
       authenticated,
       token,
