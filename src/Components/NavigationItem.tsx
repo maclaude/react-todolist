@@ -3,7 +3,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { useQueryClient } from '@tanstack/react-query';
 import { IconContext } from 'react-icons';
 import { MdDelete } from 'react-icons/md';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { useUpdateTodolistStatusMutation } from '../api/mutations/todolist';
 import { useAuth } from '../context/authContext';
@@ -16,6 +16,8 @@ type NavigationItemProps = {
 
 export const NavigationItem = ({ todolistId, title }: NavigationItemProps) => {
   const { token } = useAuth();
+  const navigate = useNavigate();
+
   const updateTodolistStatusMutation = useUpdateTodolistStatusMutation(
     useQueryClient(),
   );
@@ -50,13 +52,16 @@ export const NavigationItem = ({ todolistId, title }: NavigationItemProps) => {
         value={{ className: 'icon navigation-item-delete-icon' }}
       >
         <MdDelete
-          onClick={() =>
-            updateTodolistStatusMutation.mutate({
+          onClick={() => {
+            // Go back to previous history
+            navigate(-1);
+
+            return updateTodolistStatusMutation.mutate({
               id: todolistId,
               status: DELETE,
               token,
-            })
-          }
+            });
+          }}
         />
       </IconContext.Provider>
     </li>
