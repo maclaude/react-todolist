@@ -106,7 +106,7 @@ export const Navigation = () => {
   );
 
   return (
-    <nav className="navigation">
+    <nav className="navigation box--shadow">
       <section>
         <div className="navigation-title">
           <h3>Mes listes</h3>

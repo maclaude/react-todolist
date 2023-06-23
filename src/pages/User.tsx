@@ -14,7 +14,7 @@ export const User = () => {
     </main>
   ) : (
     <main id="central_container">
-      <div className="user-container">
+      <div className="user-container box--shadow">
         <h2 className="user-title">Bienvenue !</h2>
         <span className="user-intro">
           Connectez vous pour pouvoir sauvegarder et consulter vos listes ✨

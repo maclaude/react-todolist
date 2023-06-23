@@ -35,7 +35,7 @@ export const List = () => {
     <main id="main_container">
       {todolist && (
         <>
-          <div id="todolist_container">
+          <div id="todolist_container" className="box--shadow">
             <ListTitle
               todolistId={todolist._id}
               title={todolist.title}

@@ -6,9 +6,6 @@
     padding: 35px 40px;
     display: flex;
     flex-direction: column;
-    background-color: var(--clr-main);
-    box-shadow: var(--regular-box-shadow);
-    border-radius: 10px;
   }
 
   &-form {
@@ -67,7 +64,6 @@
     font-size: 1em;
     line-height: 1.5;
     overflow-y: scroll;
-    color: #444;
 
     &::-webkit-scrollbar {
       width: 0px;

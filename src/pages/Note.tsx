@@ -22,7 +22,7 @@ export const Note = () => {
   return (
     <main id="main_container">
       {fetchedNote && (
-        <div id="note_container">
+        <div id="note_container" className="box--shadow">
           <NoteTitle noteId={fetchedNote._id} title={fetchedNote.title} />
           <section id="note_item">
             <BlockNote

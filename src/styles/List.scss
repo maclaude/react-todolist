@@ -9,9 +9,6 @@
     padding: 35px 40px;
     display: flex;
     flex-direction: column;
-    background-color: var(--clr-main);
-    box-shadow: var(--regular-box-shadow);
-    border-radius: 10px;
   }
 
   &_title {
@@ -118,7 +115,6 @@
       font-size: inherit;
       flex-grow: 1;
       cursor: pointer;
-      color: #444;
     }
   }
 }

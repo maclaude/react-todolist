@@ -60,7 +60,7 @@ export const Signup = () => {
 
   return (
     <main id="central_container">
-      <div className="sign-container">
+      <div className="sign-container box--shadow">
         <h2 className="sign-title">Inscription</h2>
 
         <form className="sign-form" onSubmit={handleSubmit(onSubmit)}>

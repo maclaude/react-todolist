@@ -72,7 +72,7 @@ export const Todo = ({ todoId }: TodoProps) => {
   };
 
   return (
-    <div className="todo-container">
+    <div className="todo-container box--shadow">
       <form onBlur={handleSubmit(onSubmit)} className="todo-form">
         <div className="todo_title todo-item">
           <textarea

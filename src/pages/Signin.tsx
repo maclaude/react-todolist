@@ -49,7 +49,7 @@ export const Signin = () => {
   if (isLoading)
     return (
       <main id="central_container">
-        <div className="sign-container">
+        <div className="sign-container box--shadow">
           <span className="sign-loader">
             <PulseLoader />
           </span>
@@ -59,7 +59,7 @@ export const Signin = () => {
 
   return (
     <main id="central_container">
-      <div className="sign-container">
+      <div className="sign-container box--shadow">
         <h2 className="sign-title">Connexion</h2>
 
         <form className="sign-form" onSubmit={handleSubmit(onSubmit)}>

@@ -34,12 +34,9 @@
   --clr-medium-grey: #D6DBDF ;
   --clr-dark: #24292f;
   --clr-acc-green: #47e5bdff;
-  --clr-acc-blue: #27384d;
-  --clr-acc-blue--hover: #2E4053;
   --clr-acc-red: #ff385d;
   --clr-acc-red--hover: #f53f5e;
-  --light-box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  --regular-box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  --box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
 /* Fonts
@@ -96,4 +93,10 @@ input {
 
 .chevron {
   cursor: pointer;
+}
+
+.box--shadow {
+  background-color: var(--clr-main);
+  box-shadow: var(--box-shadow);
+  border-radius: 10px;
 }

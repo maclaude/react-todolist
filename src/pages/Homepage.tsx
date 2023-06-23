@@ -18,7 +18,7 @@ export const HomePage = () => {
   };
 
   return (
-    <div className="home-container">
+    <div className="home-container box--shadow">
       <div className="home-title">
         <h2>Mon compte</h2>
         <div>
