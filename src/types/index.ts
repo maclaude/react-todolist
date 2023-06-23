@@ -1,6 +1,14 @@
-import { COMPLETE, DELETE, ON_GOING } from '../data/constant';
+import { PRIORITY, STATUS } from '../data/constant';
 
-export type Status = typeof COMPLETE | typeof DELETE | typeof ON_GOING;
+export type Status =
+  | typeof STATUS.COMPLETE
+  | typeof STATUS.DELETE
+  | typeof STATUS.ON_GOING;
+
+export type Priority =
+  | typeof PRIORITY.LOW
+  | typeof PRIORITY.NORMAL
+  | typeof PRIORITY.HIGH;
 
 export type Todolist = {
   _id: string;
@@ -19,6 +27,9 @@ export type Todolist = {
 export type Todo = {
   _id: string;
   title: string;
+  notes?: string;
+  date?: string;
+  priority?: Priority;
   createdAt: Date;
   updatedAt: Date;
   __v: number;

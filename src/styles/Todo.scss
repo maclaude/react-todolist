@@ -1,0 +1,84 @@
+.todo {
+  &-container {
+    height: 100%;
+    min-width: 400px;
+    width: 100%;
+    padding: 35px 40px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--clr-main);
+    box-shadow: var(--regular-box-shadow);
+    border-radius: 10px;
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    height: 100%;
+  }
+
+  &-item {
+    display: flex;
+
+    &--inline {
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &--column {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    &--grow {
+      flex-grow: 1;
+    }
+
+    & > label {
+      font-weight: 600;
+      font-size: 1em;
+    }
+
+    & > textarea {
+      background-color: inherit;
+      font-family: inherit;
+      border: none;
+      outline: none;
+      resize: none;
+      cursor: pointer;
+    }
+  }
+
+  &_title {
+    padding: 0;
+    font-size: 1.1em;
+    font-weight: 600;
+    line-height: 30px;
+    min-height: 60px;
+    width: 100%;
+  }
+
+  &_notes {
+    flex-grow: 1;
+    min-height: 200px;
+    max-width: 100%;
+    height: auto;
+    font-size: 1em;
+    line-height: 1.5;
+    overflow-y: scroll;
+    color: #444;
+
+    &::-webkit-scrollbar {
+      width: 0px;
+    }
+  }
+
+  &_priority {
+    width: 70px;
+    outline: 0;
+    border: none;
+    font-size: .9em;
+    font-family: inherit;
+  }
+}

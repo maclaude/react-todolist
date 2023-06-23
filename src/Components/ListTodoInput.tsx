@@ -1,15 +1,16 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
-import { useAuth } from '../context/authContext';
 import { useUpdateTodoTitleMutation } from '../api/mutations/todo';
+import { useAuth } from '../context/authContext';
 
 interface ListInputProps {
   todoId: string;
   title: string;
+  setTodoId: (todoId: string) => void;
 }
 
-export const ListTodoInput = ({ todoId, title }: ListInputProps) => {
+export const ListTodoInput = ({ todoId, title, setTodoId }: ListInputProps) => {
   const { token } = useAuth();
   const [inputValue, setInputValue] = useState(title);
 
@@ -21,11 +22,16 @@ export const ListTodoInput = ({ todoId, title }: ListInputProps) => {
 
   const updateTodoTitleMutation = useUpdateTodoTitleMutation(useQueryClient());
 
+  const handleClick = () => {
+    setTodoId(todoId);
+  };
+
   return (
     <input
       className="todos_item__input"
       onChange={(e) => setInputValue(e.currentTarget.value)}
       onKeyDown={(e) => handleOnEnterBlur(e)}
+      onClick={handleClick}
       onBlur={() =>
         updateTodoTitleMutation.mutate({
           id: todoId,

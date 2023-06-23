@@ -51,68 +51,79 @@ export const Signup = () => {
     return <Navigate to="/user/signin" replace />;
   }
 
-  if (isLoading) return <PulseLoader />;
+  if (isLoading)
+    return (
+      <main id="central_container">
+        <PulseLoader />;
+      </main>
+    );
 
   return (
-    <div className="sign-container">
-      <h2 className="sign-title">Inscription</h2>
+    <main id="central_container">
+      <div className="sign-container">
+        <h2 className="sign-title">Inscription</h2>
 
-      <form className="sign-form" onSubmit={handleSubmit(onSubmit)}>
-        <label className="form-label" htmlFor="firstname">
-          Prénom
-        </label>
-        {errors.firstname?.message && (
-          <p className="form-error">{errors.firstname.message}</p>
-        )}
-        <input
-          className="form-input"
-          id="firstname"
-          {...register('firstname')}
-        />
+        <form className="sign-form" onSubmit={handleSubmit(onSubmit)}>
+          <label className="form-label" htmlFor="firstname">
+            Prénom
+          </label>
+          {errors.firstname?.message && (
+            <p className="form-error">{errors.firstname.message}</p>
+          )}
+          <input
+            className="form-input"
+            id="firstname"
+            {...register('firstname')}
+          />
 
-        <label className="form-label" htmlFor="lastname">
-          Nom
-        </label>
-        {errors.lastname?.message && (
-          <p className="form-error">{errors.lastname.message}</p>
-        )}
-        <input className="form-input" id="lastname" {...register('lastname')} />
+          <label className="form-label" htmlFor="lastname">
+            Nom
+          </label>
+          {errors.lastname?.message && (
+            <p className="form-error">{errors.lastname.message}</p>
+          )}
+          <input
+            className="form-input"
+            id="lastname"
+            {...register('lastname')}
+          />
 
-        <label className="form-label" htmlFor="email">
-          Email
-        </label>
-        {errors.email?.message && (
-          <p className="form-error">{errors.email.message}</p>
-        )}
-        <input
-          className="form-input"
-          id="email"
-          type="email"
-          {...register('email')}
-        />
+          <label className="form-label" htmlFor="email">
+            Email
+          </label>
+          {errors.email?.message && (
+            <p className="form-error">{errors.email.message}</p>
+          )}
+          <input
+            className="form-input"
+            id="email"
+            type="email"
+            {...register('email')}
+          />
 
-        <label className="form-label" htmlFor="password">
-          Mot de passe
-        </label>
-        {errors.password?.message && (
-          <p className="form-error">{errors.password.message}</p>
-        )}
-        <PasswordInput id="password" register={register} />
+          <label className="form-label" htmlFor="password">
+            Mot de passe
+          </label>
+          {errors.password?.message && (
+            <p className="form-error">{errors.password.message}</p>
+          )}
+          <PasswordInput id="password" register={register} />
 
-        <label className="form-label" htmlFor="confirm_password">
-          Confirmation mot de passe
-        </label>
-        {errors.confirm_password?.message && (
-          <p className="form-error">{errors.confirm_password.message}</p>
-        )}
-        <PasswordInput id="confirm_password" register={register} />
+          <label className="form-label" htmlFor="confirm_password">
+            Confirmation mot de passe
+          </label>
+          {errors.confirm_password?.message && (
+            <p className="form-error">{errors.confirm_password.message}</p>
+          )}
+          <PasswordInput id="confirm_password" register={register} />
 
-        <input className="form-button" type="submit" value="Inscription" />
-      </form>
+          <input className="form-button" type="submit" value="Inscription" />
+        </form>
 
-      <NavLink className="sign-link" to={`/user/signin`}>
-        connexion
-      </NavLink>
-    </div>
+        <NavLink className="sign-link" to={`/user/signin`}>
+          connexion
+        </NavLink>
+      </div>
+    </main>
   );
 };

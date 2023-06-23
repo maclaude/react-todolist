@@ -19,18 +19,20 @@ export const Note = () => {
     id,
   );
 
-  return fetchedNote ? (
-    <div id="note_container">
-      <NoteTitle noteId={fetchedNote._id} title={fetchedNote.title} />
-      <section id="note_item">
-        <BlockNote
-          key={fetchedNote._id}
-          noteId={fetchedNote._id}
-          initialBlock={fetchedNote.content}
-        />
-      </section>
-    </div>
-  ) : (
-    <></>
+  return (
+    <main id="main_container">
+      {fetchedNote && (
+        <div id="note_container">
+          <NoteTitle noteId={fetchedNote._id} title={fetchedNote.title} />
+          <section id="note_item">
+            <BlockNote
+              key={fetchedNote._id}
+              noteId={fetchedNote._id}
+              initialBlock={fetchedNote.content}
+            />
+          </section>
+        </div>
+      )}
+    </main>
   );
 };

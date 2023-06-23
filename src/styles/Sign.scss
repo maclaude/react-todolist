@@ -3,12 +3,17 @@
 
 .sign {
   &-container {
-    width: 400px;
     height: 100%;
+    min-width: 600px;
+    max-height: 700px;
+    margin: auto;
+    padding: 60px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 35px;
+    background-color: var(--clr-main);
+    box-shadow: var(--regular-box-shadow);
+    border-radius: 10px;
   }
 
   &-title {
@@ -32,6 +37,10 @@
     &:hover {
       border-bottom: 1px solid var(--clr-dark);
     }
+  }
+
+  &-loader {
+    margin: auto;
   }
 }
 

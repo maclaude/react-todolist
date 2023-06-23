@@ -1,0 +1,34 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.field {
+  display: inline-flex;
+  padding: 2px 4px;
+  border-radius: 2px;
+  font-size: .9em;
+  font-family: inherit;
+}
+
+.field:focus-within {
+  border-color: var(--clr-dark);
+}
+
+.segment {
+  padding: 1px 3px;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
+.segment.placeholder {
+  color: black;
+}
+
+.segment:focus {
+  color: white;
+  background: #AEB6BF;
+  outline: none;
+  border-radius: 2px;
+}

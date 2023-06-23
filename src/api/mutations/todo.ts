@@ -26,6 +26,15 @@ type UpdateTodoTitlePayload = {
   token: string;
 };
 
+type UpdateTodoDetailsPayload = {
+  id: string;
+  title: string;
+  notes: string;
+  date: string;
+  priority: string;
+  token: string;
+};
+
 const newTodo = async (payload: NewTodoPayload) =>
   axios
     .create({
@@ -73,5 +82,23 @@ export const useUpdateTodoTitleMutation = (queryClient: QueryClient) =>
     mutationFn: (payload: UpdateTodoTitlePayload) => updateTodoTitle(payload),
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEY.TODOLISTS]);
+    },
+  });
+
+const updateTodoDetails = async (payload: UpdateTodoDetailsPayload) =>
+  axios
+    .create({
+      headers: { Authorization: `Bearer ${payload.token}` },
+    })
+    .patch(`${API_BASE_URL}/todo/details/${payload.id}`, payload)
+    .then(({ data }) => data);
+
+export const useUpdateTodoDetailsMutation = (queryClient: QueryClient) =>
+  useMutation({
+    mutationFn: (payload: UpdateTodoDetailsPayload) =>
+      updateTodoDetails(payload),
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries([QUERY_KEY.TODOLISTS]);
+      queryClient.invalidateQueries([QUERY_KEY.TODO, variables.id]);
     },
   });

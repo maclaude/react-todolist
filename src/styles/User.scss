@@ -3,14 +3,17 @@
 
 .user {
   &-container {
+    width: 100%;
+    height: 100%;
+    padding: 35px 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 40px;
     align-items: center;
-    height: 100%;
-    width: 80%;
-    padding: 35px 40px;
+    background-color: var(--clr-main);
+    box-shadow: var(--regular-box-shadow);
+    border-radius: 10px;
   }
 
   &-title {

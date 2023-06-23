@@ -24,9 +24,10 @@ import { ListTodo } from './ListTodo';
 
 interface ListOnGoingProps {
   todolistId: string;
+  setTodoId: (todoId: string) => void;
 }
 
-export const ListTodos = ({ todolistId }: ListOnGoingProps) => {
+export const ListTodos = ({ todolistId, setTodoId }: ListOnGoingProps) => {
   const { authenticated, token } = useAuth();
   const [isChevronToogle, setIsChevronToogle] = useState<boolean>(true);
 
@@ -58,6 +59,7 @@ export const ListTodos = ({ todolistId }: ListOnGoingProps) => {
 
   useEffect(() => {
     if (fetchedOnGoingTodos) {
+      console.log(fetchedOnGoingTodos[0].title);
       setOnGoingTodos(fetchedOnGoingTodos);
     }
   }, [fetchedOnGoingTodos]);
@@ -111,15 +113,17 @@ export const ListTodos = ({ todolistId }: ListOnGoingProps) => {
             items={onGoingTodos.map((todo) => todo._id)}
             strategy={verticalListSortingStrategy}
           >
-            {onGoingTodos.map(({ _id: todoId, title }) => (
-              <ListTodo
-                key={todoId}
-                todoId={todoId}
-                todolistId={todolistId}
-                title={title}
-                status={ON_GOING}
-              />
-            ))}
+            {onGoingTodos &&
+              onGoingTodos.map(({ _id: todoId, title }) => (
+                <ListTodo
+                  key={todoId}
+                  todoId={todoId}
+                  todolistId={todolistId}
+                  title={title}
+                  status={ON_GOING}
+                  setTodoId={setTodoId}
+                />
+              ))}
           </SortableContext>
         </ul>
       </DndContext>
@@ -154,6 +158,7 @@ export const ListTodos = ({ todolistId }: ListOnGoingProps) => {
                   todolistId={todolistId}
                   title={title}
                   status={COMPLETE}
+                  setTodoId={setTodoId}
                 />
               ))}
             </ul>

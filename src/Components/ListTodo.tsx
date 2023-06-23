@@ -15,6 +15,7 @@ type ListTodoProps = {
   todolistId: string;
   title: string;
   status: Status;
+  setTodoId: (todoId: string) => void;
 };
 
 export const ListTodo = ({
@@ -22,6 +23,7 @@ export const ListTodo = ({
   todolistId,
   title,
   status,
+  setTodoId,
 }: ListTodoProps) => {
   const { token } = useAuth();
 
@@ -61,7 +63,7 @@ export const ListTodo = ({
             : 'todos_item__checkbox'
         }
       />
-      <ListTodoInput todoId={todoId} title={title} />
+      <ListTodoInput todoId={todoId} title={title} setTodoId={setTodoId} />
       <IconContext.Provider value={{ className: 'icon' }}>
         <MdRemoveCircle
           onClick={() =>

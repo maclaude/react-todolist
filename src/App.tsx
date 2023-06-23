@@ -17,20 +17,19 @@ function App() {
     <div id="app">
       <div id="container">
         {authenticated && (
-          <aside id="aside-container">
+          <aside id="aside_container">
             <Navigation />
           </aside>
         )}
-        <main id="main-container">
-          <Routes>
-            <Route path={'/'} element={<User />} />
-            <Route path={'user/'} element={<User />} />
-            <Route path={'user/signin'} element={<Signin />} />
-            <Route path={'user/signup'} element={<Signup />} />
-            <Route path={'todolist/:id'} element={<List />} />
-            <Route path={'note/:id'} element={<Note />} />
-          </Routes>
-        </main>
+
+        <Routes>
+          <Route path={'/'} element={<User />} />
+          <Route path={'user/'} element={<User />} />
+          <Route path={'user/signin'} element={<Signin />} />
+          <Route path={'user/signup'} element={<Signup />} />
+          <Route path={'todolist/:id'} element={<List />} />
+          <Route path={'note/:id'} element={<Note />} />
+        </Routes>
       </div>
     </div>
   );

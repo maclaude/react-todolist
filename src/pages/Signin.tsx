@@ -46,44 +46,55 @@ export const Signin = () => {
     mutate({ email, password });
   };
 
-  if (isLoading) return <PulseLoader />;
+  if (isLoading)
+    return (
+      <main id="central_container">
+        <div className="sign-container">
+          <span className="sign-loader">
+            <PulseLoader />
+          </span>
+        </div>
+      </main>
+    );
 
   return (
-    <div className="sign-container">
-      <h2 className="sign-title">Connexion</h2>
+    <main id="central_container">
+      <div className="sign-container">
+        <h2 className="sign-title">Connexion</h2>
 
-      <form className="sign-form" onSubmit={handleSubmit(onSubmit)}>
-        <label className="form-label" htmlFor="email">
-          Email
-        </label>
-        {errors.email?.message && (
-          <p className="form-error">{errors.email.message}</p>
-        )}
-        <input
-          className="form-input"
-          id="email"
-          type="email"
-          {...register('email', { required: true })}
-        />
+        <form className="sign-form" onSubmit={handleSubmit(onSubmit)}>
+          <label className="form-label" htmlFor="email">
+            Email
+          </label>
+          {errors.email?.message && (
+            <p className="form-error">{errors.email.message}</p>
+          )}
+          <input
+            className="form-input"
+            id="email"
+            type="email"
+            {...register('email', { required: true })}
+          />
 
-        <label className="form-label" htmlFor="password">
-          Mot de passe
-        </label>
-        {errors.password?.message && (
-          <p className="form-error">{errors.password.message}</p>
-        )}
-        <PasswordInput id="password" register={register} />
+          <label className="form-label" htmlFor="password">
+            Mot de passe
+          </label>
+          {errors.password?.message && (
+            <p className="form-error">{errors.password.message}</p>
+          )}
+          <PasswordInput id="password" register={register} />
 
-        <NavLink className="form-reset-link" to={`/user/password`}>
-          Mot de passe oublié
+          <NavLink className="form-reset-link" to={`/user/password`}>
+            Mot de passe oublié
+          </NavLink>
+
+          <input className="form-button" type="submit" value="Connexion" />
+        </form>
+
+        <NavLink className="sign-link" to={`/user/signup`}>
+          inscription
         </NavLink>
-
-        <input className="form-button" type="submit" value="Connexion" />
-      </form>
-
-      <NavLink className="sign-link" to={`/user/signup`}>
-        inscription
-      </NavLink>
-    </div>
+      </div>
+    </main>
   );
 };

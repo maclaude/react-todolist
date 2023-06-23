@@ -1,11 +1,14 @@
 .home {
   &-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     height: 100%;
     width: 100%;
     padding: 35px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--clr-main);
+    box-shadow: var(--regular-box-shadow);
+    border-radius: 10px;
   }
 
   &-title {
