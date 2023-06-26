@@ -181,6 +181,26 @@ export const Navigation = () => {
         </ul>
       </section>
 
+      <section>
+        <div className="navigation-title">
+          <h3>Dev</h3>
+        </div>
+        <ul>
+          <li className="navigation-item">
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? 'navigation-item-link navigation-item-link__active'
+                  : 'navigation-item-link'
+              }
+              to={`components/buttons`}
+            >
+              Buttons
+            </NavLink>
+          </li>
+        </ul>
+      </section>
+
       <div className="navigation-user">
         <NavLink className="navigation-user" to={`/user`}>
           <FaSignInAlt />

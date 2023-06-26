@@ -31,12 +31,15 @@
 :root {
   --clr-main: #FFFFFF;
   --clr-light-grey: #EFEFEF;
-  --clr-medium-grey: #D6DBDF ;
+  --clr-medium-grey: #D6DBDF;
+  --clr-cold: #F1F6F9;
   --clr-dark: #24292f;
+  --clr-red: #FF0033;
   --clr-acc-green: #47e5bdff;
   --clr-acc-red: #ff385d;
   --clr-acc-red--hover: #f53f5e;
   --box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  --box-shadow-: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
 /* Fonts

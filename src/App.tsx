@@ -7,6 +7,7 @@ import { Note } from './pages/Note';
 import { Signin } from './pages/Signin';
 import { Signup } from './pages/Signup';
 import { User } from './pages/User';
+import { Buttons } from './pages/Buttons';
 
 import './styles/App.scss';
 
@@ -29,6 +30,7 @@ function App() {
           <Route path={'user/signup'} element={<Signup />} />
           <Route path={'todolist/:id'} element={<List />} />
           <Route path={'note/:id'} element={<Note />} />
+          <Route path={'components/buttons'} element={<Buttons />} />
         </Routes>
       </div>
     </div>
