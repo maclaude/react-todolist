@@ -1,14 +1,20 @@
+import { MouseEventHandler } from 'react';
 import { IconContext, IconType } from 'react-icons';
 
 type ReactIconProps = {
   className: string;
   icon: IconType;
+  onClick?: MouseEventHandler;
 };
 
-export const ReactIcon = ({ className, icon: Icon }: ReactIconProps) => {
+export const ReactIcon: React.FC<ReactIconProps> = ({
+  icon: Icon,
+  className,
+  onClick,
+}) => {
   return (
     <IconContext.Provider value={{ className: `${className}` }}>
-      <Icon />
+      <Icon onClick={onClick} />
     </IconContext.Provider>
   );
 };

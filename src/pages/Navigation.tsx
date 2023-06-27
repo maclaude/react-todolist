@@ -13,7 +13,6 @@ import {
 } from '@dnd-kit/sortable';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { IconContext } from 'react-icons';
 import { FaSignInAlt } from 'react-icons/fa';
 import { MdAddCircle } from 'react-icons/md';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -26,6 +25,7 @@ import {
   useFetchTodolistsQuery,
 } from '../api/queries/user';
 import { NavigationItem } from '../components/NavigationItem';
+import { ReactIcon } from '../components/ReactIcon';
 import { useAuth } from '../context/authContext';
 import { ON_GOING } from '../data/constant';
 import { Todolist } from '../types';
@@ -110,18 +110,18 @@ export const Navigation = () => {
       <section>
         <div className="navigation-title">
           <h3>Mes listes</h3>
-          <IconContext.Provider value={{ className: 'icon' }}>
-            <MdAddCircle
-              onClick={() =>
-                newTodolistMutation.mutate({
-                  title: 'New todolist',
-                  status: ON_GOING,
-                  userId: id,
-                  token,
-                })
-              }
-            />
-          </IconContext.Provider>
+          <ReactIcon
+            icon={MdAddCircle}
+            className="icon"
+            onClick={() =>
+              newTodolistMutation.mutate({
+                title: 'New todolist',
+                status: ON_GOING,
+                userId: id,
+                token,
+              })
+            }
+          />
         </div>
 
         <DndContext
@@ -151,17 +151,17 @@ export const Navigation = () => {
       <section>
         <div className="navigation-title">
           <h3>Mes notes</h3>
-          <IconContext.Provider value={{ className: 'icon' }}>
-            <MdAddCircle
-              onClick={() =>
-                newNoteMutation.mutate({
-                  title: 'New note',
-                  content: '[]',
-                  token,
-                })
-              }
-            />
-          </IconContext.Provider>
+          <ReactIcon
+            icon={MdAddCircle}
+            className="icon"
+            onClick={() =>
+              newNoteMutation.mutate({
+                title: 'New note',
+                content: '[]',
+                token,
+              })
+            }
+          />
         </div>
         <ul>
           {fetchedNotes?.map(({ _id: noteId, title }) => (

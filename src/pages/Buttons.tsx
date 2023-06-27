@@ -1,12 +1,12 @@
-import { IconContext } from 'react-icons';
+import { BiStar } from 'react-icons/bi';
+import { BsExclamationLg, BsPlayFill } from 'react-icons/bs';
+import { FiDownload } from 'react-icons/fi';
 import { HiPlus } from 'react-icons/hi';
 import { MdDelete } from 'react-icons/md';
-import { BsExclamationLg, BsPlayFill } from 'react-icons/bs';
-import { BiStar } from 'react-icons/bi';
-import { FiDownload } from 'react-icons/fi';
+
+import { ReactIcon } from '../components/ReactIcon';
 
 import '../styles/Buttons.scss';
-import { ReactIcon } from '../components/ReactIcon';
 
 export const Buttons = () => {
   return (

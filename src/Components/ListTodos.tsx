@@ -59,7 +59,6 @@ export const ListTodos = ({ todolistId, setTodoId }: ListOnGoingProps) => {
 
   useEffect(() => {
     if (fetchedOnGoingTodos) {
-      console.log(fetchedOnGoingTodos[0].title);
       setOnGoingTodos(fetchedOnGoingTodos);
     }
   }, [fetchedOnGoingTodos]);
