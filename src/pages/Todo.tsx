@@ -1,16 +1,24 @@
-import { ZonedDateTime, getLocalTimeZone, now } from '@internationalized/date';
-import { useEffect } from 'react';
+import {
+  ZonedDateTime,
+  getLocalTimeZone,
+  now,
+  parseZonedDateTime,
+} from '@internationalized/date';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { I18nProvider } from 'react-aria';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
+import { HiPlus } from 'react-icons/hi';
 
+import { useUpdateTodoDetailsMutation } from '../api/mutations/todo';
 import { useFetchTodoByIdQuery } from '../api/queries/todo';
 import { DateField } from '../components/DateField';
+import { ReactIcon } from '../components/ReactIcon';
 import { useAuth } from '../context/authContext';
 import { PRIORITY } from '../data/constant';
 import { Priority } from '../types';
-import { useUpdateTodoDetailsMutation } from '../api/mutations/todo';
 
+import '../styles/Buttons.scss';
 import '../styles/Todo.scss';
 
 type TodoProps = {
@@ -19,22 +27,33 @@ type TodoProps = {
 
 type Inputs = {
   title: string;
-  date: ZonedDateTime;
+  date: ZonedDateTime | undefined;
   notes: string;
   priority: Priority;
 };
 
 export const Todo = ({ todoId }: TodoProps) => {
   const { authenticated, token } = useAuth();
+  const [toogleDate, setToogleDate] = useState(false);
+  const [tooglePriority, setTooglePriority] = useState(false);
 
-  const { control, register, handleSubmit, setValue } = useForm<Inputs>({
+  const { control, register, handleSubmit, setValue, reset } = useForm<Inputs>({
     defaultValues: {
       title: '',
       notes: '',
-      date: now(getLocalTimeZone()),
-      priority: PRIORITY.NORMAL,
+      date: undefined,
+      priority: undefined,
     },
   });
+
+  useEffect(() => {
+    // Reset state on new todo id
+    setToogleDate(false);
+    setTooglePriority(false);
+
+    // Reset form on new todo id
+    reset({ title: '', notes: '', date: undefined, priority: undefined });
+  }, [todoId]);
 
   const { data: todo } = useFetchTodoByIdQuery(
     {
@@ -44,16 +63,24 @@ export const Todo = ({ todoId }: TodoProps) => {
     todoId,
   );
 
-  const updateTodoDetails = useUpdateTodoDetailsMutation(useQueryClient());
-
   useEffect(() => {
     if (todo) {
       setValue('title', todo.title);
       setValue('notes', todo.notes ? todo.notes : '');
-      setValue('date', now(getLocalTimeZone()));
-      setValue('priority', todo.priority ? todo.priority : PRIORITY.NORMAL);
+
+      if (todo.date) {
+        setValue('date', parseZonedDateTime(todo.date));
+        setToogleDate(true);
+      }
+
+      if (todo.priority) {
+        setValue('priority', todo.priority);
+        setTooglePriority(true);
+      }
     }
   }, [todo]);
+
+  const updateTodoDetails = useUpdateTodoDetailsMutation(useQueryClient());
 
   const onSubmit: SubmitHandler<Inputs> = ({
     title,
@@ -65,7 +92,7 @@ export const Todo = ({ todoId }: TodoProps) => {
       id: todoId,
       title,
       notes,
-      date: JSON.stringify(date),
+      date: date?.toString(),
       priority,
       token,
     });
@@ -73,7 +100,7 @@ export const Todo = ({ todoId }: TodoProps) => {
 
   return (
     <div className="todo-container box--shadow">
-      <form onBlur={handleSubmit(onSubmit)} className="todo-form">
+      <form onSubmit={handleSubmit(onSubmit)} className="todo-form">
         <div className="todo_title todo-item">
           <textarea
             maxLength={50}
@@ -88,33 +115,59 @@ export const Todo = ({ todoId }: TodoProps) => {
         </div>
         <div className="todo-item todo-item--inline">
           <label htmlFor="date">Date</label>
-          <I18nProvider locale="fr-FR">
-            <Controller
-              name="date"
-              control={control}
-              render={({ field }) => (
-                <DateField
-                  aria-label="date"
-                  hourCycle={24}
-                  hideTimeZone
-                  {...field}
-                />
-              )}
+          {toogleDate ? (
+            <I18nProvider locale="fr-FR">
+              <Controller
+                name="date"
+                control={control}
+                render={({ field }) => (
+                  <DateField
+                    aria-label="date"
+                    hourCycle={24}
+                    hideTimeZone
+                    {...field}
+                  />
+                )}
+              />
+            </I18nProvider>
+          ) : (
+            <ReactIcon
+              className="btn btn_icon"
+              onClick={() => {
+                setValue('date', now(getLocalTimeZone()));
+                setToogleDate(true);
+              }}
+              icon={HiPlus}
             />
-          </I18nProvider>
+          )}
         </div>
         <div className="todo-item todo-item--inline">
           <label htmlFor="priority">Priorité</label>
-          <select
-            className="todo_priority"
-            id="priority"
-            {...register('priority')}
-          >
-            <option value={PRIORITY.LOW}>Faible</option>
-            <option value={PRIORITY.NORMAL}>Normal</option>
-            <option value={PRIORITY.HIGH}>Haute</option>
-          </select>
+          {tooglePriority ? (
+            <select
+              className="todo_priority"
+              id="priority"
+              {...register('priority')}
+            >
+              <option value={PRIORITY.LOW}>Faible</option>
+              <option value={PRIORITY.NORMAL}>Normal</option>
+              <option value={PRIORITY.HIGH}>Haute</option>
+            </select>
+          ) : (
+            <ReactIcon
+              className="btn btn_icon"
+              onClick={() => {
+                setValue('priority', PRIORITY.NORMAL);
+                setTooglePriority(true);
+              }}
+              icon={HiPlus}
+            />
+          )}
         </div>
+
+        <button type="submit" className="btn btn_regular todo-submit">
+          Sauvegarder
+        </button>
       </form>
     </div>
   );

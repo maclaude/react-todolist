@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useUpdateTodoTitleMutation } from '../api/mutations/todo';
 import { useAuth } from '../context/authContext';
@@ -13,6 +13,10 @@ interface ListInputProps {
 export const ListTodoInput = ({ todoId, title, setTodoId }: ListInputProps) => {
   const { token } = useAuth();
   const [inputValue, setInputValue] = useState(title);
+
+  useEffect(() => {
+    if (title) setInputValue(title);
+  }, [title]);
 
   const handleOnEnterBlur = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {

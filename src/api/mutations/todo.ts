@@ -30,8 +30,8 @@ type UpdateTodoDetailsPayload = {
   id: string;
   title: string;
   notes: string;
-  date: string;
-  priority: string;
+  date: string | undefined;
+  priority: string | undefined;
   token: string;
 };
 
@@ -80,8 +80,9 @@ const updateTodoTitle = async (payload: UpdateTodoTitlePayload) =>
 export const useUpdateTodoTitleMutation = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: (payload: UpdateTodoTitlePayload) => updateTodoTitle(payload),
-    onSuccess: () => {
+    onSuccess: (data, variables) => {
       queryClient.invalidateQueries([QUERY_KEY.TODOLISTS]);
+      queryClient.invalidateQueries([QUERY_KEY.TODO, variables.id]);
     },
   });
 

@@ -11,7 +11,7 @@
   &-form {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
     height: 100%;
   }
 
@@ -19,6 +19,7 @@
     display: flex;
 
     &--inline {
+      line-height: 20px;
       justify-content: space-between;
       align-items: center;
     }
@@ -45,6 +46,11 @@
       resize: none;
       cursor: pointer;
     }
+  }
+
+  &-submit {
+    margin: 0;
+    margin-left: auto;
   }
 
   &_title {

@@ -29,7 +29,7 @@ export const List = () => {
       // Set 1st ongoing todo of the list for Todo query
       setTodoId(todolist?.items.ongoing[0]?._id);
     }
-  }, [todolist]);
+  }, [todolist?._id]);
 
   return (
     <main id="main_container">

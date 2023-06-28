@@ -27,8 +27,8 @@
 }
 
 .segment:focus {
-  color: white;
-  background: #AEB6BF;
+  color: var(--clr-main);
+  background: var(--clr-acc-red);
   outline: none;
   border-radius: 2px;
 }
