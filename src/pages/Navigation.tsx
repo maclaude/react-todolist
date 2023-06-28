@@ -198,6 +198,18 @@ export const Navigation = () => {
               Buttons
             </NavLink>
           </li>
+          <li className="navigation-item">
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? 'navigation-item-link navigation-item-link__active'
+                  : 'navigation-item-link'
+              }
+              to={`components/toaster`}
+            >
+              Toaster
+            </NavLink>
+          </li>
         </ul>
       </section>
 
