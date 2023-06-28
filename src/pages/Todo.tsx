@@ -27,13 +27,14 @@ type TodoProps = {
 
 type Inputs = {
   title: string;
-  date: ZonedDateTime | undefined;
   notes: string;
-  priority: Priority;
+  priority?: Priority;
+  date?: ZonedDateTime;
 };
 
 export const Todo = ({ todoId }: TodoProps) => {
   const { authenticated, token } = useAuth();
+
   const [toogleDate, setToogleDate] = useState(false);
   const [tooglePriority, setTooglePriority] = useState(false);
 
@@ -47,11 +48,11 @@ export const Todo = ({ todoId }: TodoProps) => {
   });
 
   useEffect(() => {
-    // Reset state on new todo id
+    // Reset state when todo id change
     setToogleDate(false);
     setTooglePriority(false);
 
-    // Reset form on new todo id
+    // Reset form when todo id change
     reset({ title: '', notes: '', date: undefined, priority: undefined });
   }, [todoId]);
 
@@ -64,6 +65,7 @@ export const Todo = ({ todoId }: TodoProps) => {
   );
 
   useEffect(() => {
+    // Hydrate form when todo is fetched
     if (todo) {
       setValue('title', todo.title);
       setValue('notes', todo.notes ? todo.notes : '');

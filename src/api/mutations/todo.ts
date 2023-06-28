@@ -30,9 +30,9 @@ type UpdateTodoDetailsPayload = {
   id: string;
   title: string;
   notes: string;
-  date: string | undefined;
-  priority: string | undefined;
   token: string;
+  date?: string;
+  priority?: string;
 };
 
 const newTodo = async (payload: NewTodoPayload) =>

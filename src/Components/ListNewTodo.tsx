@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TbArrowBigRightLineFilled } from 'react-icons/tb';
 
 import { useNewTodoMutation } from '../api/mutations/todo';
@@ -12,12 +12,20 @@ interface ListFormProps {
 }
 
 export const ListNewTodo = ({ todolistId }: ListFormProps) => {
-  const [newTodo, setNewTodo] = useState<string>('');
+  const [newTodo, setNewTodo] = useState('');
+
+  useEffect(() => {
+    setNewTodo('');
+  }, [todolistId]);
 
   const { token } = useAuth();
   const newTodoMutation = useNewTodoMutation(useQueryClient());
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (
+    event:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<Element, MouseEvent>,
+  ) => {
     event.preventDefault();
 
     if (newTodo.trim()) {
@@ -43,6 +51,7 @@ export const ListNewTodo = ({ todolistId }: ListFormProps) => {
       <ReactIcon
         className="new-todo__button"
         icon={TbArrowBigRightLineFilled}
+        onClick={(e) => handleSubmit(e)}
       />
     </form>
   );

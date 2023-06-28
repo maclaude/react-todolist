@@ -18,36 +18,38 @@ export const HomePage = () => {
   };
 
   return (
-    <div className="home-container box--shadow">
-      <div className="home-title">
-        <h2>Mon compte</h2>
-        <div>
-          <div className="avatar">
-            <img className="avatar__image" src={avatarImg} />
+    <main id="main_container">
+      <div className="home-container box--shadow">
+        <div className="home-title">
+          <h2>Mon compte</h2>
+          <div>
+            <div className="avatar">
+              <img className="avatar__image" src={avatarImg} />
+            </div>
           </div>
         </div>
+
+        <section className="home-settings">
+          <h3 className="settings-title">Paramètres</h3>
+          <div className="settings-section">
+            <a href="#">Ajouter une image de profil</a>
+            <a href="#">Modifier mon email</a>
+            <a href="#">Changer mon mot de passe</a>
+            <a href="#">Supprimer mon compte</a>
+          </div>
+
+          <h3 className="settings-title">Reset</h3>
+          <div className="settings-section">
+            <a onClick={() => deleteAllTodolistsMutation.mutate({ token })}>
+              Supprimer toutes les todolists
+            </a>
+          </div>
+        </section>
+
+        <button className="home-logout" onClick={handleLogout}>
+          Déconnexion
+        </button>
       </div>
-
-      <section className="home-settings">
-        <h3 className="settings-title">Paramètres</h3>
-        <div className="settings-section">
-          <a href="#">Ajouter une image de profil</a>
-          <a href="#">Modifier mon email</a>
-          <a href="#">Changer mon mot de passe</a>
-          <a href="#">Supprimer mon compte</a>
-        </div>
-
-        <h3 className="settings-title">Reset</h3>
-        <div className="settings-section">
-          <a onClick={() => deleteAllTodolistsMutation.mutate({ token })}>
-            Supprimer toutes les todolists
-          </a>
-        </div>
-      </section>
-
-      <button className="home-logout" onClick={handleLogout}>
-        Déconnexion
-      </button>
-    </div>
+    </main>
   );
 };
