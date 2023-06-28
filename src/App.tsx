@@ -1,14 +1,15 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { useAuth } from './context/authContext';
+import { Buttons } from './pages/Buttons';
 import { List } from './pages/List';
 import { Navigation } from './pages/Navigation';
 import { Note } from './pages/Note';
 import { Signin } from './pages/Signin';
 import { Signup } from './pages/Signup';
 import { User } from './pages/User';
-import { Buttons } from './pages/Buttons';
 
+import { Toaster } from './pages/Toaster';
 import './styles/App.scss';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path={'todolist/:id'} element={<List />} />
           <Route path={'note/:id'} element={<Note />} />
           <Route path={'components/buttons'} element={<Buttons />} />
+          <Route path={'components/toaster'} element={<Toaster />} />
         </Routes>
       </div>
     </div>
