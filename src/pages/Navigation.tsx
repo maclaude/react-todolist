@@ -14,7 +14,7 @@ import {
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { FaSignInAlt } from 'react-icons/fa';
-import { MdAddCircle } from 'react-icons/md';
+import { HiPlus } from 'react-icons/hi';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import { useNewNoteMutation } from '../api/mutations/note';
@@ -31,6 +31,7 @@ import { ON_GOING } from '../data/constant';
 import { Todolist } from '../types';
 import { getOnGoingTodolists } from '../utils/helpers';
 
+import '../styles/Buttons.scss';
 import '../styles/Navigation.scss';
 
 export const Navigation = () => {
@@ -111,8 +112,8 @@ export const Navigation = () => {
         <div className="navigation-title">
           <h3>Mes listes</h3>
           <ReactIcon
-            icon={MdAddCircle}
-            className="icon"
+            icon={HiPlus}
+            className="btn btn_icon navigation-icon"
             onClick={() =>
               newTodolistMutation.mutate({
                 title: 'New todolist',
@@ -152,8 +153,8 @@ export const Navigation = () => {
         <div className="navigation-title">
           <h3>Mes notes</h3>
           <ReactIcon
-            icon={MdAddCircle}
-            className="icon"
+            icon={HiPlus}
+            className="btn btn_icon navigation-icon"
             onClick={() =>
               newNoteMutation.mutate({
                 title: 'New note',
