@@ -93,3 +93,12 @@
   background-color: var(--clr-cold);
   color: var(--clr-dark);
 }
+
+.info {
+  &_icon {
+    margin: 5px;
+    width: 15px;
+    height: 15px;
+    color: var(--clr-dark);
+  }
+}

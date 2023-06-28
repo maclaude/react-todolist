@@ -58,6 +58,7 @@
     width: 25px;
     height: 25px;
     color: var(--clr-dark);
+    cursor: pointer;
   }
 }
 
@@ -96,7 +97,6 @@
       width: 20px;
       border-radius: 50%;
       border: none;
-      box-shadow: var(--box-shadow);
       cursor: pointer;
 
       &--checked {

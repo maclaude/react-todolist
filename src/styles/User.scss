@@ -4,6 +4,7 @@
 .user {
   &-container {
     width: 100%;
+    min-width: 500px;
     height: 100%;
     padding: 35px 40px;
     display: flex;

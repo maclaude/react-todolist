@@ -19,9 +19,9 @@ import { PRIORITY } from '../data/constant';
 import { Priority } from '../types';
 
 import '../styles/Buttons.scss';
-import '../styles/Todo.scss';
+import '../styles/Details.scss';
 
-type TodoProps = {
+type DetailsProps = {
   todoId: string;
 };
 
@@ -32,7 +32,7 @@ type Inputs = {
   date?: ZonedDateTime;
 };
 
-export const Todo = ({ todoId }: TodoProps) => {
+export const Details = ({ todoId }: DetailsProps) => {
   const { authenticated, token } = useAuth();
 
   const [toogleDate, setToogleDate] = useState(false);
@@ -101,21 +101,25 @@ export const Todo = ({ todoId }: TodoProps) => {
   };
 
   return (
-    <div className="todo-container box--shadow">
-      <form onSubmit={handleSubmit(onSubmit)} className="todo-form">
-        <div className="todo_title todo-item">
+    <div className="details-container box--shadow">
+      <form onSubmit={handleSubmit(onSubmit)} className="details-form">
+        <div className="details_title details-item">
           <textarea
             maxLength={50}
-            className="todo_title"
+            className="details_title"
             id="title"
             {...register('title')}
           />
         </div>
-        <div className="todo-item todo-item--column todo-item--grow">
+        <div className="details-item details-item--column details-item--grow">
           <label htmlFor="notes">Notes</label>
-          <textarea className="todo_notes" id="notes" {...register('notes')} />
+          <textarea
+            className="details_notes"
+            id="notes"
+            {...register('notes')}
+          />
         </div>
-        <div className="todo-item todo-item--inline">
+        <div className="details-item details-item--inline">
           <label htmlFor="date">Date</label>
           {toogleDate ? (
             <I18nProvider locale="fr-FR">
@@ -143,11 +147,11 @@ export const Todo = ({ todoId }: TodoProps) => {
             />
           )}
         </div>
-        <div className="todo-item todo-item--inline">
+        <div className="details-item details-item--inline">
           <label htmlFor="priority">Priorité</label>
           {tooglePriority ? (
             <select
-              className="todo_priority"
+              className="details_priority"
               id="priority"
               {...register('priority')}
             >
@@ -167,7 +171,7 @@ export const Todo = ({ todoId }: TodoProps) => {
           )}
         </div>
 
-        <button type="submit" className="btn btn_regular todo-submit">
+        <button type="submit" className="btn btn_regular details-submit">
           Sauvegarder
         </button>
       </form>
