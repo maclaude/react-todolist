@@ -76,6 +76,12 @@
       color: var(--clr-main);
       transition: background-color 200ms ease-in;
     }
+
+    &--complete {
+      &:hover {
+        background-color: var(--clr-acc-green);
+      }
+    }
   }
 }
 

@@ -27,6 +27,7 @@ export type Todolist = {
 export type Todo = {
   _id: string;
   title: string;
+  status: Status;
   notes?: string;
   date?: string;
   priority?: Priority;

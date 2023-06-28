@@ -44,7 +44,7 @@ export const List = () => {
             <ListTodos todolistId={todolist._id} setTodoId={setTodoId} />
           </div>
           <section id="detail_container">
-            <Details todoId={todoId} />
+            <Details todolistId={todolist._id} todoId={todoId} />
           </section>
         </>
       )}

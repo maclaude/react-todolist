@@ -8,20 +8,26 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { I18nProvider } from 'react-aria';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { HiPlus } from 'react-icons/hi';
+import { HiMinusSm, HiPlus } from 'react-icons/hi';
+import { IoMdCheckmark } from 'react-icons/io';
+import { MdDelete } from 'react-icons/md';
 
-import { useUpdateTodoDetailsMutation } from '../api/mutations/todo';
+import {
+  useUpdateTodoDetailsMutation,
+  useUpdateTodoStatusMutation,
+} from '../api/mutations/todo';
 import { useFetchTodoByIdQuery } from '../api/queries/todo';
 import { DateField } from '../components/DateField';
 import { ReactIcon } from '../components/ReactIcon';
 import { useAuth } from '../context/authContext';
-import { PRIORITY } from '../data/constant';
+import { COMPLETE, DELETE, ON_GOING, PRIORITY } from '../data/constant';
 import { Priority } from '../types';
 
 import '../styles/Buttons.scss';
 import '../styles/Details.scss';
 
 type DetailsProps = {
+  todolistId: string;
   todoId: string;
 };
 
@@ -32,7 +38,7 @@ type Inputs = {
   date?: ZonedDateTime;
 };
 
-export const Details = ({ todoId }: DetailsProps) => {
+export const Details = ({ todolistId, todoId }: DetailsProps) => {
   const { authenticated, token } = useAuth();
 
   const [toogleDate, setToogleDate] = useState(false);
@@ -83,6 +89,9 @@ export const Details = ({ todoId }: DetailsProps) => {
   }, [todo]);
 
   const updateTodoDetails = useUpdateTodoDetailsMutation(useQueryClient());
+  const updateTodoStatusMutation = useUpdateTodoStatusMutation(
+    useQueryClient(),
+  );
 
   const onSubmit: SubmitHandler<Inputs> = ({
     title,
@@ -122,58 +131,111 @@ export const Details = ({ todoId }: DetailsProps) => {
         <div className="details-item details-item--inline">
           <label htmlFor="date">Date</label>
           {toogleDate ? (
-            <I18nProvider locale="fr-FR">
-              <Controller
-                name="date"
-                control={control}
-                render={({ field }) => (
-                  <DateField
-                    aria-label="date"
-                    hourCycle={24}
-                    hideTimeZone
-                    {...field}
-                  />
-                )}
+            <div className="details-item-right">
+              <I18nProvider locale="fr-FR">
+                <Controller
+                  name="date"
+                  control={control}
+                  render={({ field }) => (
+                    <DateField
+                      aria-label="date"
+                      hourCycle={24}
+                      hideTimeZone
+                      {...field}
+                    />
+                  )}
+                />
+              </I18nProvider>
+              <ReactIcon
+                className="btn btn_icon details-item-right--icon"
+                icon={HiMinusSm}
+                onClick={() => {
+                  setValue('date', undefined);
+                  setToogleDate(false);
+                }}
               />
-            </I18nProvider>
+            </div>
           ) : (
             <ReactIcon
-              className="btn btn_icon"
+              className="btn btn_icon details-item-right--icon"
+              icon={HiPlus}
               onClick={() => {
                 setValue('date', now(getLocalTimeZone()));
                 setToogleDate(true);
               }}
-              icon={HiPlus}
             />
           )}
         </div>
         <div className="details-item details-item--inline">
           <label htmlFor="priority">Priorité</label>
           {tooglePriority ? (
-            <select
-              className="details_priority"
-              id="priority"
-              {...register('priority')}
-            >
-              <option value={PRIORITY.LOW}>Faible</option>
-              <option value={PRIORITY.NORMAL}>Normal</option>
-              <option value={PRIORITY.HIGH}>Haute</option>
-            </select>
+            <div className="details-item-right">
+              <select
+                className="details_priority"
+                id="priority"
+                {...register('priority')}
+              >
+                <option value={PRIORITY.LOW}>Faible</option>
+                <option value={PRIORITY.NORMAL}>Normal</option>
+                <option value={PRIORITY.HIGH}>Haute</option>
+              </select>
+              <ReactIcon
+                className="btn btn_icon details-item-right--icon"
+                icon={HiMinusSm}
+                onClick={() => {
+                  setValue('priority', undefined);
+                  setTooglePriority(false);
+                }}
+              />
+            </div>
           ) : (
             <ReactIcon
-              className="btn btn_icon"
+              className="btn btn_icon details-item-right--icon"
+              icon={HiPlus}
               onClick={() => {
                 setValue('priority', PRIORITY.NORMAL);
                 setTooglePriority(true);
               }}
-              icon={HiPlus}
             />
           )}
         </div>
 
-        <button type="submit" className="btn btn_regular details-submit">
-          Sauvegarder
-        </button>
+        <div className="details-item-actions">
+          {todo?.status && (
+            <>
+              <ReactIcon
+                className="btn btn_icon"
+                icon={MdDelete}
+                onClick={() =>
+                  updateTodoStatusMutation.mutate({
+                    id: todoId,
+                    todolistId,
+                    currentStatus: todo.status,
+                    newStatus: DELETE,
+                    token,
+                  })
+                }
+              />
+              <ReactIcon
+                className="btn btn_icon btn_icon--complete"
+                icon={IoMdCheckmark}
+                onClick={() =>
+                  updateTodoStatusMutation.mutate({
+                    id: todoId,
+                    todolistId,
+                    currentStatus: todo.status,
+                    newStatus: todo.status === ON_GOING ? COMPLETE : ON_GOING,
+                    token,
+                  })
+                }
+              />
+            </>
+          )}
+
+          <button type="submit" className="btn btn_regular details-submit">
+            Sauvegarder
+          </button>
+        </div>
       </form>
     </div>
   );
