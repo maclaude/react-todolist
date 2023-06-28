@@ -64,7 +64,8 @@ const updateTodoStatus = async (payload: UpdateTodoStatusPayload) =>
 export const useUpdateTodoStatusMutation = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: (payload: UpdateTodoStatusPayload) => updateTodoStatus(payload),
-    onSuccess: () => {
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries([QUERY_KEY.TODO, variables.id]);
       queryClient.invalidateQueries([QUERY_KEY.TODOLISTS]);
     },
   });

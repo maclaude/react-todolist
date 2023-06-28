@@ -46,10 +46,28 @@
       resize: none;
       cursor: pointer;
     }
+
+    &-right {
+      display: flex;
+      align-items: center;
+
+      &--icon {
+        width: 15px;
+        height: 15px;
+        margin-left: 10px;
+      }
+    }
+
+    &-actions {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
   }
 
   &-submit {
-    margin: 10px 0 0 auto;
+    margin: 0;
     margin-left: auto;
   }
 
