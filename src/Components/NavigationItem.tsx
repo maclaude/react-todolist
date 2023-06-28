@@ -22,8 +22,14 @@ export const NavigationItem = ({ todolistId, title }: NavigationItemProps) => {
     useQueryClient(),
   );
 
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: todolistId });
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: todolistId });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -38,16 +44,20 @@ export const NavigationItem = ({ todolistId, title }: NavigationItemProps) => {
       {...attributes}
       {...listeners}
     >
-      <NavLink
-        className={({ isActive }) =>
-          isActive
-            ? 'navigation-item-link navigation-item-link__active'
-            : 'navigation-item-link'
-        }
-        to={`todolist/${todolistId}`}
-      >
-        {title}
-      </NavLink>
+      {!isDragging ? (
+        <NavLink
+          className={({ isActive }) =>
+            isActive
+              ? 'navigation-item-link navigation-item-link__active'
+              : 'navigation-item-link'
+          }
+          to={`todolist/${todolistId}`}
+        >
+          {title}
+        </NavLink>
+      ) : (
+        title
+      )}
       <ReactIcon
         icon={MdDelete}
         className="icon navigation-item-delete-icon"
