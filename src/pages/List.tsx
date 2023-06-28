@@ -1,13 +1,12 @@
-import { useParams } from 'react-router-dom';
-
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { useFetchTodolistByIdQuery } from '../api/queries/todolist';
 import { ListNewTodo } from '../components/ListNewTodo';
 import { ListTitle } from '../components/ListTitle';
 import { ListTodos } from '../components/ListTodos';
 import { useAuth } from '../context/authContext';
-import { Todo } from './Todo';
+import { Details } from './Details';
 
 import '../styles/List.scss';
 
@@ -45,7 +44,7 @@ export const List = () => {
             <ListTodos todolistId={todolist._id} setTodoId={setTodoId} />
           </div>
           <section id="detail_container">
-            <Todo todoId={todoId} />
+            <Details todoId={todoId} />
           </section>
         </>
       )}

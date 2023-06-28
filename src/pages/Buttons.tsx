@@ -1,8 +1,9 @@
-import { BiStar } from 'react-icons/bi';
+import { BiCalendarAlt, BiStar } from 'react-icons/bi';
 import { BsExclamationLg, BsPlayFill } from 'react-icons/bs';
 import { FiDownload } from 'react-icons/fi';
-import { HiPlus } from 'react-icons/hi';
-import { MdDelete } from 'react-icons/md';
+import { HiMinusSm, HiPlus } from 'react-icons/hi';
+import { IoMdCheckmark } from 'react-icons/io';
+import { MdDelete, MdNotes } from 'react-icons/md';
 
 import { ReactIcon } from '../components/ReactIcon';
 
@@ -15,8 +16,17 @@ export const Buttons = () => {
         <h2>Buttons</h2>
 
         <section className="buttons-section">
+          <h3 className="buttons-section--title">Input icons</h3>
+          <ReactIcon className="info_icon" icon={MdNotes} />
+          <ReactIcon className="info_icon" icon={BiCalendarAlt} />
+          <ReactIcon className="info_icon" icon={BsExclamationLg} />
+        </section>
+
+        <section className="buttons-section">
           <h3 className="buttons-section--title">Icons</h3>
           <ReactIcon className="btn btn_icon" icon={HiPlus} />
+          <ReactIcon className="btn btn_icon" icon={HiMinusSm} />
+          <ReactIcon className="btn btn_icon" icon={IoMdCheckmark} />
           <ReactIcon className="btn btn_icon" icon={MdDelete} />
           <ReactIcon className="btn btn_icon" icon={BsExclamationLg} />
           <ReactIcon className="btn btn_icon" icon={BsPlayFill} />
