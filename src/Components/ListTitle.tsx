@@ -1,8 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
-import { useAuth } from '../context/authContext';
 import { useUpdateTodolistTitleMutation } from '../api/mutations/todolist';
+import { useAuth } from '../context/authContext';
 
 interface ListTitleProps {
   todolistId: string;
@@ -51,6 +51,7 @@ export const ListTitle = ({
           })
         }
         value={listTitle}
+        data-form-type="other"
       />
       {onGoingCount > 0 && (
         <p>{`${onGoingCount} ${onGoingCount === 1 ? 'rappel' : 'rappels'}`}</p>

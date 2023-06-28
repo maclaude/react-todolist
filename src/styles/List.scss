@@ -92,6 +92,7 @@
     gap: 15px;
 
     &__checkbox {
+      background-color: var(--clr-cold);
       appearance: none;
       height: 20px;
       width: 20px;
@@ -115,6 +116,12 @@
       font-size: inherit;
       flex-grow: 1;
       cursor: pointer;
+    }
+
+    &__delete-icon {
+      width: 15px;
+      height: 15px;
+      color: var(--clr-black);
     }
   }
 }

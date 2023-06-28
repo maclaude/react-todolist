@@ -78,9 +78,15 @@
     }
 
     &--complete {
+      
       &:hover {
         background-color: var(--clr-acc-green);
       }
+    }
+
+    &--checked {
+      color: var(--clr-main);
+      background-color: var(--clr-acc-green);
     }
   }
 }

@@ -1,14 +1,16 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useQueryClient } from '@tanstack/react-query';
-import { MdRemoveCircle } from 'react-icons/md';
 
+import { HiMinusSm } from 'react-icons/hi';
 import { useUpdateTodoStatusMutation } from '../api/mutations/todo';
 import { useAuth } from '../context/authContext';
 import { COMPLETE, DELETE, ON_GOING } from '../data/constant';
 import { Status } from '../types';
 import { ListTodoInput } from './ListTodoInput';
 import { ReactIcon } from './ReactIcon';
+
+import '../styles/Buttons.scss';
 
 type ListTodoProps = {
   todoId: string;
@@ -65,8 +67,8 @@ export const ListTodo = ({
       />
       <ListTodoInput todoId={todoId} title={title} setTodoId={setTodoId} />
       <ReactIcon
-        className="icon"
-        icon={MdRemoveCircle}
+        className="btn btn_icon todos_item__delete-icon"
+        icon={HiMinusSm}
         onClick={() =>
           updateTodoStatusMutation.mutate({
             id: todoId,

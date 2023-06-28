@@ -147,7 +147,7 @@ export const Details = ({ todolistId, todoId }: DetailsProps) => {
                 />
               </I18nProvider>
               <ReactIcon
-                className="btn btn_icon details-item-right--icon"
+                className="btn btn_icon details-item-right_icon"
                 icon={HiMinusSm}
                 onClick={() => {
                   setValue('date', undefined);
@@ -157,7 +157,7 @@ export const Details = ({ todolistId, todoId }: DetailsProps) => {
             </div>
           ) : (
             <ReactIcon
-              className="btn btn_icon details-item-right--icon"
+              className="btn btn_icon details-item-right_icon"
               icon={HiPlus}
               onClick={() => {
                 setValue('date', now(getLocalTimeZone()));
@@ -180,7 +180,7 @@ export const Details = ({ todolistId, todoId }: DetailsProps) => {
                 <option value={PRIORITY.HIGH}>Haute</option>
               </select>
               <ReactIcon
-                className="btn btn_icon details-item-right--icon"
+                className="btn btn_icon details-item-right_icon"
                 icon={HiMinusSm}
                 onClick={() => {
                   setValue('priority', undefined);
@@ -190,7 +190,7 @@ export const Details = ({ todolistId, todoId }: DetailsProps) => {
             </div>
           ) : (
             <ReactIcon
-              className="btn btn_icon details-item-right--icon"
+              className="btn btn_icon details-item-right_icon"
               icon={HiPlus}
               onClick={() => {
                 setValue('priority', PRIORITY.NORMAL);
@@ -217,7 +217,9 @@ export const Details = ({ todolistId, todoId }: DetailsProps) => {
                 }
               />
               <ReactIcon
-                className="btn btn_icon btn_icon--complete"
+                className={`btn btn_icon btn_icon--complete ${
+                  todo?.status === COMPLETE && 'btn_icon--checked'
+                }`}
                 icon={IoMdCheckmark}
                 onClick={() =>
                   updateTodoStatusMutation.mutate({

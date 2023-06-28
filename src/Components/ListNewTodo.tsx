@@ -47,6 +47,7 @@ export const ListNewTodo = ({ todolistId }: ListFormProps) => {
         type="text"
         value={newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
+        data-form-type="other"
       />
       <ReactIcon
         className="new-todo__button"
