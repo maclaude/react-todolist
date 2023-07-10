@@ -6,6 +6,7 @@ import { ListNewTodo } from '../components/ListNewTodo';
 import { ListTitle } from '../components/ListTitle';
 import { ListTodos } from '../components/ListTodos';
 import { useAuth } from '../context/authContext';
+import { getTodoId } from '../utils/helpers';
 import { Details } from './Details';
 
 import '../styles/List.scss';
@@ -26,7 +27,7 @@ export const List = () => {
   useEffect(() => {
     if (todolist) {
       // Set 1st ongoing todo of the list for Todo query
-      setTodoId(todolist?.items.ongoing[0]?._id);
+      setTodoId(getTodoId(todolist));
     }
   }, [todolist?._id]);
 
@@ -38,7 +39,7 @@ export const List = () => {
             <ListTitle
               todolistId={todolist._id}
               title={todolist.title}
-              onGoingCount={todolist.items.ongoing.length}
+              newCount={todolist.items.new.length}
             />
             <ListNewTodo todolistId={todolist._id} />
             <ListTodos todolistId={todolist._id} setTodoId={setTodoId} />

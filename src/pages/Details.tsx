@@ -217,8 +217,11 @@ export const Details = ({ todolistId, todoId }: DetailsProps) => {
                 }
               />
               <ReactIcon
-                className={`btn btn_icon btn_icon--complete ${
-                  todo?.status === COMPLETE && 'btn_icon--checked'
+                className={`btn btn_icon ${
+                  (todo?.status === COMPLETE &&
+                    'btn_icon--checked btn_icon-complete') ||
+                  (todo?.status === ON_GOING &&
+                    'btn_icon--checked btn_icon-ongoing')
                 }`}
                 icon={IoMdCheckmark}
                 onClick={() =>

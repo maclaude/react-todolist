@@ -100,7 +100,11 @@
       border: none;
       cursor: pointer;
 
-      &--checked {
+      &--ongoing {
+        background-color: var(--clr-acc-yellow);
+      }
+
+      &--complete {
         background-color: var(--clr-acc-green);
       }
 
@@ -118,9 +122,9 @@
       cursor: pointer;
     }
 
-    &__delete-icon {
-      width: 15px;
-      height: 15px;
+    &__undo-icon {
+      width: 20px;
+      height: 20px;
       color: var(--clr-black);
     }
   }

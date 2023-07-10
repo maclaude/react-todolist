@@ -7,14 +7,10 @@ import { useAuth } from '../context/authContext';
 interface ListTitleProps {
   todolistId: string;
   title: string;
-  onGoingCount: number;
+  newCount: number;
 }
 
-export const ListTitle = ({
-  todolistId,
-  title,
-  onGoingCount,
-}: ListTitleProps) => {
+export const ListTitle = ({ todolistId, title, newCount }: ListTitleProps) => {
   const { token } = useAuth();
   const [listTitle, setListTitle] = useState<string>(title);
 
@@ -53,8 +49,8 @@ export const ListTitle = ({
         value={listTitle}
         data-form-type="other"
       />
-      {onGoingCount > 0 && (
-        <p>{`${onGoingCount} ${onGoingCount === 1 ? 'rappel' : 'rappels'}`}</p>
+      {newCount > 0 && (
+        <p>{`${newCount} ${newCount === 1 ? 'rappel' : 'rappels'}`}</p>
       )}
     </div>
   );

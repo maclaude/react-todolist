@@ -18,7 +18,7 @@ import { GoChevronDown, GoChevronRight } from 'react-icons/go';
 import { useUpdateTodolistTodosOrder } from '../api/mutations/todolist';
 import { usefetchTodolistTodosQuery } from '../api/queries/todolist';
 import { useAuth } from '../context/authContext';
-import { COMPLETE, ON_GOING } from '../data/constant';
+import { COMPLETE, NEW, ON_GOING } from '../data/constant';
 import { Todo } from '../types';
 import { ListTodo } from './ListTodo';
 
@@ -32,6 +32,11 @@ export const ListTodos = ({ todolistId, setTodoId }: ListOnGoingProps) => {
   const [isChevronToogle, setIsChevronToogle] = useState<boolean>(true);
 
   const authContext = { authenticated, token };
+
+  const { data: fetchedNewTodos } = usefetchTodolistTodosQuery(authContext, {
+    id: todolistId,
+    status: NEW,
+  });
 
   const { data: fetchedOnGoingTodos } = usefetchTodolistTodosQuery(
     authContext,
@@ -53,15 +58,34 @@ export const ListTodos = ({ todolistId, setTodoId }: ListOnGoingProps) => {
     useQueryClient(),
   );
 
+  const [newTodos, setNewTodos] = useState<Todo[]>(fetchedNewTodos || []);
+
   const [onGoingTodos, setOnGoingTodos] = useState<Todo[]>(
     fetchedOnGoingTodos || [],
   );
+
+  useEffect(() => {
+    if (fetchedNewTodos) {
+      setNewTodos(fetchedNewTodos);
+    }
+  }, [fetchedNewTodos]);
 
   useEffect(() => {
     if (fetchedOnGoingTodos) {
       setOnGoingTodos(fetchedOnGoingTodos);
     }
   }, [fetchedOnGoingTodos]);
+
+  useEffect(() => {
+    if (newTodos.length > 1) {
+      updateTodolistTodosOrderMutation.mutate({
+        id: todolistId,
+        newItems: newTodos.map((item) => item._id),
+        section: NEW,
+        token,
+      });
+    }
+  }, [newTodos]);
 
   useEffect(() => {
     if (onGoingTodos.length > 1) {
@@ -78,7 +102,20 @@ export const ListTodos = ({ todolistId, setTodoId }: ListOnGoingProps) => {
     setIsChevronToogle(!isChevronToogle);
   };
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleNewTodosDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (active.id !== over?.id) {
+      setNewTodos((items) => {
+        const overIndex = items.findIndex((item) => item._id === over?.id);
+        const activeIndex = items.findIndex((item) => item._id === active.id);
+
+        return arrayMove(items, activeIndex, overIndex);
+      });
+    }
+  };
+
+  const handleOnGoingTodosDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
     if (active.id !== over?.id) {
@@ -91,7 +128,7 @@ export const ListTodos = ({ todolistId, setTodoId }: ListOnGoingProps) => {
     }
   };
 
-  // Sensors to enable click on dragable item
+  // Sensors to enable click on draggable item
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -102,39 +139,72 @@ export const ListTodos = ({ todolistId, setTodoId }: ListOnGoingProps) => {
 
   return (
     <div id="todos-container">
-      <DndContext
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-        sensors={sensors}
-      >
-        <ul className="todos">
-          <SortableContext
-            items={onGoingTodos.map((todo) => todo._id)}
-            strategy={verticalListSortingStrategy}
-          >
-            {onGoingTodos &&
-              onGoingTodos.map(({ _id: todoId, title }) => (
+      {fetchedNewTodos && fetchedNewTodos.length > 0 && (
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={handleNewTodosDragEnd}
+          sensors={sensors}
+        >
+          <ul className="todos">
+            <SortableContext
+              items={newTodos.map((todo) => todo._id)}
+              strategy={verticalListSortingStrategy}
+            >
+              {newTodos.map(({ _id: todoId, title }) => (
                 <ListTodo
                   key={todoId}
                   todoId={todoId}
                   todolistId={todolistId}
                   title={title}
-                  status={ON_GOING}
+                  status={NEW}
                   setTodoId={setTodoId}
                 />
               ))}
-          </SortableContext>
-        </ul>
-      </DndContext>
+            </SortableContext>
+          </ul>
+        </DndContext>
+      )}
+
+      {fetchedOnGoingTodos && fetchedOnGoingTodos.length > 0 && (
+        <>
+          <div className="todos_title">
+            {`${fetchedOnGoingTodos.length} en cours`}
+            <GoChevronDown className="chevron" />
+          </div>
+
+          <DndContext
+            collisionDetection={closestCenter}
+            onDragEnd={handleOnGoingTodosDragEnd}
+            sensors={sensors}
+          >
+            <ul className="todos">
+              <SortableContext
+                items={onGoingTodos.map((todo) => todo._id)}
+                strategy={verticalListSortingStrategy}
+              >
+                {onGoingTodos &&
+                  onGoingTodos.map(({ _id: todoId, title }) => (
+                    <ListTodo
+                      key={todoId}
+                      todoId={todoId}
+                      todolistId={todolistId}
+                      title={title}
+                      status={ON_GOING}
+                      setTodoId={setTodoId}
+                    />
+                  ))}
+              </SortableContext>
+            </ul>
+          </DndContext>
+        </>
+      )}
 
       {fetchedCompleteTodos && fetchedCompleteTodos.length > 0 && (
         <>
           <div className="todos_title">
-            <p>
-              {`${fetchedCompleteTodos.length} ${
-                fetchedCompleteTodos.length === 1 ? 'terminé' : 'terminés'
-              }`}
-            </p>
+            {`${fetchedCompleteTodos.length} ${
+              fetchedCompleteTodos.length === 1 ? 'terminé' : 'terminés'
+            }`}
             {isChevronToogle ? (
               <GoChevronDown
                 className="chevron"

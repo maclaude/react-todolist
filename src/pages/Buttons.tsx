@@ -1,5 +1,6 @@
 import { BiCalendarAlt, BiStar } from 'react-icons/bi';
 import { BsExclamationLg, BsPlayFill } from 'react-icons/bs';
+import { CgUndo } from 'react-icons/cg';
 import { FiDownload } from 'react-icons/fi';
 import { HiMinusSm, HiPlus } from 'react-icons/hi';
 import { IoMdCheckmark } from 'react-icons/io';
@@ -32,6 +33,7 @@ export const Buttons = () => {
           <ReactIcon className="btn btn_icon" icon={BsPlayFill} />
           <ReactIcon className="btn btn_icon" icon={BiStar} />
           <ReactIcon className="btn btn_icon" icon={FiDownload} />
+          <ReactIcon className="btn btn_icon" icon={CgUndo} />
         </section>
 
         <section className="buttons-section">
