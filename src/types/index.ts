@@ -15,6 +15,7 @@ export type Todolist = {
   title: string;
   status: Status;
   items: {
+    new: Todo[];
     ongoing: Todo[];
     complete: Todo[];
     delete: Todo[];

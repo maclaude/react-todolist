@@ -2,10 +2,10 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { HiMinusSm } from 'react-icons/hi';
+import { CgUndo } from 'react-icons/cg';
 import { useUpdateTodoStatusMutation } from '../api/mutations/todo';
 import { useAuth } from '../context/authContext';
-import { COMPLETE, DELETE, ON_GOING } from '../data/constant';
+import { COMPLETE, DELETE, NEW, ON_GOING } from '../data/constant';
 import { Status } from '../types';
 import { ListTodoInput } from './ListTodoInput';
 import { ReactIcon } from './ReactIcon';
@@ -18,6 +18,45 @@ type ListTodoProps = {
   title: string;
   status: Status;
   setTodoId: (todoId: string) => void;
+};
+
+const getTodoNewStatusOnCheckoxClick = (status: Status) => {
+  switch (status) {
+    case NEW:
+      return ON_GOING;
+    case ON_GOING:
+      return COMPLETE;
+    case COMPLETE:
+      return ON_GOING;
+    default:
+      throw new Error(`invalid todo status ${status}`);
+  }
+};
+
+const getTodoNewStatusOnIconClick = (status: Status) => {
+  switch (status) {
+    case NEW:
+      return DELETE;
+    case ON_GOING:
+      return NEW;
+    case COMPLETE:
+      return DELETE;
+    default:
+      throw new Error(`invalid todo status ${status}`);
+  }
+};
+
+const getCheckboxClassName = (status: Status) => {
+  switch (status) {
+    case NEW:
+      return 'todos_item__checkbox';
+    case ON_GOING:
+      return 'todos_item__checkbox todos_item__checkbox--ongoing';
+    case COMPLETE:
+      return 'todos_item__checkbox todos_item__checkbox--complete';
+    default:
+      throw new Error(`invalid todo status ${status}`);
+  }
 };
 
 export const ListTodo = ({
@@ -55,30 +94,28 @@ export const ListTodo = ({
             id: todoId,
             todolistId,
             currentStatus: status,
-            newStatus: status === ON_GOING ? COMPLETE : ON_GOING,
+            newStatus: getTodoNewStatusOnCheckoxClick(status),
             token,
           })
         }
-        className={
-          status === COMPLETE
-            ? 'todos_item__checkbox todos_item__checkbox--checked'
-            : 'todos_item__checkbox'
-        }
+        className={getCheckboxClassName(status)}
       />
       <ListTodoInput todoId={todoId} title={title} setTodoId={setTodoId} />
-      <ReactIcon
-        className="btn btn_icon todos_item__delete-icon"
-        icon={HiMinusSm}
-        onClick={() =>
-          updateTodoStatusMutation.mutate({
-            id: todoId,
-            todolistId,
-            currentStatus: status,
-            newStatus: DELETE,
-            token,
-          })
-        }
-      />
+      {status === ON_GOING && (
+        <ReactIcon
+          className="btn btn_icon todos_item__undo-icon"
+          icon={CgUndo}
+          onClick={() =>
+            updateTodoStatusMutation.mutate({
+              id: todoId,
+              todolistId,
+              currentStatus: status,
+              newStatus: getTodoNewStatusOnIconClick(status),
+              token,
+            })
+          }
+        />
+      )}
     </li>
   );
 };
