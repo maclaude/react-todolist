@@ -7,7 +7,7 @@ import { useAuth } from '../context/authContext';
 interface ListInputProps {
   todoId: string;
   title: string;
-  setTodoId: (todoId: string) => void;
+  setTodoId?: (todoId: string) => void;
 }
 
 export const ListTodoInput = ({ todoId, title, setTodoId }: ListInputProps) => {
@@ -27,7 +27,7 @@ export const ListTodoInput = ({ todoId, title, setTodoId }: ListInputProps) => {
   const updateTodoTitleMutation = useUpdateTodoTitleMutation(useQueryClient());
 
   const handleClick = () => {
-    setTodoId(todoId);
+    if (setTodoId) setTodoId(todoId);
   };
 
   return (
