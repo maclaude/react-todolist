@@ -7,9 +7,9 @@ import { Navigation } from './pages/Navigation';
 import { Note } from './pages/Note';
 import { Signin } from './pages/Signin';
 import { Signup } from './pages/Signup';
+import { Toaster } from './pages/Toaster';
 import { User } from './pages/User';
 
-import { Toaster } from './pages/Toaster';
 import './styles/App.scss';
 
 function App() {

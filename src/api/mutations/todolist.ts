@@ -52,6 +52,7 @@ export const useNewTodolistMutation = (queryClient: QueryClient) =>
             title: 'New todolist',
             status: ON_GOING,
             items: {
+              new: [],
               ongoing: [],
               complete: [],
               delete: [],

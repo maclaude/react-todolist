@@ -13,11 +13,10 @@
 #container {
   height: 100%;
   width: 100%;
-  max-height: 800px;
   display: grid;
-  grid-template-columns: 20px 250px repeat(2, 1fr) 250px 20px;
-  grid-template-rows: 20px repeat(3, 1fr) 20px;
-  column-gap: 20px;
+  grid-template-columns: 5px 250px repeat(2, 1fr) 250px 5px;
+  grid-template-rows: 10px repeat(3, 1fr) 10px;
+  column-gap: 5px;
   color: var(--clr-dark);
 }
 
@@ -32,9 +31,10 @@
 #main_container {
   grid-area: 2 / 3 / 5 / 6;
   display: flex;
+  flex-grow: 1;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 25px;
   padding: 10px;
 }
 

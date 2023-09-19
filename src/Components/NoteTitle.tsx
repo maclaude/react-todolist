@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+
 import { useUpdateNoteTitleMutation } from '../api/mutations/note';
 import { useAuth } from '../context/authContext';
 

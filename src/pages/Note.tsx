@@ -2,9 +2,9 @@ import { useParams } from 'react-router-dom';
 
 import { useFetchNoteByIdQuery } from '../api/queries/note';
 import { BlockNote } from '../components/BlockNote';
+import { NoteTitle } from '../components/NoteTitle';
 import { useAuth } from '../context/authContext';
 
-import { NoteTitle } from '../components/NoteTitle';
 import '../styles/Note.scss';
 
 export const Note = () => {
