@@ -5,6 +5,7 @@ import { FiDownload } from 'react-icons/fi';
 import { HiMinusSm, HiPlus } from 'react-icons/hi';
 import { IoMdCheckmark } from 'react-icons/io';
 import { MdDelete, MdNotes } from 'react-icons/md';
+import { BeatLoader, PulseLoader, SyncLoader } from 'react-spinners';
 
 import { ReactIcon } from '../components/ReactIcon';
 
@@ -68,6 +69,21 @@ export const Buttons = () => {
           <button className="btn btn_secondary btn_secondary--over">
             Terminer
           </button>
+        </section>
+
+        <section className="buttons-section">
+          <h3 className="buttons-section--title">Loader</h3>
+          <div className="loader-section">
+            <span className="loader">
+              <PulseLoader loading size="10" color="#24292f" />
+            </span>
+            <span className="loader">
+              <BeatLoader loading size="10" color="#24292f" />
+            </span>
+            <span className="loader">
+              <SyncLoader loading size="10" color="#24292f" />
+            </span>
+          </div>
         </section>
       </div>
     </main>
