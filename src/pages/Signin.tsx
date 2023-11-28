@@ -33,7 +33,7 @@ export const Signin = () => {
   });
 
   useEffect(() => {
-    if (isSuccess && data) {
+    if (isSuccess && data?.user && data?.token) {
       // Set authContext credentials
       login(data.user.id, data.token);
 
@@ -66,28 +66,44 @@ export const Signin = () => {
           <label className="form-label" htmlFor="email">
             Email
           </label>
-          {errors.email?.message && (
-            <p className="form-error">{errors.email.message}</p>
-          )}
+          {
+            // Error from form validation
+            errors.email?.message && (
+              <p className="form-error">{errors.email.message}</p>
+            )
+          }
+          {
+            // Error from useSigninMutation
+            data?.error?.code === 1 && (
+              <p className="form-error">{data.error.message}</p>
+            )
+          }
+
           <input
             className="form-input"
             id="email"
             type="email"
             {...register('email', { required: true })}
           />
-
           <label className="form-label" htmlFor="password">
             Mot de passe
           </label>
-          {errors.password?.message && (
-            <p className="form-error">{errors.password.message}</p>
-          )}
+          {
+            // Error from form validation
+            errors.password?.message && (
+              <p className="form-error">{errors.password.message}</p>
+            )
+          }
+          {
+            // Error from useSigninMutation
+            data?.error?.code === 2 && (
+              <p className="form-error">{data.error.message}</p>
+            )
+          }
           <PasswordInput id="password" register={register} />
-
           <NavLink className="form-reset-link" to={`/user/password`}>
             Mot de passe oublié
           </NavLink>
-
           <input className="form-button" type="submit" value="Connexion" />
         </form>
 
