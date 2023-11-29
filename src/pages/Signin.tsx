@@ -57,6 +57,9 @@ export const Signin = () => {
       </main>
     );
 
+  // - `errors` | form validation errors
+  // - `data` | API signin request errors
+
   return (
     <main id="central_container">
       <div className="sign-container box--shadow">
@@ -66,40 +69,28 @@ export const Signin = () => {
           <label className="form-label" htmlFor="email">
             Email
           </label>
-          {
-            // Error from form validation
-            errors.email?.message && (
-              <p className="form-error">{errors.email.message}</p>
-            )
-          }
-          {
-            // Error from useSigninMutation
-            data?.error?.code === 1 && (
-              <p className="form-error">{data.error.message}</p>
-            )
-          }
-
+          {(errors.email?.message ||
+            (data?.error?.code === 1 && data.error.message)) && (
+            <p className="form-error">
+              {errors.email?.message || data?.error?.message}
+            </p>
+          )}
           <input
             className="form-input"
-            id="email"
             type="email"
+            id="email"
             {...register('email', { required: true })}
           />
           <label className="form-label" htmlFor="password">
             Mot de passe
           </label>
-          {
-            // Error from form validation
-            errors.password?.message && (
-              <p className="form-error">{errors.password.message}</p>
-            )
-          }
-          {
-            // Error from useSigninMutation
-            data?.error?.code === 2 && (
-              <p className="form-error">{data.error.message}</p>
-            )
-          }
+
+          {(errors.password?.message ||
+            (data?.error?.code === 2 && data.error.message)) && (
+            <p className="form-error">
+              {errors.password?.message || data?.error?.message}
+            </p>
+          )}
           <PasswordInput id="password" register={register} />
           <NavLink className="form-reset-link" to={`/user/password`}>
             Mot de passe oublié

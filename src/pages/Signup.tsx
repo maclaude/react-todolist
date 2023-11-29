@@ -23,7 +23,7 @@ const signupSchema = yup.object({
 type SignupData = yup.InferType<typeof signupSchema>;
 
 export const Signup = () => {
-  const { mutate, isLoading, isSuccess } = useSignupMutation();
+  const { mutate, isLoading, isSuccess, data } = useSignupMutation();
 
   const {
     register,
@@ -47,7 +47,7 @@ export const Signup = () => {
     });
   };
 
-  if (isSuccess) {
+  if (isSuccess && data?.userId) {
     return <Navigate to="/user/signin" replace />;
   }
 
@@ -57,6 +57,9 @@ export const Signup = () => {
         <PulseLoader />;
       </main>
     );
+
+  // - `errors` | form validation errors
+  // - `data` | API signup request errors
 
   return (
     <main id="central_container">
@@ -91,8 +94,11 @@ export const Signup = () => {
           <label className="form-label" htmlFor="email">
             Email
           </label>
-          {errors.email?.message && (
-            <p className="form-error">{errors.email.message}</p>
+          {(errors.email?.message ||
+            (data?.error?.code === 3 && data.error.message)) && (
+            <p className="form-error">
+              {errors.email?.message || data?.error?.message}
+            </p>
           )}
           <input
             className="form-input"
