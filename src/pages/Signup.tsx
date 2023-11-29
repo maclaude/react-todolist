@@ -13,7 +13,14 @@ const signupSchema = yup.object({
   firstname: yup.string().trim().required('Le prénom est requis'),
   lastname: yup.string().trim().required('Le nom est requis'),
   email: yup.string().trim().required("L'email est requis"),
-  password: yup.string().required('Le mot de passe est requis'),
+  password: yup
+    .string()
+    .required('Le mot de passe est requis')
+    .min(8, 'Le mot de passe doit contenir au moins 8 caractères')
+    .matches(
+      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$/,
+      'Le mot de passe doit contenir au moins un chiffre et un caractère spécial',
+    ),
   confirm_password: yup
     .string()
     .required('La confirmation de mot de passe est requise')
