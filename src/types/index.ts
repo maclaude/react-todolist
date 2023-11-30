@@ -40,6 +40,7 @@ export type Todo = {
 export type Note = {
   _id: string;
   title: string;
+  status: Status;
   content: string;
   createdAt: Date;
   updatedAt: Date;

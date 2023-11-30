@@ -15,9 +15,13 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { FaSignInAlt } from 'react-icons/fa';
 import { HiPlus } from 'react-icons/hi';
+import { MdDelete } from 'react-icons/md';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import { useNewNoteMutation } from '../api/mutations/note';
+import {
+  useNewNoteMutation,
+  useUpdateNoteStatusMutation,
+} from '../api/mutations/note';
 import { useNewTodolistMutation } from '../api/mutations/todolist';
 import { useUpdateTodolistsOrderMutation } from '../api/mutations/user';
 import {
@@ -27,9 +31,9 @@ import {
 import { NavigationItem } from '../components/NavigationItem';
 import { ReactIcon } from '../components/ReactIcon';
 import { useAuth } from '../context/authContext';
-import { ON_GOING } from '../data/constant';
+import { DELETE, ON_GOING } from '../data/constant';
 import { Todolist } from '../types';
-import { getOnGoingTodolists } from '../utils/helpers';
+import { getOnGoingNotes, getOnGoingTodolists } from '../utils/helpers';
 
 import '../styles/Buttons.scss';
 import '../styles/Navigation.scss';
@@ -55,6 +59,9 @@ export const Navigation = () => {
   );
 
   const newNoteMutation = useNewNoteMutation(useQueryClient());
+  const updateNoteStatusMutation = useUpdateNoteStatusMutation(
+    useQueryClient(),
+  );
 
   useEffect(() => {
     if (fetchedTodolists) {
@@ -158,6 +165,7 @@ export const Navigation = () => {
             onClick={() =>
               newNoteMutation.mutate({
                 title: 'New note',
+                status: 'ongoing',
                 content: '[]',
                 token,
               })
@@ -165,20 +173,35 @@ export const Navigation = () => {
           />
         </div>
         <ul>
-          {fetchedNotes?.map(({ _id: noteId, title }) => (
-            <li key={noteId} className="navigation-item">
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? 'navigation-item-link navigation-item-link__active'
-                    : 'navigation-item-link'
-                }
-                to={`note/${noteId}`}
-              >
-                {title}
-              </NavLink>
-            </li>
-          ))}
+          {fetchedNotes &&
+            getOnGoingNotes(fetchedNotes).map(({ _id: noteId, title }) => (
+              <li key={noteId} className="navigation-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? 'navigation-item-link navigation-item-link__active'
+                      : 'navigation-item-link'
+                  }
+                  to={`note/${noteId}`}
+                >
+                  {title}
+                </NavLink>
+                <ReactIcon
+                  icon={MdDelete}
+                  className="icon navigation-item-delete-icon"
+                  onClick={() => {
+                    // Go back to previous history
+                    navigate(-1);
+
+                    return updateNoteStatusMutation.mutate({
+                      id: noteId,
+                      status: DELETE,
+                      token,
+                    });
+                  }}
+                />
+              </li>
+            ))}
         </ul>
       </section>
 
