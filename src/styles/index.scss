@@ -3,50 +3,49 @@
   font-style: italic;
   font-weight: 400;
   src: url('../assets/fonts/roboto-italic-webfont.woff2') format('woff2'),
-       url('../assets/fonts/roboto-italic-webfont.woff') format('woff');
+    url('../assets/fonts/roboto-italic-webfont.woff') format('woff');
 }
 
 @font-face {
   font-family: 'Roboto';
   font-weight: 400;
   src: url('../assets/fonts/roboto-regular-webfont.woff2') format('woff2'),
-       url('../assets/fonts/roboto-regular-webfont.woff') format('woff');
+    url('../assets/fonts/roboto-regular-webfont.woff') format('woff');
 }
 
 @font-face {
   font-family: 'Roboto';
   font-weight: 600;
   src: url('../assets/fonts/roboto-bold-webfont.woff2') format('woff2'),
-       url('../assets/fonts/roboto-bold-webfont.woff') format('woff');
+    url('../assets/fonts/roboto-bold-webfont.woff') format('woff');
 }
 
 @font-face {
   font-family: 'Roboto';
   font-weight: 800;
   src: url('../assets/fonts/roboto-black-webfont.woff2') format('woff2'),
-       url('../assets/fonts/roboto-black-webfont.woff') format('woff');
+    url('../assets/fonts/roboto-black-webfont.woff') format('woff');
 }
 
-
 :root {
-  --clr-main: #FFFFFF;
-  --clr-light-grey: #EFEFEF;
-  --clr-medium-grey: #D6DBDF;
-  --clr-cold: #F1F6F9;
+  --clr-main: #ffffff;
+  --clr-light-grey: #efefef;
+  --clr-medium-grey: #d6dbdf;
+  --clr-cold: #f1f6f9;
   --clr-dark: #24292f;
-  --clr-red: #FF0033;
+  --clr-red: #ff0033;
   --clr-acc-green: #47e5bdff;
   --clr-acc-red: #ff385d;
-  --clr-acc-yellow: #FFEE58;
+  --clr-acc-yellow: #ffee58;
   --clr-acc-red--hover: #f53f5e;
   --box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  --box-shadow-: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
 /* Fonts
 ========================== */
 
-h1, h2 {
+h1,
+h2 {
   font-weight: 800;
   line-height: 1.5;
 }
@@ -62,11 +61,11 @@ h2 {
 h3 {
   font-weight: 600;
   line-height: 1.5;
-  font-size: 1.20em;
+  font-size: 1.2em;
 }
 
 p {
-  line-height: 1.25
+  line-height: 1.25;
 }
 
 strong {

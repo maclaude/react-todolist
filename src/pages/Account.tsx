@@ -1,6 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 
 import { useDeleteAllTodolistsMutation } from '../api/mutations/user';
+import { Modal } from '../components/DialogModal';
 import { useAuth } from '../context/authContext';
 
 import avatarImg from '../assets/svg/avatar.svg';
@@ -8,6 +10,7 @@ import '../styles/Account.scss';
 
 export const Account = () => {
   const { logout, token } = useAuth();
+  const [modal, setModal] = useState(false);
 
   const deleteAllTodolistsMutation = useDeleteAllTodolistsMutation(
     useQueryClient(),
@@ -34,7 +37,11 @@ export const Account = () => {
           <a href="#">Ajouter une image de profil</a>
           <a href="#">Modifier mon email</a>
           <a href="#">Changer mon mot de passe</a>
-          <a href="#">Supprimer mon compte</a>
+          <a onClick={() => setModal(true)}>Supprimer mon compte</a>
+
+          <Modal openModal={modal} closeModal={() => setModal(false)}>
+            Êtes-vous certain de vouloir supprimer votre compte ?
+          </Modal>
         </div>
 
         <h3 className="settings-title">Reset</h3>

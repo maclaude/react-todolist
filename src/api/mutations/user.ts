@@ -25,6 +25,10 @@ type DeleteAllTodolistsPayload = {
   token: string;
 };
 
+type DeleteUserAccountPayload = {
+  token: string;
+};
+
 const signin = async (payload: SigninPayload) =>
   axios.post(`${API_BASE_URL}/auth/signin`, payload).then(({ data }) => data);
 
@@ -72,6 +76,23 @@ export const useDeleteAllTodolistsMutation = (queryClient: QueryClient) =>
   useMutation({
     mutationFn: (payload: DeleteAllTodolistsPayload) =>
       deleteAllTodolists(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEY.TODOLISTS], { exact: true });
+    },
+  });
+
+export const deleteUserAccount = async (payload: DeleteUserAccountPayload) =>
+  axios
+    .create({
+      headers: { Authorization: `Bearer ${payload.token}` },
+    })
+    .delete(`${API_BASE_URL}/user/account`)
+    .then(({ data }) => data);
+
+export const useDeleteUserAccountMutation = (queryClient: QueryClient) =>
+  useMutation({
+    mutationFn: (payload: DeleteUserAccountPayload) =>
+      deleteUserAccount(payload),
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEY.TODOLISTS], { exact: true });
     },
