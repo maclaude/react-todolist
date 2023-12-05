@@ -31,16 +31,24 @@ export const Modal = ({ openModal, closeModal, children }: ModalProps) => {
 
   return (
     <dialog ref={ref} onCancel={closeModal} className="modal">
-      {children}
-      <button onClick={closeModal}>Annuler</button>
-      <button
-        onClick={() => {
-          deleteUserAccountMutation.mutate({ token });
-          logout();
-        }}
-      >
-        Supprimer
-      </button>
+      <div className="modal-title">{children}</div>
+      <section className="modal-buttons">
+        <button
+          className="btn btn_secondary btn_secondary--over"
+          onClick={closeModal}
+        >
+          Annuler
+        </button>
+        <button
+          className="btn btn_secondary btn_secondary--delete"
+          onClick={() => {
+            deleteUserAccountMutation.mutate({ token });
+            logout();
+          }}
+        >
+          Supprimer
+        </button>
+      </section>
     </dialog>
   );
 };
