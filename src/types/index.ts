@@ -20,8 +20,8 @@ export type Todolist = {
     complete: Todo[];
     delete: Todo[];
   };
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   __v: number;
 };
 
@@ -32,8 +32,8 @@ export type Todo = {
   notes?: string;
   date?: string;
   priority?: Priority;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   __v: number;
 };
 
@@ -42,7 +42,7 @@ export type Note = {
   title: string;
   status: Status;
   content: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   __v: number;
 };
