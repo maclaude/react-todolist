@@ -1,8 +1,15 @@
 {
+  "collectCoverage": true,
+  "collectCoverageFrom": ["src/**/*.{ts,tsx}"],
+  "coverageDirectory": "coverage",
   "preset": "ts-jest",
-  "testEnvironment": "node",
+  "setupFilesAfterEnv": ["<rootDir>/jest.setup.ts"],
+  "testEnvironment": "jsdom",
   "transform": {
     "^.+\\.ts?$": "ts-jest"
   },
-  "transformIgnorePatterns": ["<rootDir>/node_modules/"]
+  "transformIgnorePatterns": ["<rootDir>/node_modules/"],
+  "moduleNameMapper": {
+    "^.+\\.(css|less|scss)$": "identity-obj-proxy"
+  }
 }

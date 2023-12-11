@@ -2,13 +2,15 @@
   "env": {
     "browser": true,
     "es2021": true,
+    "jest/globals": true,
     "jest": true
   },
   "extends": [
     "airbnb-base",
     "airbnb-typescript",
     "plugin:import/typescript",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:jest/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -19,7 +21,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["react", "@typescript-eslint", "prettier", "import"],
+  "plugins": ["react", "@typescript-eslint", "prettier", "import", "jest"],
   "rules": {
     "import/no-extraneous-dependencies": "off",
     "import/prefer-default-export": "off",
