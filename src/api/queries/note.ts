@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { QUERY_KEY } from '../../data/constant';
+import { API_BASE_URL } from '../../data/environment';
 import { Note } from '../../types';
-import { API_BASE_URL, QUERY_KEY } from '../constants';
 
 type AuthContext = {
   authenticated: boolean;

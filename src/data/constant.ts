@@ -14,3 +14,9 @@ export const PRIORITY = {
   NORMAL: 'normal',
   HIGH: 'high',
 };
+
+export const QUERY_KEY = {
+  NOTES: 'notes',
+  TODOLISTS: 'todolists',
+  TODO: 'todo',
+};

@@ -1,9 +1,9 @@
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { ON_GOING } from '../../data/constant';
+import { ON_GOING, QUERY_KEY } from '../../data/constant';
+import { API_BASE_URL } from '../../data/environment';
 import { Note, Status } from '../../types';
-import { API_BASE_URL, QUERY_KEY } from '../constants';
 
 type NewNotePayload = {
   title: string;

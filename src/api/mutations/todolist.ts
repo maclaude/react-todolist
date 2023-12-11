@@ -1,9 +1,9 @@
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { ON_GOING } from '../../data/constant';
+import { ON_GOING, QUERY_KEY } from '../../data/constant';
+import { API_BASE_URL } from '../../data/environment';
 import { Status, Todo, Todolist } from '../../types';
-import { API_BASE_URL, QUERY_KEY } from '../constants';
 
 type NewTodolistPayload = {
   title: string;
@@ -57,8 +57,8 @@ export const useNewTodolistMutation = (queryClient: QueryClient) =>
               complete: [],
               delete: [],
             },
-            createdAt: new Date(),
-            updatedAt: new Date(),
+            createdAt: new Date().toDateString(),
+            updatedAt: new Date().toDateString(),
             __v: 1,
           },
         ],
