@@ -75,13 +75,13 @@ export const Buttons = () => {
           <h3 className="buttons-section--title">Loader</h3>
           <div className="loader-section">
             <span className="loader">
-              <PulseLoader loading size="10" color="#24292f" />
+              <PulseLoader loading size="10px" color="#24292f" />
             </span>
             <span className="loader">
-              <BeatLoader loading size="10" color="#24292f" />
+              <BeatLoader loading size="10px" color="#24292f" />
             </span>
             <span className="loader">
-              <SyncLoader loading size="10" color="#24292f" />
+              <SyncLoader loading size="10px" color="#24292f" />
             </span>
           </div>
         </section>

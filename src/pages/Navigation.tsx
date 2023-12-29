@@ -229,9 +229,9 @@ export const Navigation = () => {
                   ? 'navigation-item-link navigation-item-link__active'
                   : 'navigation-item-link'
               }
-              to={`components/toaster`}
+              to={`components/poc`}
             >
-              Toaster
+              Poc
             </NavLink>
           </li>
         </ul>

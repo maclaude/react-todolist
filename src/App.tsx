@@ -5,9 +5,9 @@ import { Buttons } from './pages/Buttons';
 import { List } from './pages/List';
 import { Navigation } from './pages/Navigation';
 import { Note } from './pages/Note';
+import { Poc } from './pages/Poc';
 import { Signin } from './pages/Signin';
 import { Signup } from './pages/Signup';
-import { Toaster } from './pages/Toaster';
 import { User } from './pages/User';
 
 import './styles/App.scss';
@@ -32,7 +32,7 @@ function App() {
           <Route path={'todolist/:id'} element={<List />} />
           <Route path={'note/:id'} element={<Note />} />
           <Route path={'components/buttons'} element={<Buttons />} />
-          <Route path={'components/toaster'} element={<Toaster />} />
+          <Route path={'components/poc'} element={<Poc />} />
         </Routes>
       </div>
     </div>
