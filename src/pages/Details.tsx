@@ -5,7 +5,7 @@ import {
   parseZonedDateTime,
 } from '@internationalized/date';
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { I18nProvider } from 'react-aria';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { HiMinusSm, HiPlus } from 'react-icons/hi';
@@ -21,6 +21,7 @@ import { DateField } from '../components/DateField';
 import { ReactIcon } from '../components/ReactIcon';
 import { useAuth } from '../context/authContext';
 import { COMPLETE, DELETE, ON_GOING, PRIORITY } from '../data/constant';
+import useAutosizeTextArea from '../hooks/useAutosizeTextArea';
 import { Priority } from '../types';
 
 import '../styles/Buttons.scss';
@@ -44,14 +45,21 @@ export const Details = ({ todolistId, todoId }: DetailsProps) => {
   const [toogleDate, setToogleDate] = useState(false);
   const [tooglePriority, setTooglePriority] = useState(false);
 
-  const { control, register, handleSubmit, setValue, reset } = useForm<Inputs>({
-    defaultValues: {
-      title: '',
-      notes: '',
-      date: undefined,
-      priority: undefined,
-    },
-  });
+  const { control, register, handleSubmit, setValue, reset, watch } =
+    useForm<Inputs>({
+      defaultValues: {
+        title: '',
+        notes: '',
+        date: undefined,
+        priority: undefined,
+      },
+    });
+
+  const { ref, ...rest } = register('title');
+
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  useAutosizeTextArea(textAreaRef.current, watch('title'));
 
   useEffect(() => {
     // Reset state when todo id change
@@ -114,10 +122,13 @@ export const Details = ({ todolistId, todoId }: DetailsProps) => {
       <form onSubmit={handleSubmit(onSubmit)} className="details-form">
         <div className="details_title details-item">
           <textarea
-            maxLength={50}
             className="details_title"
             id="title"
-            {...register('title')}
+            {...rest}
+            ref={(e) => {
+              ref(e);
+              textAreaRef.current = e;
+            }}
           />
         </div>
         <div className="details-item details-item--column details-item--grow">

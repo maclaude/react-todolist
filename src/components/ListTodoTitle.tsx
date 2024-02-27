@@ -1,24 +1,31 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useUpdateTodoTitleMutation } from '../api/mutations/todo';
 import { useAuth } from '../context/authContext';
+import useAutosizeTextArea from '../hooks/useAutosizeTextArea';
 
-interface ListInputProps {
+interface ListTitleProps {
   todoId: string;
   title: string;
   setTodoId?: (todoId: string) => void;
 }
 
-export const ListTodoInput = ({ todoId, title, setTodoId }: ListInputProps) => {
+export const ListTodoTitle = ({ todoId, title, setTodoId }: ListTitleProps) => {
   const { token } = useAuth();
-  const [inputValue, setInputValue] = useState(title);
+  const [titleValue, setTitleValue] = useState(title);
+
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  useAutosizeTextArea(textAreaRef.current, titleValue);
 
   useEffect(() => {
-    if (title) setInputValue(title);
+    if (title) setTitleValue(title);
   }, [title]);
 
-  const handleOnEnterBlur = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleOnEnterBlur = (
+    event: React.KeyboardEvent<HTMLTextAreaElement>,
+  ) => {
     if (event.key === 'Enter') {
       event.currentTarget.blur();
     }
@@ -31,19 +38,21 @@ export const ListTodoInput = ({ todoId, title, setTodoId }: ListInputProps) => {
   };
 
   return (
-    <input
-      className="todos_item__input"
-      onChange={(e) => setInputValue(e.currentTarget.value)}
+    <textarea
+      rows={1}
+      ref={textAreaRef}
+      className="todos_item__title"
+      onChange={(e) => setTitleValue(e.currentTarget.value)}
       onKeyDown={(e) => handleOnEnterBlur(e)}
       onClick={handleClick}
       onBlur={() =>
         updateTodoTitleMutation.mutate({
           id: todoId,
-          title: inputValue,
+          title: titleValue,
           token,
         })
       }
-      value={inputValue}
+      value={titleValue}
     />
   );
 };

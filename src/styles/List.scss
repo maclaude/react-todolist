@@ -62,7 +62,6 @@
   }
 }
 
-
 #todos-container {
   flex-grow: 1;
   overflow-y: scroll;
@@ -109,11 +108,11 @@
       }
 
       &:focus {
-        border: 1px solid var(--clr-medium-grey)
+        border: 1px solid var(--clr-medium-grey);
       }
     }
 
-    &__input {
+    &__title {
       background-color: inherit;
       border: none;
       outline: none;

@@ -5,7 +5,7 @@ import { useUpdateTodoStatusMutation } from '../api/mutations/todo';
 import { useAuth } from '../context/authContext';
 import { COMPLETE, DELETE, NEW, ON_GOING } from '../data/constant';
 import { Status } from '../types';
-import { ListTodoInput } from './ListTodoInput';
+import { ListTodoTitle } from './ListTodoTitle';
 import { ReactIcon } from './ReactIcon';
 
 import '../styles/Buttons.scss';
@@ -82,7 +82,7 @@ export const ListTodoUndraggable = ({
         }
         className={getCheckboxClassName(status)}
       />
-      <ListTodoInput todoId={todoId} title={title} />
+      <ListTodoTitle todoId={todoId} title={title} />
       {status === ON_GOING && (
         <ReactIcon
           className="btn btn_icon todos_item__undo-icon"
