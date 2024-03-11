@@ -48,20 +48,20 @@ export const Signin = () => {
 
   if (isLoading)
     return (
-      <main id="central_container">
+      <>
         <div className="sign-container box--shadow">
           <span className="sign-loader">
             <PulseLoader />
           </span>
         </div>
-      </main>
+      </>
     );
 
   // - `errors` | form validation errors
   // - `data` | API signin request errors
 
   return (
-    <main id="central_container">
+    <>
       <div className="sign-container box--shadow">
         <h2 className="sign-title">Connexion</h2>
 
@@ -102,6 +102,6 @@ export const Signin = () => {
           inscription
         </NavLink>
       </div>
-    </main>
+    </>
   );
 };

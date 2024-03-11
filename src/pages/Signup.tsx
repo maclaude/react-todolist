@@ -60,16 +60,16 @@ export const Signup = () => {
 
   if (isLoading)
     return (
-      <main id="central_container">
+      <>
         <PulseLoader />;
-      </main>
+      </>
     );
 
   // - `errors` | form validation errors
   // - `data` | API signup request errors
 
   return (
-    <main id="central_container">
+    <>
       <div className="sign-container box--shadow">
         <h2 className="sign-title">Inscription</h2>
 
@@ -137,6 +137,6 @@ export const Signup = () => {
           connexion
         </NavLink>
       </div>
-    </main>
+    </>
   );
 };

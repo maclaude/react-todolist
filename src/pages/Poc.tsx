@@ -10,7 +10,7 @@ export const Poc = () => {
   const sendEmailMutation = useSendEmailMutation();
 
   return (
-    <main id="main_container">
+    <>
       <div className="poc_container box--shadow">
         <h2>Proof of concept</h2>
         <h3>Toaster</h3>
@@ -30,6 +30,6 @@ export const Poc = () => {
           Send an email
         </button>
       </div>
-    </main>
+    </>
   );
 };

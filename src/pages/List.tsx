@@ -32,7 +32,7 @@ export const List = () => {
   }, [todolist?._id]);
 
   return (
-    <main id="main_container">
+    <>
       {todolist && (
         <>
           <div id="todolist_container" className="box--shadow">
@@ -49,6 +49,6 @@ export const List = () => {
           </section>
         </>
       )}
-    </main>
+    </>
   );
 };

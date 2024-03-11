@@ -24,16 +24,18 @@ function App() {
           </aside>
         )}
 
-        <Routes>
-          <Route path={'/'} element={<User />} />
-          <Route path={'user/'} element={<User />} />
-          <Route path={'user/signin'} element={<Signin />} />
-          <Route path={'user/signup'} element={<Signup />} />
-          <Route path={'todolist/:id'} element={<List />} />
-          <Route path={'note/:id'} element={<Note />} />
-          <Route path={'components/buttons'} element={<Buttons />} />
-          <Route path={'components/poc'} element={<Poc />} />
-        </Routes>
+        <main id="main_container">
+          <Routes>
+            <Route path={'/'} element={<User />} />
+            <Route path={'user/'} element={<User />} />
+            <Route path={'user/signin'} element={<Signin />} />
+            <Route path={'user/signup'} element={<Signup />} />
+            <Route path={'todolist/:id'} element={<List />} />
+            <Route path={'note/:id'} element={<Note />} />
+            <Route path={'components/buttons'} element={<Buttons />} />
+            <Route path={'components/poc'} element={<Poc />} />
+          </Routes>
+        </main>
       </div>
     </div>
   );

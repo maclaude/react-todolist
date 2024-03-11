@@ -13,7 +13,7 @@ import '../styles/Buttons.scss';
 
 export const Buttons = () => {
   return (
-    <main id="main_container">
+    <>
       <div className="buttons-container box--shadow">
         <h2>Buttons</h2>
 
@@ -86,6 +86,6 @@ export const Buttons = () => {
           </div>
         </section>
       </div>
-    </main>
+    </>
   );
 };

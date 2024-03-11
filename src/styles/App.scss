@@ -13,44 +13,23 @@
 #container {
   height: 100%;
   width: 100%;
-  display: grid;
-  grid-template-columns: 5px 250px repeat(2, 1fr) 250px 5px;
-  grid-template-rows: 10px repeat(3, 1fr) 10px;
-  column-gap: 5px;
-  color: var(--clr-dark);
-}
-
-#aside_container {
-  grid-area: 2 / 2 / 5 / 3;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  gap: 10px;
+  color: var(--clr-dark);
   padding: 10px;
 }
 
+#aside_container {
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 #main_container {
-  grid-area: 2 / 3 / 5 / 6;
   display: flex;
   flex-grow: 1;
   align-items: center;
   justify-content: space-between;
-  gap: 25px;
-  padding: 10px;
-}
-
-#central_container {
-  grid-area: 2 / 3 / 5 / 5;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 10px;
-}
-
-// ============= Desktop wide =============
-@media screen and (min-width: 1500px) {
-  #container {
-    height: 85%;
-    width: 85%;
-  }
+  gap: 10px;
 }

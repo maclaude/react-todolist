@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 export const Connexion = () => {
   return (
-    <main id="central_container">
+    <>
       <div className="user-container box--shadow">
         <h2 className="user-title">Bienvenue !</h2>
         <span className="user-intro">
@@ -17,6 +17,6 @@ export const Connexion = () => {
           </NavLink>
         </div>
       </div>
-    </main>
+    </>
   );
 };
