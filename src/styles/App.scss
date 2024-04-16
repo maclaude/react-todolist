@@ -16,7 +16,7 @@
   display: flex;
   gap: 10px;
   color: var(--clr-dark);
-  padding: 10px;
+  padding: 0.75em;
 }
 
 #aside_container {
@@ -31,5 +31,5 @@
   flex-grow: 1;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 0.75em;
 }

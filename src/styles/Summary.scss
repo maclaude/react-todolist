@@ -2,7 +2,7 @@
   &_container {
     width: 80%;
     height: 100%;
-    padding: 35px 40px;
+    padding: 2em;
     display: flex;
     flex-direction: column;
     gap: 50px;
@@ -20,7 +20,6 @@
     gap: 10px;
 
     &-title {
-      font-size: .95em;
       font-weight: 600;
     }
   }

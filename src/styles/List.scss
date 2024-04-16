@@ -6,7 +6,8 @@
     height: 100%;
     min-width: 600px;
     width: 60%;
-    padding: 35px 40px;
+    padding: 2em;
+    gap: 2em;
     display: flex;
     flex-direction: column;
   }
@@ -14,7 +15,6 @@
   &_title {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
     align-items: center;
     font-weight: 600;
 
@@ -33,20 +33,18 @@
 .new-todo {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 30px;
+  gap: 1em;
 
   input {
     border: none;
     border-bottom: 1px solid var(--clr-light-grey);
     width: 100%;
-    font-size: 1em;
+    font-size: inherit;
     line-height: 1.75;
     flex-grow: 1;
 
     &::placeholder {
       color: var(--clr-medium-grey);
-      font-size: 0.9em;
     }
 
     &:focus {
@@ -74,21 +72,21 @@
 .todos {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 0.3em;
 
   &_title {
     font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 10px;
-    margin: 20px 0;
+    gap: 0.75em;
+    margin: 1.25em 0;
   }
 
   &_item {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 1em;
 
     &__checkbox {
       background-color: var(--clr-cold);

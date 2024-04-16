@@ -2,17 +2,17 @@
   &-container {
     height: 100%;
     width: 100%;
-    padding: 35px 40px;
+    padding: 2em;
     gap: 20px;
     display: flex;
     flex-direction: column;
   }
 
   &-section {
-    margin: 5px 20px;
+    margin: 0.25em 0;
 
     &--title {
-      margin-bottom: 20px;
+      margin-bottom: 1em;
       font-size: 1.1em;
     }
   }
@@ -20,15 +20,15 @@
 
 .btn {
   width: fit-content;
-  margin: 5px;
+  margin: 0.25em;
   border: none;
   cursor: pointer;
 
   &_regular {
-    line-height: .9;
-    padding: 10px 15px;
+    line-height: 0.9;
+    padding: 0.8em 1.2em;
     font-weight: 600;
-    font-size: .8em;
+    font-size: 0.8em;
     border-radius: 8px;
     background-color: var(--clr-cold);
     color: var(--clr-dark);
@@ -41,10 +41,10 @@
   }
 
   &_secondary {
-    line-height: .8;
-    padding: 10px 15px;
+    line-height: 0.8;
+    padding: 0.75em 1em;
     font-weight: 600;
-    font-size: .75em;
+    font-size: 0.75em;
     border-radius: 5px;
 
     &--add {
@@ -67,10 +67,10 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    padding: 3px;
+    padding: 0.2em;
     background-color: var(--clr-cold);
     color: var(--clr-dark);
-  
+
     &--checked {
       color: var(--clr-main);
     }
@@ -84,7 +84,7 @@
         transition: background-color 200ms ease-in;
       }
     }
-    
+
     &-complete {
       background-color: var(--clr-acc-green);
 
@@ -94,28 +94,26 @@
         transition: background-color 200ms ease-in;
       }
     }
-
   }
 }
-
 
 .tag {
   cursor: pointer;
   border: none;
   width: fit-content;
-  line-height: .6;
-  margin: 5px;
-  padding: 10px;
+  line-height: 0.6;
+  margin: 0.25em;
+  padding: 0.75em;
   border-radius: 5px;
   font-weight: 400;
-  font-size: .8em;
+  font-size: 0.8em;
   background-color: var(--clr-cold);
   color: var(--clr-dark);
 }
 
 .info {
   &_icon {
-    margin: 5px;
+    margin: 0.25em;
     width: 15px;
     height: 15px;
     color: var(--clr-dark);
@@ -123,5 +121,5 @@
 }
 
 .loader {
-  margin-right: 10px;
+  margin-right: 1em;
 }

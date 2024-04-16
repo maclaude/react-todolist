@@ -6,11 +6,11 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 35px 0;
+    padding: 2em 0;
   }
 
   &_title {
-    padding: 0 40px;
+    padding: 0 2.2em;
 
     &__input {
       background-color: inherit;
@@ -26,7 +26,7 @@
   &_item {
     flex-grow: 1;
     overflow-y: scroll;
-    padding: 0 5px;
+    padding: 0 0.25em;
 
     &::-webkit-scrollbar {
       width: 0px;

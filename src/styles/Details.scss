@@ -3,7 +3,7 @@
     height: 100%;
     min-width: 400px;
     width: 100%;
-    padding: 35px 40px;
+    padding: 2em;
     display: flex;
     flex-direction: column;
   }
@@ -35,7 +35,6 @@
 
     & > label {
       font-weight: 600;
-      font-size: 1em;
     }
 
     & > textarea {
@@ -54,12 +53,12 @@
       &_icon {
         width: 15px;
         height: 15px;
-        margin-left: 10px;
+        margin-left: 0.75em;
       }
     }
 
     &-actions {
-      margin-top: 10px;
+      margin-top: 0.75em;
       display: flex;
       align-items: center;
       gap: 5px;

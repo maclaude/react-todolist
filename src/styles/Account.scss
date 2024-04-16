@@ -2,7 +2,7 @@
   &-container {
     height: 100%;
     width: 50%;
-    padding: 35px 40px;
+    padding: 2em;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -11,18 +11,14 @@
   &-title {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 1.2em;
     align-items: center;
     color: var(--clr-dark);
-
-    h2 {
-      font-size: 1.3em;
-    }
   }
 
   &-logout {
     margin-left: auto;
-    padding: 10px 15px;
+    padding: 1em;
     border-radius: 5px;
     width: fit-content;
     font-weight: 600;
@@ -42,20 +38,19 @@
 
 .settings {
   &-title {
-    font-size: 1.1em;
-    margin-bottom: 10px;
+    margin-bottom: 0.8em;
   }
 
   &-section {
-    margin-bottom: 30px;
+    margin-bottom: 2em;
     display: flex;
     flex-direction: column;
 
     a {
       display: block;
       width: fit-content;
-      margin: 5px 0;
-      padding: 5px 0;
+      margin: 0.3em 0;
+      padding: 0.3em 0;
       cursor: pointer;
 
       &:hover {
