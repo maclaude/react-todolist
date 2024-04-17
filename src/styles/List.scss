@@ -4,8 +4,6 @@
 #todolist {
   &_container {
     height: 100%;
-    min-width: 600px;
-    width: 60%;
     padding: 2em;
     gap: 2em;
     display: flex;
@@ -24,8 +22,11 @@
       outline: none;
       font-size: 1.2em;
       font-weight: 600;
-      width: fit-content;
       cursor: pointer;
+    }
+
+    & > p {
+      min-width: fit-content;
     }
   }
 }
@@ -127,7 +128,23 @@
   }
 }
 
-#detail_container {
-  width: 40%;
-  height: 100%;
+@media (min-width: 1000px) {
+  #todolist {
+    &_container {
+      min-width: 600px;
+      width: 60%;
+    }
+  }
+
+  #detail {
+    &_container {
+      width: 40%;
+    }
+  }
+}
+
+@media (min-width: 1250px) {
+  #detail_container {
+    height: 100%;
+  }
 }
